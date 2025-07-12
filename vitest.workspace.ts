@@ -1,1 +1,4 @@
-export default ['**/vite.config.{mjs,js,ts,mts}', '**/vitest.config.{mjs,js,ts,mts}'];
+export default {
+  fix: true,
+  include: ['**/vite.config.{mjs,js,ts,mts}', '**/vitest.config.{mjs,js,ts,mts}'],
+};

@@ -1,109 +1,150 @@
 # DocumentsManager
 
-<a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
+A full-stack application for managing document generation, email sending, and data management.
 
-✨ Your new, shiny [Nx workspace](https://nx.dev) is ready ✨.
+## Overview
 
-[Learn more about this workspace setup and its capabilities](https://nx.dev/nx-api/js?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects) or run `npx nx graph` to visually explore what was created. Now, let's get you up to speed!
+DocumentsManager is a comprehensive solution that allows you to:
 
-## Generate a library
+- Generate PDF documents using HTML templates populated with data
+- Send emails with optional document attachments
+- Manage multiple datasets that serve as variables for documents and emails
 
-```sh
-npx nx g @nx/js:lib packages/pkg1 --publishable --importPath=@my-org/pkg1
+## Features
+
+- **Document Generation**: Create PDF documents from HTML templates
+- **Email Management**: Compose and send emails with attachments
+- **Data Management**: Organize and maintain datasets for use in documents and emails
+- **Cloud Infrastructure**: Serverless architecture for scalability and reliability
+
+## Tech Stack
+
+### Frontend
+
+- **React**: Modern UI library for building the web application
+- **React Router**: Client-side routing for single-page application
+- **Shadcn UI**: Component library for consistent and attractive UI
+
+### Backend & Infrastructure
+
+- **NX Monorepo**: Workspace management for multiple applications and packages
+- **Pulumi**: Infrastructure as Code (IaC) for cloud resource management
+- **Cloudflare Services**:
+  - **D1**: Serverless relational database for data storage
+  - **R2**: Object storage for generated documents (S3-compatible)
+
+### CI/CD
+
+- **GitHub Actions**: Automated testing, building, and deployment
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js (v16 or later)
+- npm (v7 or later)
+- Cloudflare account with API token
+
+### Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/yourusername/documents-manager.git
+   cd documents-manager
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+3. Configure Cloudflare credentials:
+   Create a `Pulumi.dev.yaml` file in the `packages/infra` directory with your Cloudflare API token:
+   ```yaml
+   config:
+     cloudflare:apiToken: your-api-token-here
+   ```
+
+### Development
+
+Run the web application locally:
+
+```bash
+nx serve web
 ```
 
-## Run tasks
+Run linting across all projects:
 
-To build the library use:
-
-```sh
-npx nx build pkg1
+```bash
+npm run lint
 ```
 
-To run any task with Nx use:
+### ESLint Configuration
 
-```sh
-npx nx <target> <project-name>
+The project uses ESLint for code quality and consistency. The root `.eslintrc.json` provides base configuration for all subprojects.
+
+#### Subproject-specific ESLint Configuration
+
+Subprojects can extend or override the root configuration by creating their own `.eslintrc.json` file. Example:
+
+```json
+{
+  "extends": ["../../.eslintrc.json"],
+  "ignorePatterns": ["!**/*"],
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+      "rules": {
+        // Add or override rules specific to this subproject
+        "no-console": "off"
+      }
+    }
+  ]
+}
 ```
 
-These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or defined in the `project.json` or `package.json` files.
+#### Managing ESLint Dependencies
 
-[More about running tasks in the docs &raquo;](https://nx.dev/features/run-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+Each subproject should manage its own ESLint plugin dependencies in its `package.json` if it requires specific plugins not included in the root configuration.
 
-## Versioning and releasing
+### Prettier Configuration
 
-To version and release the library use
+The project uses Prettier for code formatting. The root `.prettierrc.json` provides base configuration for all files.
 
-```
-npx nx release
-```
+Run formatting across all projects:
 
-Pass `--dry-run` to see what would happen without actually releasing the library.
-
-[Learn more about Nx release &raquo;](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Keep TypeScript project references up to date
-
-Nx automatically updates TypeScript [project references](https://www.typescriptlang.org/docs/handbook/project-references.html) in `tsconfig.json` files to ensure they remain accurate based on your project dependencies (`import` or `require` statements). This sync is automatically done when running tasks such as `build` or `typecheck`, which require updated references to function correctly.
-
-To manually trigger the process to sync the project graph dependencies information to the TypeScript project references, run the following command:
-
-```sh
-npx nx sync
+```bash
+npm run format
 ```
 
-You can enforce that the TypeScript project references are always in the correct state when running in CI by adding a step to your CI job configuration that runs the following command:
+Check if files are formatted correctly:
 
-```sh
-npx nx sync:check
+```bash
+npm run format:check
 ```
 
-[Learn more about nx sync](https://nx.dev/reference/nx-commands#sync)
+### Pre-commit Hooks
 
-## Set up CI!
+The project uses Husky and lint-staged to run linting and formatting on pre-commit. This ensures that all committed code meets the project's quality standards.
 
-### Step 1
+When you commit changes, the pre-commit hook will:
 
-To connect to Nx Cloud, run the following command:
+1. Run ESLint with auto-fix on affected files
+2. Format uncommitted files using Prettier
 
-```sh
-npx nx connect
+This setup helps maintain code quality and consistency across the project.
+
+### Deployment
+
+Deploy the infrastructure and web application:
+
+```bash
+cd packages/infra
+npm run deploy
 ```
 
-Connecting to Nx Cloud ensures a [fast and scalable CI](https://nx.dev/ci/intro/why-nx-cloud?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) pipeline. It includes features such as:
+## License
 
-- [Remote caching](https://nx.dev/ci/features/remote-cache?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Task distribution across multiple machines](https://nx.dev/ci/features/distribute-task-execution?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Automated e2e test splitting](https://nx.dev/ci/features/split-e2e-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Task flakiness detection and rerunning](https://nx.dev/ci/features/flaky-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-### Step 2
-
-Use the following command to configure a CI workflow for your workspace:
-
-```sh
-npx nx g ci-workflow
-```
-
-[Learn more about Nx on CI](https://nx.dev/ci/intro/ci-with-nx#ready-get-started-with-your-provider?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Install Nx Console
-
-Nx Console is an editor extension that enriches your developer experience. It lets you run tasks, generate code, and improves code autocompletion in your IDE. It is available for VSCode and IntelliJ.
-
-[Install Nx Console &raquo;](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Useful links
-
-Learn more:
-
-- [Learn more about this workspace setup](https://nx.dev/nx-api/js?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects)
-- [Learn about Nx on CI](https://nx.dev/ci/intro/ci-with-nx?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Releasing Packages with Nx release](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [What are Nx plugins?](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-And join the Nx community:
-- [Discord](https://go.nx.dev/community)
-- [Follow us on X](https://twitter.com/nxdevtools) or [LinkedIn](https://www.linkedin.com/company/nrwl)
-- [Our Youtube channel](https://www.youtube.com/@nxdevtools)
-- [Our blog](https://nx.dev/blog?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+This project is licensed under the MIT License - see the LICENSE file for details.
