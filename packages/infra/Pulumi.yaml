@@ -1,0 +1,22 @@
+name: DocumentManager
+description: |
+  Infrastructure-as-Code (IaC) stack for deploying and managing the "Document Manager" web application. 
+  This configuration provisions all necessary cloud infrastructure with Pulumi for deployment to CloudFlare, 
+  including storage (R2 bucket), database, and website deployment automation. 
+  Designed for ease of deployment in CI/CD pipelines with TypeScript support enabled.
+author: Kori Kristensen <kori.kristensen@gmail.com>
+main: ./src/index.ts
+runtime:
+  name: nodejs
+  options:
+    typescript: true
+environments:
+  - staging
+  - production
+tags:
+  - pulumi
+  - cloudflare
+  - document-manager
+#plugins:
+#    - name: cloudflare
+#      version: 6.3.1

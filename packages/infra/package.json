@@ -1,0 +1,33 @@
+{
+  "name": "infra",
+  "main": "dist/index.js",
+  "version": "0.0.0",
+  "dependencies": {
+    "@pulumi/cloudflare": "^6.3.1",
+    "@pulumi/command": "^1.1.0",
+    "@pulumi/pulumi": "^3.178.0"
+  },
+  "scripts": {
+    "build": "tsc",
+    "deploy": "pulumi up --stack dev",
+    "destroy": "pulumi destroy --stack dev",
+    "refresh": "pulumi refresh --stack dev"
+  },
+  "nx": {
+    "targets": {
+      "deploy": {
+        "cache": true,
+        "dependsOn": [
+          "build",
+          "website:generate"
+        ]
+      },
+      "destroy": {
+        "dependsOn": [
+          "build"
+        ]
+      }
+    }
+  },
+  "devDependencies": {}
+}

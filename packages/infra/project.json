@@ -1,0 +1,49 @@
+{
+  "name": "infra",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/infra",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/infra",
+        "main": "packages/infra/index.ts",
+        "tsConfig": "packages/infra/tsconfig.json",
+        "assets": []
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/infra/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "deploy": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "pulumi up --stack dev",
+        "cwd": "packages/infra"
+      },
+      "dependsOn": ["build", "website:generate"]
+    },
+    "destroy": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "pulumi destroy --stack dev",
+        "cwd": "packages/infra"
+      },
+      "dependsOn": ["build"]
+    },
+    "refresh": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "pulumi refresh --stack dev",
+        "cwd": "packages/infra"
+      }
+    }
+  },
+  "tags": []
+}

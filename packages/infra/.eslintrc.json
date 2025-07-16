@@ -1,0 +1,29 @@
+{
+  "extends": ["../../.eslintrc.json"],
+  "ignorePatterns": ["!**/*", "dist/"],
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+      "rules": {
+        // Specific rules for infrastructure code
+        "no-console": "off", // Allow console in infrastructure scripts
+        "@typescript-eslint/explicit-module-boundary-types": "error", // Require explicit return types for exported functions
+        "import/order": [
+          "warn",
+          {
+            "groups": ["builtin", "external", "internal", "parent", "sibling", "index"],
+            "pathGroups": [
+              {
+                "pattern": "@pulumi/**",
+                "group": "external",
+                "position": "before"
+              }
+            ],
+            "newlines-between": "always",
+            "alphabetize": { "order": "asc", "caseInsensitive": true }
+          }
+        ]
+      }
+    }
+  ]
+}
