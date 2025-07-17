@@ -8,7 +8,7 @@ import {
   getBillBucket,
   getPOABucket,
 } from './components/r2/buckets';
-import { getAccessApplication } from './components/zero-trust';
+// import { getAccessApplication } from './components/zero-trust';
 
 const [webHostingBucket] = getWebHostingBucket();
 const [templateBucket] = getTemplateBucket();
@@ -20,6 +20,7 @@ const buyerKvNamespace = getBuyerKvNamespace();
 const sellerKvNamespace = getSellerKvNamespace();
 const db = getDB();
 
+// Had to set-up manually due to API bug, same goes for bucket cors
 // const [accessApplication] = getAccessApplication();
 
 export {

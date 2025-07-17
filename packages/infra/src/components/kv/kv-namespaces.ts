@@ -2,8 +2,7 @@ import * as cloudflare from '@pulumi/cloudflare';
 
 import { accountId } from '../../bridges/constants';
 import { Provider } from '../../bridges/provider';
-
-import { getKvNamespaceName } from './utils';
+import { getEnvBasedName } from '../../utils/get-env-based-name';
 
 type KvKeys = 'buyer' | 'seller';
 
@@ -11,7 +10,7 @@ const BUYER_KEY: KvKeys = 'buyer';
 const SELLER_KEY: KvKeys = 'seller';
 
 const kvNamespaceInitializer = (key: KvKeys) => {
-  const name = getKvNamespaceName(key);
+  const name = getEnvBasedName(key);
 
   return new cloudflare.WorkersKvNamespace(
     name,

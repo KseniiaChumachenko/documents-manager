@@ -2,11 +2,10 @@ import * as cloudflare from '@pulumi/cloudflare';
 import { Input, Output } from '@pulumi/pulumi/output';
 import { Resource } from '@pulumi/pulumi/resource';
 
-import { env } from '../../bridges/config';
 import { domainZoneId, WEB_BUCKET_DNS_ROUTE_PATH } from '../../bridges/constants';
+import { getEnvBasedName } from '../../utils/get-env-based-name';
 
-const getName = () => `${env}-web-bucket-dns`;
-const name = getName();
+const name = getEnvBasedName('web-bucket-dns');
 
 const getWebBucketDnsSet = (
   bucketId: Output<string>,

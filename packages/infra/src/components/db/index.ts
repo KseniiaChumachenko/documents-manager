@@ -1,13 +1,9 @@
 import * as cloudflare from '@pulumi/cloudflare';
 
-import { env } from '../../bridges/config';
 import { accountId, BUCKETS_LOCATION } from '../../bridges/constants';
+import { getEnvBasedName } from '../../utils/get-env-based-name';
 
-export const getDBName = (): string => {
-  return `${env}-db`;
-};
-
-const dbName = getDBName();
+const dbName = getEnvBasedName('db');
 
 const getDB = (): cloudflare.D1Database =>
   new cloudflare.D1Database(dbName, {
