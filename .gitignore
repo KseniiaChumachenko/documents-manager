@@ -2,7 +2,6 @@
 
 # compiled output
 /dist/
-/.wrangler/
 /build/
 tmp
 out-tsc
@@ -50,6 +49,8 @@ vitest.config.*.timestamp*
 
 # React Router
 /apps/web/.react-router/
+/apps/web/.wrangler/
 
 # Secrets
-/.env
+*/.env
+
