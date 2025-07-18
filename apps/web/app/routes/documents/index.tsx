@@ -1,4 +1,4 @@
-import type { Route } from './+types/home';
+import type { Route } from '../../../.react-router/types/app/routes/+types';
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -11,6 +11,6 @@ export function loader() {
   return { message: 'Hello, home!' };
 }
 
-export default function Home({ loaderData }) {
+export default function Index({ loaderData }) {
   return <div>{loaderData.message}</div>;
 }

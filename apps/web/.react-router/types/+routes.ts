@@ -13,7 +13,34 @@ type Pages = {
   "/": {
     params: {};
   };
+  "/documents": {
+    params: {};
+  };
+  "/documents/poas": {
+    params: {};
+  };
+  "/documents/bills": {
+    params: {};
+  };
+  "/documents/invoices": {
+    params: {};
+  };
+  "/documents/settings": {
+    params: {};
+  };
   "/library": {
+    params: {};
+  };
+  "/library/clients": {
+    params: {};
+  };
+  "/library/sources": {
+    params: {};
+  };
+  "/library/items": {
+    params: {};
+  };
+  "/library/settings": {
     params: {};
   };
 };
@@ -21,18 +48,54 @@ type Pages = {
 type RouteFiles = {
   "root.tsx": {
     id: "root";
-    page: "/" | "/library";
+    page: "/" | "/documents" | "/documents/poas" | "/documents/bills" | "/documents/invoices" | "/documents/settings" | "/library" | "/library/clients" | "/library/sources" | "/library/items" | "/library/settings";
   };
   "routes/layout.tsx": {
     id: "routes/layout";
-    page: "/" | "/library";
+    page: "/" | "/documents" | "/documents/poas" | "/documents/bills" | "/documents/invoices" | "/documents/settings" | "/library" | "/library/clients" | "/library/sources" | "/library/items" | "/library/settings";
   };
-  "routes/home.tsx": {
-    id: "routes/home";
+  "routes/home/index.tsx": {
+    id: "routes/home/index";
     page: "/";
+  };
+  "routes/documents/index.tsx": {
+    id: "routes/documents/index";
+    page: "/documents" | "/documents/poas" | "/documents/bills" | "/documents/invoices" | "/documents/settings";
+  };
+  "routes/documents/poas/index.tsx": {
+    id: "routes/documents/poas/index";
+    page: "/documents/poas";
+  };
+  "routes/documents/bills/index.tsx": {
+    id: "routes/documents/bills/index";
+    page: "/documents/bills";
+  };
+  "routes/documents/invoices/index.tsx": {
+    id: "routes/documents/invoices/index";
+    page: "/documents/invoices";
+  };
+  "routes/documents/settings/index.tsx": {
+    id: "routes/documents/settings/index";
+    page: "/documents/settings";
   };
   "routes/library/index.tsx": {
     id: "routes/library/index";
-    page: "/library";
+    page: "/library" | "/library/clients" | "/library/sources" | "/library/items" | "/library/settings";
+  };
+  "routes/library/clients/index.tsx": {
+    id: "routes/library/clients/index";
+    page: "/library/clients";
+  };
+  "routes/library/sources/index.tsx": {
+    id: "routes/library/sources/index";
+    page: "/library/sources";
+  };
+  "routes/library/items/index.tsx": {
+    id: "routes/library/items/index";
+    page: "/library/items";
+  };
+  "routes/library/settings/index.tsx": {
+    id: "routes/library/settings/index";
+    page: "/library/settings";
   };
 };

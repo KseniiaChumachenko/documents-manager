@@ -7,7 +7,9 @@ export default function Home() {
   return (
     <SidebarProvider>
       <AppSidebar />
-      <Outlet />
+      <div className={'p-4'}>
+        <Outlet />
+      </div>
     </SidebarProvider>
   );
 }
