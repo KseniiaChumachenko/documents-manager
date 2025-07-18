@@ -2,6 +2,7 @@
 
 # compiled output
 /dist/
+/.wrangler/
 /build/
 tmp
 out-tsc
