@@ -1,16 +1,15 @@
-import type { Route } from './+types/library';
+import { getTitle } from '~/i18n';
 
-export function meta({}: Route.MetaArgs) {
-  return [
-    { title: 'Document Manager' },
-    { name: 'description', content: 'Welcome to Document Manager' },
-  ];
+import type { Route } from '../../../../.react-router/types/app/routes/documents/invoices/+types';
+
+export function meta({ location }: Route.MetaArgs) {
+  return [{ title: { title: getTitle(location) } }];
 }
 
 export function loader() {
   return { message: 'Hello, library!' };
 }
 
-export default function Home({ loaderData }) {
+export default function Invoices({ loaderData }: Route.ComponentProps) {
   return <div>{loaderData.message}</div>;
 }

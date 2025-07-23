@@ -13,6 +13,8 @@ export default [
 
     route('library', 'routes/library/index.tsx', [
       route('clients', 'routes/library/clients/index.tsx'),
+      route('search-company', 'routes/library/api/search-company.ts'),
+      route('save-company', 'routes/library/api/save-company.ts'),
       route('sources', 'routes/library/sources/index.tsx'),
       route('items', 'routes/library/items/index.tsx'),
       route('settings', 'routes/library/settings/index.tsx'),

@@ -1,16 +1,8 @@
-import type { Route } from './+types/library';
+import * as Router from 'react-router';
 
-export function meta({}: Route.MetaArgs) {
-  return [
-    { title: 'Document Manager' },
-    { name: 'description', content: 'Welcome to Document Manager' },
-  ];
-}
+import { ErrorBoundary as EB } from '~/components/error-boundary';
 
-export function loader() {
-  return { message: 'Hello, library!' };
+export default function Library() {
+  return <Router.Outlet />;
 }
-
-export default function Home({ loaderData }) {
-  return <div>{loaderData.message}</div>;
-}
+export const ErrorBoundary = EB;

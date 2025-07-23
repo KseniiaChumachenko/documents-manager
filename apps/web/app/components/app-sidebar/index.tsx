@@ -1,3 +1,4 @@
+'use client';
 import { Home, Settings, Library, FileStack, Waves } from 'lucide-react';
 
 import {
@@ -6,7 +7,6 @@ import {
   SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
-  SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuAction,
@@ -15,17 +15,19 @@ import {
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem,
+  SidebarProvider,
 } from '~/components/ui/sidebar';
+import { i18n } from '~/i18n';
 import { cn } from '~/lib/utils';
 
-const items = [
+export const items = [
   {
-    title: 'Головна',
+    title: i18n['/'].title,
     url: '/',
     icon: Home,
   },
   {
-    title: 'Документи',
+    title: i18n['/documents'].title,
     url: '/documents',
     icon: FileStack,
     action: {
@@ -34,21 +36,21 @@ const items = [
     },
     children: [
       {
-        title: 'Довіренності',
+        title: i18n['/documents/poas'].title,
         url: '/documents/poas',
       },
       {
-        title: 'Видаткові накладні',
+        title: i18n['/documents/bills'].title,
         url: '/documents/bills',
       },
       {
-        title: 'Рахунки фактури',
+        title: i18n['/documents/invoices'].title,
         url: '/documents/invoices',
       },
     ],
   },
   {
-    title: 'Бібліотека',
+    title: i18n['/library'].title,
     url: '/library',
     icon: Library,
     action: {
@@ -57,22 +59,22 @@ const items = [
     },
     children: [
       {
-        title: 'Покупці',
+        title: i18n['/library/clients'].title,
         url: '/library/clients',
       },
       {
-        title: 'Продавці',
+        title: i18n['/library/sources'].title,
         url: '/library/sources',
       },
       {
-        title: 'Товари',
+        title: i18n['/library/items'].title,
         url: '/library/items',
       },
     ],
   },
 ];
 
-export function AppSidebar() {
+export function ASidebar() {
   return (
     <Sidebar>
       <SidebarHeader>
@@ -102,7 +104,7 @@ export function AppSidebar() {
                       </SidebarMenuAction>
                     )}
                   </SidebarMenuItem>
-                  <SidebarMenuSub>
+                  <SidebarMenuSub key={`action_${item.title}`}>
                     {item.children?.map((i) => (
                       <SidebarMenuSubItem key={i.title}>
                         <SidebarMenuSubButton href={i.url}>{i.title}</SidebarMenuSubButton>
@@ -119,3 +121,11 @@ export function AppSidebar() {
     </Sidebar>
   );
 }
+
+export const AppSidebar = () => {
+  return (
+    <SidebarProvider>
+      <ASidebar />
+    </SidebarProvider>
+  );
+};

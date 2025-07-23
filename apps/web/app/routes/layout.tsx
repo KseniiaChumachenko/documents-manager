@@ -1,15 +1,17 @@
 import { Outlet } from 'react-router';
 
 import { AppSidebar } from '~/components/app-sidebar';
-import { SidebarProvider } from '~/components/ui/sidebar';
+import { ErrorBoundary as EB } from '~/components/error-boundary';
 
-export default function Home() {
+export default function Layout() {
   return (
-    <SidebarProvider>
+    <div className={'flex'}>
       <AppSidebar />
       <div className={'p-4'}>
         <Outlet />
       </div>
-    </SidebarProvider>
+    </div>
   );
 }
+
+export const ErrorBoundary = EB;

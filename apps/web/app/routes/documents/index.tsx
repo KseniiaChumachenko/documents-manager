@@ -1,16 +1,15 @@
-import type { Route } from '../../../.react-router/types/app/routes/+types';
+import { getTitle } from '~/i18n';
 
-export function meta({}: Route.MetaArgs) {
-  return [
-    { title: 'Document Manager' },
-    { name: 'description', content: 'Welcome to Document Manager' },
-  ];
+import type { Route } from '../../../.react-router/types/app/routes/documents/+types';
+
+export function meta({ location }: Route.MetaArgs) {
+  return [{ title: getTitle(location) }];
 }
 
 export function loader() {
   return { message: 'Hello, home!' };
 }
 
-export default function Index({ loaderData }) {
+export default function Documents({ loaderData }: Route.ComponentProps) {
   return <div>{loaderData.message}</div>;
 }
