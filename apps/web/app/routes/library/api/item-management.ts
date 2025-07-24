@@ -1,16 +1,17 @@
 import { eq } from 'drizzle-orm';
 
-import { item as table_item } from '~/database/schema';
-import { valueFromSP } from '~/lib/value-from-sp';
+import { item as table_item, Item } from '~/database/schema';
 
 import type { Route } from '../../../../.react-router/types/app/routes/library/api/+types/item-management';
 
-type TItem = typeof table_item.$inferInsert;
-
-export async function loader({ request, context }: Route.LoaderArgs) {
+export async function action({ request, context }: Route.ActionArgs) {
   let returnValue;
   try {
-    const values = valueFromSP<TItem>(request);
+    const fd = await request.formData();
+    let values: Item = {};
+    fd.forEach((v, k) => {
+      values = { ...values, [k]: v };
+    });
     // Id indicated editing of item, not adding
     const id = values?.id;
 
@@ -33,4 +34,4 @@ export async function loader({ request, context }: Route.LoaderArgs) {
   };
 }
 
-export type IMLoader = typeof loader;
+export type IMLoader = typeof action;
