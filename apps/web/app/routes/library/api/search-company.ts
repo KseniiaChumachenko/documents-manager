@@ -3,7 +3,7 @@ import { decode as windows1251decode } from 'windows-1251';
 
 import type { Route } from '../../../../.react-router/types/app/routes/library/api/+types/search-company';
 
-export async function loader({ request, params }: Route.LoaderArgs) {
+export async function loader({ request }: Route.LoaderArgs) {
   const reqUrl = new URL(request.url);
   const egrpou = reqUrl.searchParams.get('egrpou');
 

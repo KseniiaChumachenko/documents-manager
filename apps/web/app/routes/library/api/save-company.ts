@@ -41,7 +41,7 @@ export async function loader({ request, context }: Route.LoaderArgs) {
   let typeExist = !!types.find((v) => v.name === type)?.name;
 
   if (!typeExist) {
-    const t = await context.db.insert(companyType).values({ name: 'client' }).returning();
+    const t = await context.db.insert(companyType).values({ name: type }).returning();
     if (!t?.length) {
       typeExist = true;
     }

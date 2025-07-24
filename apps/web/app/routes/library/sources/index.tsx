@@ -1,15 +1,9 @@
-import { getTitle } from '~/i18n';
+import { getLibraryView } from '~/routes/library/commons/library-view';
 
-import type { Route } from '../../../../.react-router/types/app/routes/library/sources/+types';
+const { meta: m, ErrorBoundary: EB, loader: l, Component } = getLibraryView('source');
 
-export function meta({ location }: Route.MetaArgs) {
-  return [{ title: getTitle(location) }];
-}
+export const meta = m;
+export const ErrorBoundary = EB;
+export const loader = l;
 
-export function loader() {
-  return { message: 'Hello, library!' };
-}
-
-export default function Sources({ loaderData }: Route.ComponentProps) {
-  return <div>{loaderData.message}</div>;
-}
+export default Component;

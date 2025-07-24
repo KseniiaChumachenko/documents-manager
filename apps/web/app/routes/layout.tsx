@@ -7,7 +7,7 @@ export default function Layout() {
   return (
     <div className={'flex'}>
       <AppSidebar />
-      <div className={'p-4'}>
+      <div className={'p-4 w-full'}>
         <Outlet />
       </div>
     </div>

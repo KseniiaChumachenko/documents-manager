@@ -14,6 +14,8 @@ export default [
     route('library', 'routes/library/index.tsx', [
       route('clients', 'routes/library/clients/index.tsx'),
       route('search-company', 'routes/library/api/search-company.ts'),
+      route('item-management', 'routes/library/api/item-management.ts'),
+      route('enums/:key/:id?', 'routes/library/api/enums-management.ts'),
       route('save-company', 'routes/library/api/save-company.ts'),
       route('sources', 'routes/library/sources/index.tsx'),
       route('items', 'routes/library/items/index.tsx'),

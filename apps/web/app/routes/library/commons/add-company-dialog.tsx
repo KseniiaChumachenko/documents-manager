@@ -1,6 +1,6 @@
 'use client';
 
-import { useFetcher } from 'react-router-dom';
+import { useFetcher, useRevalidator } from 'react-router-dom';
 
 import { Button } from '~/components/ui/button';
 import {
@@ -18,20 +18,22 @@ import { i18n as i } from '~/i18n';
 import type { SaveCompanyLoader } from '~/routes/library/api/save-company';
 import type { SearchCompanyLoader } from '~/routes/library/api/search-company';
 
-const i18n = i['/library/clients'];
+const labels = i['/library/clients'];
 
-export const AddClientDialog = () => {
+export const AddCompanyDialog = ({ i18n, type }: { i18n: typeof labels; type: 'client' }) => {
   const searchFetcher = useFetcher<SearchCompanyLoader>();
   const saveFetcher = useFetcher<SaveCompanyLoader>();
+  const revalidator = useRevalidator();
 
   const handleSubmit = async () => {
     if (searchFetcher.data?.data) {
       await saveFetcher.submit(
-        { ...searchFetcher.data.data, type: 'client' },
+        { ...searchFetcher.data.data, type },
         {
           action: '/library/save-company',
         }
       );
+      await revalidator.revalidate();
     }
   };
 
