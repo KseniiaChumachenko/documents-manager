@@ -7,25 +7,26 @@ import { company } from '~/database/schema';
 import type { Company } from '~/database/schema';
 import { getTitle, i18n as i } from '~/i18n';
 
-import type { Route } from '../../../../.react-router/types/app/routes/library/clients/+types';
-import { AddCompanyDialog } from '../commons/add-company-dialog';
+import type { Route } from '../../../../.react-router/types/app/routes/library/:companies/+types';
+
+import { AddCompanyDialog } from './add-company-dialog';
 
 type Type = 'client' | 'source';
 
-function meta({ location }: Route.MetaArgs) {
+export function meta({ location }: Route.MetaArgs) {
   return [{ title: getTitle(location) }];
 }
 
-function loader(type: Type) {
-  return async function ({ context: { db } }: Route.LoaderArgs) {
-    const data = await db.select().from(company).where(eq(company.type, type));
+export async function loader({ context: { db }, params }: Route.LoaderArgs) {
+  const type = params.type as Type;
+  const data = await db.select().from(company).where(eq(company.type, type));
 
-    return { data, type };
-  };
+  return { data, type };
 }
 
 function Component({ loaderData: { data, type } }: Route.ComponentProps) {
   const i18n = i[`/library/${type}s`];
+  console.log(type);
   const tableHeaders = i18n.table.headers;
   const tableKeys = Object.keys(tableHeaders) as Array<keyof typeof tableHeaders>;
   const columns: ColumnDef<Company>[] = tableKeys.map((accessorKey) => ({
@@ -45,11 +46,6 @@ function Component({ loaderData: { data, type } }: Route.ComponentProps) {
   );
 }
 
-const ErrorBoundary = EB;
+export const ErrorBoundary = EB;
 
-export const getLibraryView = (type: Type) => ({
-  ErrorBoundary,
-  Component,
-  meta,
-  loader: loader(type),
-});
+export default Component;

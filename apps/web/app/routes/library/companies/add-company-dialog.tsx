@@ -15,8 +15,9 @@ import {
 } from '~/components/ui/dialog';
 import { Input } from '~/components/ui/input';
 import { i18n as i } from '~/i18n';
-import type { SaveCompanyLoader } from '~/routes/library/api/save-company';
-import type { SearchCompanyLoader } from '~/routes/library/api/search-company';
+
+import type { SaveCompanyLoader } from '~/routes/library/_commons_/_api/save-company';
+import type { SearchCompanyLoader } from '~/routes/library/_commons_/_api/search-company';
 
 const labels = i['/library/clients'];
 
@@ -55,7 +56,7 @@ export const AddCompanyDialog = ({ i18n, type }: { i18n: typeof labels; type: 'c
               type="text"
               name="egrpou"
               minLength={8}
-              maxLength={8}
+              maxLength={10}
             />
             <Button disabled={searchFetcher.state !== 'idle'} variant={'ghost'}>
               {i18n.dialogs.add.actions.secondary}

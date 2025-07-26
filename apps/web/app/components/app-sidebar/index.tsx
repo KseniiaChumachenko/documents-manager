@@ -60,11 +60,11 @@ export const items = [
     children: [
       {
         title: i18n['/library/clients'].title,
-        url: '/library/clients',
+        url: '/library/client',
       },
       {
         title: i18n['/library/sources'].title,
-        url: '/library/sources',
+        url: '/library/source',
       },
       {
         title: i18n['/library/items'].title,

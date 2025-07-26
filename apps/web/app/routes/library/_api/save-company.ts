@@ -2,7 +2,7 @@ import { eq } from 'drizzle-orm';
 
 import { company, companyType } from '~/database/schema';
 
-import type { Route } from '../../../../.react-router/types/app/routes/library/api/+types/save-company';
+import type { Route } from '../../../../.react-router/types/app/routes/library/_api/+types/save-company';
 
 export async function loader({ request, context }: Route.LoaderArgs) {
   const sp = new URL(request.url).searchParams;

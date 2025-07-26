@@ -2,7 +2,7 @@ import { eq } from 'drizzle-orm';
 
 import { itemType, unit } from '~/database/schema';
 
-import { type Route } from '../../../../.react-router/types/app/routes/library/api/+types/enums-management';
+import { type Route } from '../../../../.react-router/types/app/routes/library/_api/+types/enums-management';
 
 export async function action({ request, params, context }: Route.ActionArgs) {
   const formData = await request.formData();
