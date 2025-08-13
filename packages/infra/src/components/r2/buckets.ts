@@ -1,9 +1,9 @@
 import * as cloudflare from '@pulumi/cloudflare';
 
-import { accountId, appOrigin, BUCKETS_LOCATION } from '../../bridges/constants';
+import { accountId, BUCKETS_LOCATION } from '../../bridges/constants';
 import { Provider } from '../../bridges/provider';
 
-import { getBucketCorsID, getBucketCorsName, getBucketName } from './utils';
+import { getBucketName } from './utils';
 
 type R2Keys = 'web' | 'template' | 'poa' | 'invoice' | 'bill';
 
@@ -59,6 +59,6 @@ const getWebHostingBucket = (): [cloudflare.R2Bucket] => bucketInitializer(WEB_K
 const getTemplateBucket = (): [cloudflare.R2Bucket] => bucketInitializer(TEMPLATE_KEY);
 const getPOABucket = (): [cloudflare.R2Bucket] => bucketInitializer(POA_KEY);
 const getInvoiceBucket = (): [cloudflare.R2Bucket] => bucketInitializer(INVOICE_KEY); //rahunok factura
-const getBillBucket = (): [cloudflare.R2Bucket] => bucketInitializer(BILL_KEY); //rahunkova nakladna
+const getBillBucket = (): [cloudflare.R2Bucket] => bucketInitializer(BILL_KEY); //vydatkova nakladna
 
 export { getWebHostingBucket, getTemplateBucket, getPOABucket, getInvoiceBucket, getBillBucket };
