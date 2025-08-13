@@ -52,6 +52,6 @@ vitest.config.*.timestamp*
 /apps/web/.wrangler/
 
 # Secrets
-*/.env
-*/.env.*
-
+**/.env
+**/.env.*
+**/Pulumi.*.yaml
