@@ -1,0 +1,37 @@
+{
+  "name": "document-manager-devcontainer",
+  "dockerFile": "Dockerfile",
+  "context": "../",
+  "workspaceFolder": "/workspace",
+  "postCreateCommand": "./.devcontainer/post-create.sh",
+  "customizations": {
+    "jetbrains": {
+      "settings": {
+        "com.intellij:app:BaseRefactoringSettings.safe_delete_when_delete": false,
+        "com.intellij:app:BaseRefactoringSettings.rename_search_in_comments_for_file": false,
+        "com.intellij:app:BaseRefactoringSettings.rename_search_for_text_for_file": false,
+        "com.intellij:app:BaseRefactoringSettings.rename_search_for_references_for_file": false,
+        "com.intellij:app:BaseRefactoringSettings.move_search_for_references_for_file": false,
+        "com.intellij:app:EditorSettings.is_ensure_newline_at_eof": true,
+        "com.intellij:app:Vcs-Log-App-Settings.show_changes_from_parents": true,
+        "com.intellij:app:Vcs-Log-App-Settings.show_tag_names": true,
+        "Git4Idea:app:Git-Application-Settings.use_credential_helper": true
+      }
+    },
+    "vscode": {
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "ms-azuretools.vscode-docker",
+        "pulumi.pulumi",
+        "ms-vscode.vscode-typescript-next"
+      ]
+    }
+  },
+  "forwardPorts":[5173],
+  "remoteUser": "node",
+  "containerEnv": {
+    "GIT_AUTHOR_NAME": "${localEnv:GIT_AUTHOR_NAME}",
+    "GIT_AUTHOR_EMAIL": "${localEnv:GIT_AUTHOR_EMAIL}",
+  }
+}
