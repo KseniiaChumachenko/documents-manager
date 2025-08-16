@@ -28,7 +28,7 @@
       ]
     }
   },
-  "forwardPorts":[5173],
+  "forwardPorts":[5173, 8976],
   "remoteUser": "node",
   "containerEnv": {
     "GIT_AUTHOR_NAME": "${localEnv:GIT_AUTHOR_NAME}",
