@@ -1,0 +1,52 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "react-router-app",
+  "compatibility_date": "2025-04-04",
+  "main": "./workers/app.ts",
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1
+  },
+  "env": {
+    "staging": {
+      "routes": [
+        {
+          "pattern": "${WRANGLER_ROUTES_PATTERN}",
+          "custom_domain": true
+        }
+      ],
+      "d1_databases": [
+        {
+          "binding": "DB",
+          "database_name": "staging-db",
+          "database_id": "${WRANGLER_DATABASE_ID}",
+          "preview_database_id": "${WRANGLER_DATABASE_ID}",
+          "migrations_dir": "database/migrations",
+          "experimental_remote": true
+        }
+      ],
+      "r2_buckets": [
+        {
+          "binding": "ASSETS",
+          "bucket_name": "staging-web"
+        },
+        {
+          "binding": "POAS",
+          "bucket_name": "staging-poa"
+        },
+        {
+          "binding": "INVOICES",
+          "bucket_name": "staging-invoice"
+        },
+        {
+          "binding": "BILLS",
+          "bucket_name": "staging-bill"
+        },
+        {
+          "binding": "TEMPLATES",
+          "bucket_name": "staging-template"
+        }
+      ]
+    }
+  }
+}
