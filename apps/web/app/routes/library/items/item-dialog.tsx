@@ -9,13 +9,12 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from '~/components/ui/dialog';
 import { Input } from '~/components/ui/input';
 import { Label } from '~/components/ui/label';
 import type { Item, ItemType, Unit } from '~/database/schema';
 import { i18n as i } from '~/i18n';
-import type { IMLoader } from '~/routes/library/api/item-management';
+import type { IMLoader } from '~/routes/library/_api/item-management';
 
 const labels = i['/library/items'];
 type Options = { value: string; children: string }[];
@@ -27,6 +26,12 @@ const getFields = ({
   typeOptions: Options;
   unitOptions: Options;
 }) => [
+  {
+    name: 'id',
+    f: 'input',
+    hidden: true,
+    type: 'text',
+  },
   {
     name: 'name',
     f: 'input',
@@ -66,8 +71,12 @@ export const ItemDialog = ({
   item,
   types,
   units,
+  open,
+  onClose,
 }: {
-  item?: Item;
+  open: boolean;
+  onClose: () => void;
+  item?: Item | null;
   types: ItemType[];
   units: Unit[];
 }) => {
@@ -80,11 +89,7 @@ export const ItemDialog = ({
   const fields = getFields({ typeOptions, unitOptions });
 
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button>{labels.actions.primary}</Button>
-      </DialogTrigger>
-
+    <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className={'md:max-w-lg'}>
         <fetcher.Form method={'post'} action={'/library/item-management'}>
           <DialogHeader>
@@ -99,7 +104,7 @@ export const ItemDialog = ({
                   <Label htmlFor={rest.name} className="pb-2">
                     {labels.table.headers[rest.name]}
                   </Label>
-                  <Input id={rest.name} {...rest} />
+                  <Input id={rest.name} defaultValue={item?.[rest.name]} {...rest} />
                 </div>
               ) : (
                 <div key={rest.name}>
@@ -108,6 +113,7 @@ export const ItemDialog = ({
                   </Label>
                   <select
                     id={rest.name}
+                    defaultValue={item?.[rest.name]}
                     {...rest}
                     className="border px-2 py-1 rounded-md w-full h-full"
                   >

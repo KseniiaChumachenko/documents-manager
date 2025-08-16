@@ -7,7 +7,7 @@ import { company } from '~/database/schema';
 import type { Company } from '~/database/schema';
 import { getTitle, i18n as i } from '~/i18n';
 
-import type { Route } from '../../../../.react-router/types/app/routes/library/:companies/+types';
+import type { Route } from '../../../../.react-router/types/app/routes/library/companies/+types';
 
 import { AddCompanyDialog } from './add-company-dialog';
 
@@ -26,7 +26,6 @@ export async function loader({ context: { db }, params }: Route.LoaderArgs) {
 
 function Component({ loaderData: { data, type } }: Route.ComponentProps) {
   const i18n = i[`/library/${type}s`];
-  console.log(type);
   const tableHeaders = i18n.table.headers;
   const tableKeys = Object.keys(tableHeaders) as Array<keyof typeof tableHeaders>;
   const columns: ColumnDef<Company>[] = tableKeys.map((accessorKey) => ({

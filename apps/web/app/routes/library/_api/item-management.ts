@@ -14,8 +14,10 @@ export async function action({ request, context }: Route.ActionArgs) {
     });
     // Id indicated editing of item, not adding
     const id = values?.id;
-
+    console.log(values);
+    // TODO: Tries to insert empty id for new  item
     if (id) {
+
       returnValue = await context.db
         .update(table_item)
         .set(values)
@@ -25,6 +27,7 @@ export async function action({ request, context }: Route.ActionArgs) {
       returnValue = await context.db.insert(table_item).values(values).returning();
     }
   } catch (e) {
+    console.error(e);
     return { data: null, error: e.message };
   }
 

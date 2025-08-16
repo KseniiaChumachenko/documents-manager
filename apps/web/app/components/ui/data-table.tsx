@@ -2,6 +2,7 @@
 
 import { flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import type { ColumnDef } from '@tanstack/react-table';
+import type { TableOptions } from '@tanstack/table-core';
 
 import {
   Table,
@@ -12,13 +13,20 @@ import {
   TableRow,
 } from '~/components/ui/table';
 
-interface DataTableProps<TData, TValue> {
+interface DataTableProps<TData, TValue> extends Partial<TableOptions<TData>> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  onRowClick?: (id: string) => void;
 }
 
-export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData, TValue>) {
+export function DataTable<TData, TValue>({
+  columns,
+  data,
+  onRowClick,
+  ...rest
+}: DataTableProps<TData, TValue>) {
   const table = useReactTable({
+    ...rest,
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
@@ -45,9 +53,13 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
         <TableBody>
           {table.getRowModel().rows?.length ? (
             table.getRowModel().rows.map((row) => (
-              <TableRow key={row.id} data-state={row.getIsSelected() && 'selected'}>
+              <TableRow
+                key={row.id}
+                data-state={row.getIsSelected() && 'selected'}
+                onClick={() => onRowClick?.(row.id)}
+              >
                 {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id} className="whitespace-normal overflow-scroll">
+                  <TableCell key={cell.id} className="whitespace-normal overflow-auto">
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </TableCell>
                 ))}
