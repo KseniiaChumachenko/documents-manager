@@ -3,6 +3,8 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
+    "dev:web": "npm --workspace @documents-manager/web run dev",
+    "dev": "npm run dev:web",
     "lint": "nx run-many --target=lint --all",
     "prepare": "husky"
   },
