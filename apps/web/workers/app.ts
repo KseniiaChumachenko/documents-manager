@@ -10,6 +10,7 @@ declare module 'react-router' {
       ctx: ExecutionContext;
     };
     db: DrizzleD1Database<typeof schema>;
+    user: {email: string | null}
   }
 }
 
@@ -21,10 +22,14 @@ const requestHandler = createRequestHandler(
 export default {
   async fetch(request, env, ctx) {
     const db = drizzle(env.DB, { schema });
+    const user = {
+      email: request.headers.get('cf-access-authenticated-user-email'),
+    };
 
     return requestHandler(request, {
       cloudflare: { env, ctx },
       db,
+      user,
     });
   },
 } satisfies ExportedHandler<Env>;

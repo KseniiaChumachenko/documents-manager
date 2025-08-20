@@ -1,5 +1,5 @@
 'use client';
-import { Home, Settings, Library, FileStack, Waves } from 'lucide-react';
+import { Home, Settings, Library, FileStack, Waves, ChevronUp } from 'lucide-react';
 
 import {
   Sidebar,
@@ -19,6 +19,16 @@ import {
 } from '~/components/ui/sidebar';
 import { i18n } from '~/i18n';
 import { cn } from '~/lib/utils';
+import { useRouteLoaderData } from 'react-router-dom';
+import { loader } from '~/root';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '~/components/ui/dropdown-menu';
+
+import { AvatarFallback, Avatar, AvatarImage } from '~/components/ui/avatar';
 
 export const items = [
   {
@@ -59,11 +69,11 @@ export const items = [
     },
     children: [
       {
-        title: i18n['/library/clients'].title,
+        title: i18n['/library/client'].title,
         url: '/library/client',
       },
       {
-        title: i18n['/library/sources'].title,
+        title: i18n['/library/source'].title,
         url: '/library/source',
       },
       {
@@ -75,6 +85,8 @@ export const items = [
 ];
 
 export function ASidebar() {
+  const { user: { email } = { email: '' } } = useRouteLoaderData<typeof loader>('root');
+
   return (
     <Sidebar>
       <SidebarHeader>
@@ -117,7 +129,29 @@ export function ASidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter />
+      <SidebarFooter>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <SidebarMenuButton>
+                  <Avatar>
+                    <AvatarImage src="https://github.com/shadcn.png" />
+                    <AvatarFallback>{'D'}</AvatarFallback>
+                  </Avatar>
+                  {email || 'Default'}
+                  <ChevronUp className="ml-auto" />
+                </SidebarMenuButton>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent side="top" className="w-[--radix-popper-anchor-width]">
+                <DropdownMenuItem>
+                  <span>{i18n.root.sidebar.menu.signout}</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarFooter>
     </Sidebar>
   );
 }

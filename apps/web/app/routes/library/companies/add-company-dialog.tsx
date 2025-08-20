@@ -18,7 +18,7 @@ import { i18n as i } from '~/i18n';
 import type { SaveCompanyLoader } from '~/routes/library/_api/save-company';
 import type { SearchCompanyLoader } from '~/routes/library/_api/search-company';
 
-const labels = i['/library/clients'];
+const labels = i['/library/client'];
 
 export const AddCompanyDialog = ({
   i18n,

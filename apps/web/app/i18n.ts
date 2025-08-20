@@ -38,7 +38,7 @@ export const i18n = {
       },
     },
   },
-  '/library/clients': {
+  '/library/client': {
     title: 'Покупці',
     actions: {
       primary: 'Додати нового клієнта',
@@ -48,7 +48,7 @@ export const i18n = {
         title: 'Додати нового клієнта',
         description:
           'Введіть ЄДРПОУ, щоб відшукати компанію в єдиному реєстрі.\n Якщо знайдена інформація коректна - збережіть її.',
-        placeholder: 'ЄДРПОУ має складається з 8 цифр',
+        placeholder: 'ЄДРПОУ має складається з 8-10 цифр',
         actions: {
           primary: 'Зберегти',
           secondary: 'Пошук',
@@ -72,7 +72,7 @@ export const i18n = {
       },
     },
   },
-  '/library/sources': {
+  '/library/source': {
     title: 'Продавці',
     actions: {
       primary: 'Додати нового продавця',
@@ -134,6 +134,13 @@ export const i18n = {
       actions: { primary: 'Зберегти' },
     },
   },
+  root:{
+    sidebar:{
+      menu: {
+        signout: 'Вихід'
+      }
+    }
+  }
 };
 
 export const getTitle = (location: Location) => i18n[location.pathname as keyof typeof i18n]?.title;

@@ -5,10 +5,9 @@ export default [
     index('routes/home/index.tsx'),
 
     route('documents', 'routes/documents/index.tsx', [
-      route('poas', 'routes/documents/poas/index.tsx'),
-      route('bills', 'routes/documents/bills/index.tsx'),
-      route('invoices', 'routes/documents/invoices/index.tsx'),
-      route('settings', 'routes/documents/settings/index.tsx'),
+      route(':type', 'routes/documents/type/index.tsx'),
+      route(':type/settings', 'routes/documents/type/settings/index.tsx'),
+      route(':type/:id', 'routes/documents/type/id/index.tsx'),
     ]),
 
     route('library', 'routes/library/index.tsx', [

@@ -25,7 +25,7 @@ export async function loader({ context: { db }, params }: Route.LoaderArgs) {
 }
 
 function Component({ loaderData: { data, type } }: Route.ComponentProps) {
-  const i18n = i[`/library/${type}s`];
+  const i18n = i[`/library/${type}`];
   const tableHeaders = i18n.table.headers;
   const tableKeys = Object.keys(tableHeaders) as Array<keyof typeof tableHeaders>;
   const columns: ColumnDef<Company>[] = tableKeys.map((accessorKey) => ({

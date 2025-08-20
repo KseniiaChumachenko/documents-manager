@@ -27,6 +27,10 @@ export const links: Route.LinksFunction = () => [
   },
 ];
 
+export function loader({ context }: Route.LoaderArgs) {
+  return { user: context.user };
+}
+
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
