@@ -33,7 +33,7 @@
   "containerEnv": {
     "GIT_AUTHOR_NAME": "${localEnv:GIT_AUTHOR_NAME}",
     "GIT_AUTHOR_EMAIL": "${localEnv:GIT_AUTHOR_EMAIL}",
-    "CLOUDFLARE_TOKEN": "${localEnv:CLOUDFLARE_TOKEN}",
+    "CLOUDFLARE_API_TOKEN": "${localEnv:CLOUDFLARE_API_TOKEN}",
     "CLOUDFLARE_ACCOUNT_ID": "${localEnv:CLOUDFLARE_ACCOUNT_ID",
   },
   "runArgs": [
