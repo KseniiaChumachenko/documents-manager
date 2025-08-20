@@ -53,14 +53,35 @@ DocumentsManager is a comprehensive solution that allows you to:
    git clone https://github.com/yourusername/documents-manager.git
    cd documents-manager
    ```
+2. Give permissions to post-create script:
+    ```bash
+      chmod +x .devcontainer/post-create.sh
+    
+    ```
+3. Create `.devcontainer/.env`
+    ```bash
+    CLOUDFLARE_TOKEN=
+    CLOUDFLARE_ACCOUNT_ID=
+    GIT_AUTHOR_NAME=
+    GIT_AUTHOR_EMAIL= 
+    ```
+4. Create `apps/web/.env`
+    ```bash
+    NODE_ENV=
+    CLOUDFLARE_ENV=
+    CLOUDFLARE_TOKEN=
+    CLOUDFLARE_ACCOUNT_ID=
+    DATABASE_ID=
+    VITE_GOV_API=
+    ```
+5. Create `apps/web/.dev.vars`
+```bash
+WRANGLER_DATABASE_ID=
+WRANGLER_ROUTES_PATTERN=
+```
 
-2. Install dependencies:
-
-   ```bash
-   npm install
-   ```
-
-3. Configure Cloudflare credentials:
+6. Build the Dev Container. See VSCode/WebStorm/etc. guides for particular details.
+7. TODO (needs update) Configure Cloudflare credentials:
    Create a `Pulumi.dev.yaml` file in the `packages/infra` directory with your Cloudflare API token:
    ```yaml
    config:

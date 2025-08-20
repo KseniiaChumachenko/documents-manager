@@ -3,7 +3,7 @@
   "dockerFile": "Dockerfile",
   "context": "../",
   "workspaceFolder": "/workspace",
-  "postCreateCommand": "./.devcontainer/post-create.sh",
+  "postCreateCommand": ".devcontainer/post-create.sh",
   "customizations": {
     "jetbrains": {
       "settings": {
@@ -38,6 +38,6 @@
   },
   "runArgs": [
     "--env-file",
-    "../.devcontainer/.env"
+    "${localWorkspaceFolder}/.devcontainer/.env"
   ]
 }
