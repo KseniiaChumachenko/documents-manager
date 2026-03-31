@@ -20,7 +20,7 @@ import {
 import { i18n } from '~/i18n';
 import { cn } from '~/lib/utils';
 import { useRouteLoaderData } from 'react-router-dom';
-import { loader } from '~/root';
+import type { loader } from '~/root';
 import {
   DropdownMenu,
   DropdownMenuContent,

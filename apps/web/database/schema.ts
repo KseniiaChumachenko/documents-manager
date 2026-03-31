@@ -33,20 +33,24 @@ export const companyType = sqliteTable('company_type', {
 export type CompanyType = typeof companyType.$inferSelect;
 
 export const company = sqliteTable('company', {
-  egrpou: integer().primaryKey({ onConflict: 'replace' }), // = egrpou
+  id: integer().primaryKey({ autoIncrement: true }),
+  egrpou: text({ length: 8 }).unique(),
+  ik: text({ length: 10 }).unique(),
+  entity_type: text({ enum: ['legal', 'fop'] }).notNull(),
   type: text()
     .references(() => companyType.name)
     .notNull(),
-  name: text().notNull().unique(),
-  name_short: text().notNull().unique(),
-  address: text().notNull(),
+  name: text().notNull(),
+  name_short: text(),
+  address: text(),
+  phone: text(),
   director: text(),
   director_gen: text(),
   kved: text(),
   kved_number: text(),
   inn: text(),
   inn_date: text(),
-  last_update: text(),
+  last_sync: text(),
 });
 
 export type Company = typeof company.$inferSelect;

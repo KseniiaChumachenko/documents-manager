@@ -15,10 +15,12 @@
     "db:generate": "npx drizzle-kit generate",
     "db:migrate:stg": "npx dotenv -e .env.staging -- npm run db:generate && npx wrangler d1 migrations apply DB --remote --env staging",
     "cf-typegen": "npx wrangler types --env staging",
-    "typecheck": "npm run cf-typegen && react-router typegen && tsc -b"
+    "typecheck": "npm run cf-typegen && react-router typegen && tsc -b",
+    "test:e2e": "npx wrangler d1 migrations apply DB --local && npx playwright test",
+    "test:e2e:ui": "npx playwright test --ui",
+    "test:e2e:headed": "npx playwright test --headed"
   },
   "dependencies": {
-    "@monaco-editor/react": "^4.7.0",
     "@radix-ui/react-avatar": "^1.1.10",
     "@radix-ui/react-dialog": "^1.1.14",
     "@radix-ui/react-dropdown-menu": "^2.1.16",
@@ -57,6 +59,7 @@
     "vite": "^7.0.5",
     "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^3.0.0",
-    "wrangler": "^4.25.0"
+    "wrangler": "^4.25.0",
+    "@playwright/test": "^1.52.0"
   }
 }

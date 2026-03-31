@@ -1,4 +1,13 @@
 #!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
+
+# Only run inside devcontainer — skip silently on host machines
+if [ ! -f /.dockerenv ]; then
+  echo "Not in devcontainer — skipping pre-commit hooks"
+  exit 0
+fi
 
 npx lint-staged
+
+# Run E2E tests — block commit if any fail
+echo "Running E2E tests..."
+VITE_LOCAL=true npm run test:e2e --workspace=@documents-manager/web

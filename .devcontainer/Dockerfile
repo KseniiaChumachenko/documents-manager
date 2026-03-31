@@ -13,8 +13,14 @@ RUN alias open=xdg-open
 # Install Cloudflare Wrangler CLI
 RUN npm install -g wrangler
 
+# Install Playwright browsers and system dependencies
+RUN npx playwright install --with-deps chromium
+
 # Install Pulumi plugins (optional, can be lazy-loaded)
 # RUN pulumi plugin install resource aws v6.0.0
+
+EXPOSE 8976
+EXPOSE 5173
 
 # Set working directory
 WORKDIR /workspace

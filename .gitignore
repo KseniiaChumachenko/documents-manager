@@ -3,6 +3,8 @@
 # compiled output
 /dist/
 /build/
+apps/web/build/
+apps/web/tsconfig.tsbuildinfo
 tmp
 out-tsc
 
@@ -56,3 +58,9 @@ vitest.config.*.timestamp*
 **/.env.*
 **/Pulumi.*.yaml
 **/.dev.vars
+
+# Playwright
+/apps/web/test-results/
+/apps/web/playwright-report/
+/apps/web/blob-report/
+/apps/web/playwright/.cache/

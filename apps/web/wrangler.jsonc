@@ -7,11 +7,20 @@
     "enabled": true,
     "head_sampling_rate": 1
   },
+  // Local D1 for development and E2E tests (UUID required)
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "local-db",
+      "database_id": "00000000-0000-0000-0000-000000000001",
+      "migrations_dir": "database/migrations"
+    }
+  ],
   "env": {
     "staging": {
       "routes": [
         {
-          "pattern": "${WRANGLER_ROUTES_PATTERN}",
+          "pattern": "staging.aeroclime.com",
           "custom_domain": true
         }
       ],
@@ -19,8 +28,8 @@
         {
           "binding": "DB",
           "database_name": "staging-db",
-          "database_id": "${WRANGLER_DATABASE_ID}",
-          "preview_database_id": "${WRANGLER_DATABASE_ID}",
+          "database_id": "d63c46d8-807f-4ae2-a668-045b7e4e7d79",
+          "preview_database_id": "d63c46d8-807f-4ae2-a668-045b7e4e7d79",
           "migrations_dir": "database/migrations",
           "experimental_remote": true
         }

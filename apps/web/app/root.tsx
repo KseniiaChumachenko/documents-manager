@@ -1,4 +1,5 @@
 import './app.css';
+import { useEffect } from 'react';
 import {
   isRouteErrorResponse,
   Links,
@@ -23,7 +24,7 @@ export const links: Route.LinksFunction = () => [
   },
   {
     rel: 'stylesheet',
-    href: 'app/styles/globals.css',
+    href: '/app/styles/globals.css',
   },
 ];
 
@@ -50,6 +51,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
+  useEffect(() => {
+    document.documentElement.setAttribute('data-hydrated', 'true');
+  }, []);
   return <Outlet />;
 }
 
