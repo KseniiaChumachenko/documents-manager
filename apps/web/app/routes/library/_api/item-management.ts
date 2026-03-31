@@ -12,19 +12,15 @@ export async function action({ request, context }: Route.ActionArgs) {
     fd.forEach((v, k) => {
       values = { ...values, [k]: v };
     });
-    // Id indicated editing of item, not adding
-    const id = values?.id;
-    console.log(values);
-    // TODO: Tries to insert empty id for new  item
+    const { id, ...insertValues } = values;
     if (id) {
-
       returnValue = await context.db
         .update(table_item)
-        .set(values)
+        .set(insertValues)
         .where(eq(table_item.id, id))
         .returning();
     } else {
-      returnValue = await context.db.insert(table_item).values(values).returning();
+      returnValue = await context.db.insert(table_item).values(insertValues).returning();
     }
   } catch (e) {
     console.error(e);

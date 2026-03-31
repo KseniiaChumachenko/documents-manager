@@ -22,7 +22,7 @@ export async function action({ request, params, context }: Route.ActionArgs) {
     try {
       const r = await context.db
         .update(table)
-        .set(name)
+        .set({ name })
         .where(eq(table.name, params.id))
         .returning();
       return { data: r, error: null };
