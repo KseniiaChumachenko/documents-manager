@@ -1,0 +1,27 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "anthropic/claude-sonnet-4-6",
+  "instructions": [
+    ".claude/CLAUDE.md",
+    ".claude/memory/*.md",
+    ".claude/plans/*.md"
+  ],
+  "provider": {
+    "anthropic": {
+      "options": {
+        "setCacheKey": true
+      }
+    }
+  },
+  "watcher": {
+    "ignore": [
+      "node_modules/**",
+      "apps/web/build/**",
+      "apps/web/.react-router/**",
+      "apps/web/.wrangler/**",
+      ".nx/**",
+      "apps/web/test-results/**",
+      "apps/web/playwright-report/**"
+    ]
+  }
+}
