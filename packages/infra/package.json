@@ -23,10 +23,16 @@
       "deploy": {
         "cache": true,
         "dependsOn": [
-          "build",
-          "website:generate"
+          "build"
         ]
       },
+      "destroy": {
+        "dependsOn": [
+          "build"
+        ]
+      }
+    }
+  },
       "destroy": {
         "dependsOn": [
           "build"
