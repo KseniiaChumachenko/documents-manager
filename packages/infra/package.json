@@ -33,12 +33,10 @@
       }
     }
   },
-      "destroy": {
-        "dependsOn": [
-          "build"
-        ]
-      }
-    }
+  "destroy": {
+    "dependsOn": [
+      "build"
+    ]
   },
   "devDependencies": {}
 }
