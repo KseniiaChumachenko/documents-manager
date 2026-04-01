@@ -6,8 +6,7 @@ export function meta({ location }: Route.MetaArgs) {
   return [{ title: getTitle(location) }];
 }
 
-export function loader({ params:{type}, context}: Route.LoaderArgs) {
-
+export function loader({ params: { type }, context }: Route.LoaderArgs) {
   return { message: `Hello, ${type}!`, userEmail: context.user?.email };
 }
 

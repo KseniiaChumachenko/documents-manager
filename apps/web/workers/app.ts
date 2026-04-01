@@ -10,7 +10,7 @@ declare module 'react-router' {
       ctx: ExecutionContext;
     };
     db: DrizzleD1Database<typeof schema>;
-    user: {email: string | null}
+    user: { email: string | null };
   }
 }
 

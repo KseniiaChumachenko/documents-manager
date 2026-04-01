@@ -13,9 +13,7 @@ test.describe('Library > Settings', () => {
 
   test('renders Types section with title and description', async ({ page }) => {
     await expect(page.getByRole('heading', { name: 'Типи' })).toBeVisible();
-    await expect(
-      page.getByText('Типи можна розуміти як категорії товарів')
-    ).toBeVisible();
+    await expect(page.getByText('Типи можна розуміти як категорії товарів')).toBeVisible();
   });
 
   test('renders Units section with title and description', async ({ page }) => {

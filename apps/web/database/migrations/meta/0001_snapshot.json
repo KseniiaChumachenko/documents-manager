@@ -95,16 +95,12 @@
       "indexes": {
         "company_name_unique": {
           "name": "company_name_unique",
-          "columns": [
-            "name"
-          ],
+          "columns": ["name"],
           "isUnique": true
         },
         "company_name_short_unique": {
           "name": "company_name_short_unique",
-          "columns": [
-            "name_short"
-          ],
+          "columns": ["name_short"],
           "isUnique": true
         }
       },
@@ -113,12 +109,8 @@
           "name": "company_typeId_item_type_id_fk",
           "tableFrom": "company",
           "tableTo": "item_type",
-          "columnsFrom": [
-            "typeId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["typeId"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -148,9 +140,7 @@
       "indexes": {
         "item_type_name_unique": {
           "name": "item_type_name_unique",
-          "columns": [
-            "name"
-          ],
+          "columns": ["name"],
           "isUnique": true
         }
       },
@@ -215,9 +205,7 @@
       "indexes": {
         "item_name_unique": {
           "name": "item_name_unique",
-          "columns": [
-            "name"
-          ],
+          "columns": ["name"],
           "isUnique": true
         }
       },
@@ -226,12 +214,8 @@
           "name": "item_typeId_item_type_id_fk",
           "tableFrom": "item",
           "tableTo": "item_type",
-          "columnsFrom": [
-            "typeId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["typeId"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -239,12 +223,8 @@
           "name": "item_unitId_unit_id_fk",
           "tableFrom": "item",
           "tableTo": "unit",
-          "columnsFrom": [
-            "unitId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["unitId"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -274,9 +254,7 @@
       "indexes": {
         "unit_name_unique": {
           "name": "unit_name_unique",
-          "columns": [
-            "name"
-          ],
+          "columns": ["name"],
           "isUnique": true
         }
       },

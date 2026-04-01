@@ -158,13 +158,13 @@ export const i18n = {
       actions: { primary: 'Зберегти' },
     },
   },
-  root:{
-    sidebar:{
+  root: {
+    sidebar: {
       menu: {
-        signout: 'Вихід'
-      }
-    }
-  }
+        signout: 'Вихід',
+      },
+    },
+  },
 };
 
 export const getTitle = (location: Location) => i18n[location.pathname as keyof typeof i18n]?.title;

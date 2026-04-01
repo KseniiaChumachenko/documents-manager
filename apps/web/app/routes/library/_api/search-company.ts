@@ -17,10 +17,7 @@ export async function loader({ request, context }: Route.LoaderArgs) {
   const entityType = code.length <= 8 ? 'legal' : 'fop';
 
   if (entityType === 'fop') {
-    const cached = await context.db
-      .select()
-      .from(company)
-      .where(eq(company.ik, code));
+    const cached = await context.db.select().from(company).where(eq(company.ik, code));
 
     if (cached?.length) {
       return { data: cached[0], error: null, entity_type: 'fop' };

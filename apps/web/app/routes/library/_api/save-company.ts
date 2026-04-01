@@ -34,9 +34,7 @@ export async function loader({ request, context }: Route.LoaderArgs) {
     last_sync: new Date().toISOString(),
   };
 
-  const identifier = egrpou
-    ? eq(company.egrpou, egrpou)
-    : eq(company.ik, ik!);
+  const identifier = egrpou ? eq(company.egrpou, egrpou) : eq(company.ik, ik!);
 
   const [types, existing] = await Promise.all([
     context.db.select().from(companyType),

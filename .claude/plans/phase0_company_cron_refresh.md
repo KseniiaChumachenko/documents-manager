@@ -1,15 +1,18 @@
 # Phase 0 (Background): Company Data Cron Refresh
 
 ## Goal
+
 Monthly background job that re-fetches data for all legal entity (ЄДРПОУ) companies from adm.tools and updates D1. ФОП entries are skipped (manual-only). Keeps counteragent data fresh without any manual effort.
 
 ## Prerequisites
+
 - Migration 0005 applied: `company` table has `egrpou`, `ik`, `entity_type`, `last_sync` columns
 - `save-company` API route works correctly (already implemented)
 - Cloudflare Cron Triggers available (1 slot needed)
 - R2 bucket available for storing the codes CSV
 
 ## Status
+
 Schema and API routes are already implemented. This plan covers only the cron worker and R2 CSV storage.
 
 ---
@@ -42,6 +45,7 @@ This CSV is the source of truth for the bulk refresh. Managed manually (upload v
 ## 3. Cron Worker (`apps/web/app/workers/company-refresh.ts`)
 
 Add to `wrangler.jsonc` cron triggers (alongside the deadline cron from Phase 4):
+
 ```jsonc
 "triggers": {
   "crons": ["0 6 * * *", "0 3 1 * *"]
@@ -51,10 +55,12 @@ Add to `wrangler.jsonc` cron triggers (alongside the deadline cron from Phase 4)
 ```
 
 Worker logic:
+
 ```typescript
 export async function companyRefreshCron(env: Env) {
   // 1. Query all legal entities not synced in the last 25 days
-  const stale = await db.select()
+  const stale = await db
+    .select()
     .from(company)
     .where(
       and(
@@ -74,7 +80,8 @@ export async function companyRefreshCron(env: Env) {
     try {
       const data = await fetchFromAdmTools(co.egrpou, env.VITE_GOV_API);
       if (data) {
-        await db.update(company)
+        await db
+          .update(company)
           .set({ ...data, last_sync: new Date().toISOString() })
           .where(eq(company.egrpou, co.egrpou));
       }
@@ -93,13 +100,18 @@ Reuse the XML parsing logic already in `search-company.ts` — extract it to a s
 ## 4. Shared Library (`apps/web/app/lib/adm-tools.ts`)
 
 Extract from `search-company.ts`:
+
 ```typescript
 export async function fetchFromAdmTools(egrpou: string, apiBase: string) {
   const res = await fetch(`${apiBase}?egrpou=${egrpou}`);
   if (!res.ok) return null;
   const buffer = await res.arrayBuffer();
   const xmlText = windows1251decode(new Uint8Array(buffer));
-  const parser = new XMLParser({ allowBooleanAttributes: true, attributeNamePrefix: '', ignoreAttributes: false });
+  const parser = new XMLParser({
+    allowBooleanAttributes: true,
+    attributeNamePrefix: '',
+    ignoreAttributes: false,
+  });
   const result = parser.parse(xmlText);
   if (result?.error) return null;
   return result.export.company;
@@ -113,6 +125,7 @@ Update `search-company.ts` to import from this shared helper.
 ## 5. Manual Trigger Route (optional)
 
 `apps/web/app/routes/library/_api/refresh-companies.ts`
+
 - `POST` — triggers a one-off refresh for all stale companies (same logic as cron)
 - Useful for first-time setup or after adding many new companies
 - Protected: only `context.user.email` can trigger (Zero Trust already handles auth)
@@ -122,12 +135,14 @@ Update `search-company.ts` to import from this shared helper.
 ## 6. E2E Tests (`apps/web/e2e/library-companies.spec.ts`)
 
 Add to existing company tests:
+
 1. Verify `last_sync` field updates after a company is saved/refreshed
 2. (Integration) Mock `VITE_GOV_API` response — verify company data updates in D1
 
 ---
 
 ## Definition of Done
+
 - [ ] `adm-tools.ts` helper extracted and `search-company.ts` updated to use it
 - [ ] Cron trigger added to `wrangler.jsonc`
 - [ ] Cron worker queries stale legal entities and refreshes them

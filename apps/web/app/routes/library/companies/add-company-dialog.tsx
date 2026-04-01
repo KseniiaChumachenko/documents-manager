@@ -37,29 +37,21 @@ export const AddCompanyDialog = ({
 
   const handleSubmit = async () => {
     if (isFopManualEntry) {
-      const code = new FormData(
-        document.querySelector<HTMLFormElement>('.search-form')!
-      ).get('code') as string;
+      const code = new FormData(document.querySelector<HTMLFormElement>('.search-form')!).get(
+        'code'
+      ) as string;
 
-      await saveFetcher.submit(
-        { ik: code, type, ...fopForm },
-        { action: '/library/save-company' }
-      );
+      await saveFetcher.submit({ ik: code, type, ...fopForm }, { action: '/library/save-company' });
     } else if (searchFetcher.data?.data) {
       const data = searchFetcher.data.data;
-      const params = isFop
-        ? { ik: data.ik, type }
-        : { ...data, type };
+      const params = isFop ? { ik: data.ik, type } : { ...data, type };
 
       await saveFetcher.submit(params, { action: '/library/save-company' });
     }
     await revalidator.revalidate();
   };
 
-  const canSave =
-    isFopManualEntry
-      ? fopForm.name.trim().length > 0
-      : !!searchFetcher.data?.data;
+  const canSave = isFopManualEntry ? fopForm.name.trim().length > 0 : !!searchFetcher.data?.data;
 
   return (
     <Dialog>
@@ -113,9 +105,7 @@ export const AddCompanyDialog = ({
         )}
         {isFopManualEntry && (
           <div className="flex flex-col gap-3 border rounded-md p-4">
-            <p className="text-sm text-muted-foreground">
-              {i18n.dialogs.add.fop.description}
-            </p>
+            <p className="text-sm text-muted-foreground">{i18n.dialogs.add.fop.description}</p>
             <Input
               placeholder={i18n.dialogs.add.fop.fields.name}
               value={fopForm.name}

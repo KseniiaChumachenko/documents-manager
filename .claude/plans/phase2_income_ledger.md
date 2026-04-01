@@ -1,9 +1,11 @@
 # Phase 2: Income Ledger + Tax Calculator
 
 ## Goal
+
 Track all business income (from generated documents, Monobank webhook, CSV import, and manual entry). Calculate quarterly tax obligations. Provide a VAT ledger. Export declaration-ready summaries.
 
 ## Prerequisites
+
 - Phase 1 complete: `document` table exists (income entries link to documents)
 - `company` table exists with `id` FK
 - Cloudflare Worker can receive webhook POST requests (standard — no extra config)
@@ -74,8 +76,8 @@ export function calculateEsvSelf(minimumWageKopecks: number): number {
 
 export function calculateQuarterlyTax(incomeKopecks: number) {
   return {
-    unified: Math.round(incomeKopecks * 0.03),   // 3% єдиний податок
-    military: Math.round(incomeKopecks * 0.01),   // 1% військовий збір
+    unified: Math.round(incomeKopecks * 0.03), // 3% єдиний податок
+    military: Math.round(incomeKopecks * 0.01), // 1% військовий збір
   };
 }
 ```
@@ -87,6 +89,7 @@ Add a `config` table or use Cloudflare KV to store `minimum_wage_kopecks` — up
 ## 3. Monobank Integration
 
 ### Webhook endpoint: `apps/web/app/routes/_api/monobank-webhook.ts`
+
 - `POST /monobank-webhook`
 - Validates the request (Monobank sends a `X-Token` header)
 - Parses `StatementItem`: `{ id, time, description, amount, counterEdrpou, counterName }`
@@ -95,6 +98,7 @@ Add a `config` table or use Cloudflare KV to store `minimum_wage_kopecks` — up
 - Auto-matches counteragent by `counterEdrpou` → `company.egrpou`
 
 ### Cron poller: add to wrangler.jsonc cron triggers
+
 - Schedule: `0 6 * * *` (daily at 6 AM)
 - Calls Monobank `GET /personal/statement/{account}/{from}/{to}` for the previous day
 - Respects 1 req/60s rate limit (single account, single call per day = no issue)
@@ -102,6 +106,7 @@ Add a `config` table or use Cloudflare KV to store `minimum_wage_kopecks` — up
 - File: `apps/web/app/workers/monobank-poller.ts`
 
 ### Setup UI: `apps/web/app/routes/library/settings/bank-connection.tsx`
+
 - Form to enter Monobank personal API token
 - "Зареєструвати webhook" button → calls Monobank `POST /personal/webhook` with our endpoint URL
 - Shows connection status (last sync, active/error)
@@ -124,18 +129,21 @@ UI: upload page at `/income/import`
 ## 5. UI Routes
 
 ### `/income` — Income Register
+
 - DataTable: date, amount, counteragent, source badge, document link
 - Filter by: date range, source, counteragent
 - "Додати вручну" button → inline form (date, amount, counteragent, notes)
 - "Імпортувати CSV" button → navigates to import page
 
 ### `/income/tax` — Tax Calculator
+
 - Quarterly selector (year + quarter)
 - Shows: total income, 3% tax, 1% military levy, ESV (derived from current minimum wage)
 - "Сформувати звіт" → generates printable summary for filing via cabinet.tax.gov.ua
 - Marks quarter as `filed` when user confirms
 
 ### `/income/vat` — VAT Ledger
+
 - DataTable of VAT records (input and output)
 - Monthly filter
 - Summary: output VAT - input VAT = liability/refund
@@ -153,6 +161,7 @@ User can click → link to existing company or create new one inline.
 ## 7. E2E Tests (`apps/web/e2e/income.spec.ts`)
 
 Required:
+
 1. Navigate to `/income` — income register renders
 2. Add manual income entry — appears in list
 3. Navigate to `/income/tax` — quarterly tax summary renders with correct calculations
@@ -162,6 +171,7 @@ Required:
 ---
 
 ## Definition of Done
+
 - [ ] All schema tables created and migration applied
 - [ ] Monobank webhook endpoint receives and stores transactions
 - [ ] Cron poller configured in wrangler.jsonc
