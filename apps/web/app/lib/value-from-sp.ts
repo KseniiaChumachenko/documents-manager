@@ -1,4 +1,4 @@
-export const valueFromSP = <T extends Record<string, any>>(
+export const valueFromSP = <T extends Record<string, unknown>>(
   request: Request<unknown, CfProperties<unknown>>
 ): T => {
   const sp = new URL(request.url).searchParams;

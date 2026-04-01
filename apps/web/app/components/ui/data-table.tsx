@@ -16,7 +16,7 @@ import {
 interface DataTableProps<TData, TValue> extends Partial<TableOptions<TData>> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
-  onRowClick?: (id: string) => void;
+  onRowClick?: (row: TData) => void;
 }
 
 export function DataTable<TData, TValue>({
@@ -56,7 +56,7 @@ export function DataTable<TData, TValue>({
               <TableRow
                 key={row.id}
                 data-state={row.getIsSelected() && 'selected'}
-                onClick={() => onRowClick?.(row.id)}
+                onClick={() => onRowClick?.(row.original)}
               >
                 {row.getVisibleCells().map((cell) => (
                   <TableCell key={cell.id} className="whitespace-normal overflow-auto">

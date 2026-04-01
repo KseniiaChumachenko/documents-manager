@@ -27,42 +27,42 @@ const getFields = ({
   unitOptions: Options;
 }) => [
   {
-    name: 'id',
-    f: 'input',
+    name: 'id' as const,
+    f: 'input' as const,
     hidden: true,
     type: 'text',
   },
   {
-    name: 'name',
-    f: 'input',
+    name: 'name' as const,
+    f: 'input' as const,
     type: 'text',
   },
   {
-    name: 'unit',
-    f: 'select',
+    name: 'unit' as const,
+    f: 'select' as const,
     options: unitOptions,
   },
   {
-    name: 'priceInputVATFree',
-    f: 'input',
+    name: 'priceInputVATFree' as const,
+    f: 'input' as const,
     type: 'number',
     step: 0.01,
   },
   {
-    name: 'priceOutputVATFree',
-    f: 'input',
+    name: 'priceOutputVATFree' as const,
+    f: 'input' as const,
     type: 'number',
     step: 0.01,
   },
   {
-    name: 'priceRetailInclVAT',
-    f: 'input',
+    name: 'priceRetailInclVAT' as const,
+    f: 'input' as const,
     type: 'number',
     step: 0.01,
   },
   {
-    name: 'type',
-    f: 'select',
+    name: 'type' as const,
+    f: 'select' as const,
     options: typeOptions,
   },
 ];
@@ -101,19 +101,21 @@ export const ItemDialog = ({
             {fields.map(({ f, ...rest }) =>
               f === 'input' ? (
                 <div key={rest.name}>
-                  <Label htmlFor={rest.name} className="pb-2">
-                    {labels.table.headers[rest.name]}
-                  </Label>
-                  <Input id={rest.name} defaultValue={item?.[rest.name]} {...rest} />
+                  {!rest.hidden && (
+                    <Label htmlFor={rest.name} className="pb-2">
+                      {labels.table.headers[rest.name as keyof typeof labels.table.headers]}
+                    </Label>
+                  )}
+                  <Input id={rest.name} defaultValue={item?.[rest.name] ?? undefined} {...rest} />
                 </div>
               ) : (
                 <div key={rest.name}>
                   <Label htmlFor={rest.name} className="pb-2">
-                    {labels.table.headers[rest.name]}
+                    {labels.table.headers[rest.name as keyof typeof labels.table.headers]}
                   </Label>
                   <select
                     id={rest.name}
-                    defaultValue={item?.[rest.name]}
+                    defaultValue={item?.[rest.name] ?? undefined}
                     {...rest}
                     className="border px-2 py-1 rounded-md w-full h-full"
                   >

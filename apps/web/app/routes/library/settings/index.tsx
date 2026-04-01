@@ -1,7 +1,6 @@
 import { Trash } from 'lucide-react';
 import { useFetcher } from 'react-router-dom';
 
-import type { Route } from '../../../../.react-router/types/app/routes/library/settings/+types';
 
 import { Button } from '~/components/ui/button';
 import { Input } from '~/components/ui/input';
@@ -10,6 +9,8 @@ import { Table, TableBody, TableCell, TableRow } from '~/components/ui/table';
 import { Typography } from '~/components/ui/typography';
 import { itemType, unit } from '~/database/schema';
 import { getTitle, i18n } from '~/i18n';
+
+import type { Route } from '../../../../.react-router/types/app/routes/library/settings/+types';
 
 
 export function meta({ location }: Route.MetaArgs) {

@@ -1,15 +1,17 @@
 import type { ColumnDef } from '@tanstack/react-table';
 import { eq } from 'drizzle-orm';
 
-import type { Route } from '../../../../.react-router/types/app/routes/library/companies/+types';
 
-import { AddCompanyDialog } from './add-company-dialog';
 
 import { ErrorBoundary as EB } from '~/components/error-boundary';
 import { DataTable } from '~/components/ui/data-table';
 import { company } from '~/database/schema';
 import type { Company } from '~/database/schema';
 import { getTitle, i18n as i } from '~/i18n';
+
+import type { Route } from '../../../../.react-router/types/app/routes/library/companies/+types';
+
+import { AddCompanyDialog } from './add-company-dialog';
 
 
 

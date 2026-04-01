@@ -25,8 +25,11 @@
       "version": "detect"
     },
     "import/resolver": {
-      "typescript": {}
-    }
+      "typescript": {
+        "project": ["tsconfig.json", "apps/*/tsconfig.json", "packages/*/tsconfig.json"]
+      }
+    },
+    "import/ignore": ["virtual:react-router/server-build"]
   },
   "rules": {
     "@nx/enforce-module-boundaries": "error",
@@ -61,6 +64,12 @@
             ]
           }
         ]
+      }
+    },
+    {
+      "files": ["**/workers/app.ts"],
+      "rules": {
+        "import/no-unresolved": ["error", { "ignore": ["^virtual:react-router/server-build$"] }]
       }
     }
   ]

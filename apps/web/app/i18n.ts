@@ -167,4 +167,7 @@ export const i18n = {
   },
 };
 
-export const getTitle = (location: Location) => i18n[location.pathname as keyof typeof i18n]?.title;
+export const getTitle = (location: Location) => {
+  const entry = i18n[location.pathname as keyof typeof i18n];
+  return entry && 'title' in entry ? entry.title : undefined;
+};

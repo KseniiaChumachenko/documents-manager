@@ -1,6 +1,7 @@
+import { getTitle } from '~/i18n';
+
 import type { Route } from '../../../../../.react-router/types/app/routes/documents/type/id/+types';
 
-import { getTitle } from '~/i18n';
 
 
 export function meta({ location }: Route.MetaArgs) {

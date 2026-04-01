@@ -84,7 +84,8 @@ export const items = [
 ];
 
 export function ASidebar() {
-  const { user: { email } = { email: '' } } = useRouteLoaderData<typeof loader>('root');
+  const rootData = useRouteLoaderData<typeof loader>('root');
+  const email = rootData?.user?.email ?? '';
 
   return (
     <Sidebar>

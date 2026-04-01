@@ -1,8 +1,6 @@
 import type { ColumnDef } from '@tanstack/react-table';
 import { useState } from 'react';
 
-import type { Route } from '../../../../.react-router/types/app/routes/library/items/+types';
-
 import { ErrorBoundary as EB } from '~/components/error-boundary';
 import { Button } from '~/components/ui/button';
 import { DataTable } from '~/components/ui/data-table';
@@ -10,6 +8,7 @@ import { type Item, item, itemType, unit } from '~/database/schema';
 import { getTitle, i18n as i } from '~/i18n';
 import { ItemDialog } from '~/routes/library/items/item-dialog';
 
+import type { Route } from '../../../../.react-router/types/app/routes/library/items/+types';
 
 export function meta({ location }: Route.MetaArgs) {
   return [{ title: getTitle(location) }];
@@ -41,12 +40,9 @@ export default function Items({ loaderData: { data } }: Route.ComponentProps) {
     setItem(null);
     setOpen(true);
   };
-  const handleOpenEditing = (rowId: (typeof data)['items'][0]['id']) => {
-    const item = data.items[rowId];
-    if (item) {
-      setItem(item);
-      setOpen(true);
-    }
+  const handleOpenEditing = (row: Item) => {
+    setItem(row);
+    setOpen(true);
   };
 
   const handleClose = () => {

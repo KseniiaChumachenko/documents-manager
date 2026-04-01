@@ -22,7 +22,7 @@ interface TypographyProps extends React.HTMLAttributes<HTMLElement> {
 
 const TYPOGRAPHY_CONFIG: Record<
   TypographyVariant | 'default',
-  { tag: keyof React.JSX.IntrinsicElements; className: string }
+  { tag: 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'blockquote' | 'code'; className: string }
 > = {
   h1: {
     tag: 'h1',
