@@ -5,16 +5,16 @@ import { itemType, unit } from '~/database/schema';
 import { type Route } from '../../../../.react-router/types/app/routes/library/_api/+types/enums-management';
 
 export async function action({ request, params, context }: Route.ActionArgs) {
-  const formData = await request.formData();
-  const name = formData.get('name') as string;
-
-  if (!name) {
-    return { data: null, error: 'Name is required' };
-  }
-
   const table = params.key === 'unit' ? unit : itemType;
 
   if (request.method === 'POST') {
+    const formData = await request.formData();
+    const name = formData.get('name') as string;
+
+    if (!name) {
+      return { data: null, error: 'Name is required' };
+    }
+
     try {
       const r = await context.db.insert(table).values({ name }).returning();
       return { data: r, error: null };
@@ -23,6 +23,13 @@ export async function action({ request, params, context }: Route.ActionArgs) {
     }
   }
   if (request.method === 'PUT') {
+    const formData = await request.formData();
+    const name = formData.get('name') as string;
+
+    if (!name) {
+      return { data: null, error: 'Name is required' };
+    }
+
     try {
       const r = await context.db
         .update(table)
