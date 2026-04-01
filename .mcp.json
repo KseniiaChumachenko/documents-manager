@@ -1,0 +1,20 @@
+{
+  "mcpServers": {
+    "cloudflare": {
+      "command": "npx",
+      "args": ["mcp-remote", "https://bindings.mcp.cloudflare.com/sse"]
+    },
+    "playwright": {
+      "command": "npx",
+      "args": ["@playwright/mcp@latest"]
+    },
+    "pulumi": {
+      "command": "npx",
+      "args": ["mcp-remote", "https://mcp.ai.pulumi.com/mcp"]
+    },
+    "github": {
+      "command": "npx",
+      "args": ["github-mcp-server", "stdio"]
+    }
+  }
+}
