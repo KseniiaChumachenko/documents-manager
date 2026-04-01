@@ -27,7 +27,7 @@
         "command": "pulumi up --stack dev",
         "cwd": "packages/infra"
       },
-      "dependsOn": ["build", "website:generate"]
+      "dependsOn": ["build"]
     },
     "destroy": {
       "executor": "nx:run-commands",
