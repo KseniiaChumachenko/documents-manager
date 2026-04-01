@@ -7,12 +7,14 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 const useRemoteBindings = process.env.VITE_LOCAL !== 'true';
 
 export default defineConfig({
-  server: {
+  root: new URL('.', import.meta.url).pathname,
+  server:{
     host: '127.0.0.1',
   },
   plugins: [
     tailwindcss(),
     cloudflare({
+      configPath: new URL('./wrangler.jsonc', import.meta.url).pathname,
       viteEnvironment: { name: 'ssr' },
       experimental: {
         remoteBindings: useRemoteBindings,
