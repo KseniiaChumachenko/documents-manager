@@ -12,5 +12,12 @@
       "apps/web/test-results/**",
       "apps/web/playwright-report/**"
     ]
+  },
+  "mcp": {
+    "nx-mcp": {
+      "type": "local",
+      "command": ["npx", "nx-mcp"],
+      "enabled": true
+    }
   }
 }

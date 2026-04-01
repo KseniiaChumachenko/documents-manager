@@ -67,3 +67,7 @@ packages/infra/state/.pulumi-backups/**
 /apps/web/playwright-report/
 /apps/web/blob-report/
 /apps/web/playwright/.cache/
+
+.nx/polygraph
+.claude/worktrees
+.claude/settings.local.json
