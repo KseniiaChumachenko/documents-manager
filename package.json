@@ -6,7 +6,7 @@
     "dev:web": "npm --workspace @documents-manager/web run dev",
     "dev": "npm run dev:web",
     "lint": "nx run-many --target=lint --all",
-    "prepare": "echo 'Run inside devcontainer'"
+    "prepare": "husky"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
