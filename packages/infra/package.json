@@ -9,9 +9,14 @@
   },
   "scripts": {
     "build": "tsc",
-    "deploy": "pulumi up --stack dev",
-    "destroy": "pulumi destroy --stack dev",
-    "refresh": "pulumi refresh --stack dev"
+    "deploy:staging": "pulumi up --stack staging --yes",
+    "deploy:production": "pulumi up --stack production --yes",
+    "destroy:staging": "pulumi destroy --stack staging",
+    "destroy:production": "pulumi destroy --stack production",
+    "refresh:staging": "pulumi refresh --stack staging",
+    "refresh:production": "pulumi refresh --stack production",
+    "output:staging": "pulumi stack output --stack staging",
+    "output:production": "pulumi stack output --stack production"
   },
   "nx": {
     "targets": {

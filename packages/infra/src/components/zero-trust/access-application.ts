@@ -1,6 +1,6 @@
 import * as cloudflare from '@pulumi/cloudflare';
 
-import { accountId, appHostname, appOrigin, emailDomain, email } from '../../bridges/constants';
+import { accountId, appHostname, appOrigin, emailDomain } from '../../bridges/constants';
 
 import { getAccessApplicationName, getPolicyName } from './utils';
 
@@ -44,11 +44,7 @@ export const getAccessApplication = (): [cloudflare.AccessApplication] => {
                 domain: emailDomain,
               },
             },
-            {
-              email: { email },
-            },
           ],
-          precedence: 1,
         },
       ],
       selfHostedDomains: [appHostname + '/*'],

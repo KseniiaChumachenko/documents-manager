@@ -56,6 +56,45 @@
           "bucket_name": "staging-template"
         }
       ]
+    },
+    "production": {
+      "routes": [
+        {
+          "pattern": "app.aeroclime.com",
+          "custom_domain": true
+        }
+      ],
+      "d1_databases": [
+        {
+          "binding": "DB",
+          "database_name": "production-db",
+          "database_id": "934e95cf-1a96-4be5-8def-007c95935922",
+          "migrations_dir": "database/migrations",
+          "experimental_remote": true
+        }
+      ],
+      "r2_buckets": [
+        {
+          "binding": "ASSETS",
+          "bucket_name": "production-web"
+        },
+        {
+          "binding": "POAS",
+          "bucket_name": "production-poa"
+        },
+        {
+          "binding": "INVOICES",
+          "bucket_name": "production-invoice"
+        },
+        {
+          "binding": "BILLS",
+          "bucket_name": "production-bill"
+        },
+        {
+          "binding": "TEMPLATES",
+          "bucket_name": "production-template"
+        }
+      ]
     }
   }
 }
