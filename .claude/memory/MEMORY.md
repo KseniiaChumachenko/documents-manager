@@ -8,4 +8,5 @@
 - [Project Structure](project_structure.md) — apps/web (React Router app), packages/infra (Pulumi IaC), e2e/, key file paths
 - [Infrastructure & Deployment](infra_deployment.md) — Cloudflare Workers, D1, R2 buckets, wrangler, staging environment, Zero Trust SSO
 - [Tests Before Commit](feedback_tests_before_commit.md) — Always write E2E tests + run full suite before committing; fix failures first
+- [Never Expose Secrets](feedback_secrets_management.md) — Never commit, display, or write secrets to tracked files
 - [Company Data Redesign](project_company_data_redesign.md) — Split identifiers (egrpou/ik), FOP manual entry, migration 0005 implemented; cron refresh still TODO

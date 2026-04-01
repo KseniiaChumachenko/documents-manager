@@ -21,9 +21,23 @@ type: project
 
 ## Pulumi Infrastructure
 
-- **Stacks**: `staging`, `production` (local backend)
+- **Stacks**: `staging`, `production`
+- **Backend**: Git-based state storage (`packages/infra/state/`)
 - **Resources per stack**: 7 (D1, 5 R2 buckets, provider)
-- **State**: Stored locally in `~/.pulumi/stacks/DocumentManager/`
+- **Secrets**: Encrypted in `Pulumi.{stack}.yaml` with passphrase
+
+### Pulumi Setup
+
+```bash
+cd packages/infra
+pulumi login file://./state
+pulumi stack select staging
+pulumi config set --secret cloudflare:apiToken YOUR_TOKEN --stack staging
+```
+
+### Passphrase
+
+Set `PULUMI_CONFIG_PASSPHRASE` environment variable (required for decryption).
 
 ## Environment Variables
 
@@ -40,6 +54,7 @@ type: project
 
 - `apps/web/.env.staging` — staging environment config
 - `apps/web/.env.production` — production environment config
+- `.devcontainer/.env` — devcontainer environment (for container setup)
 
 ## Deployment Commands
 
@@ -51,7 +66,7 @@ npm run dev                    # Vite dev server
 npm run build:staging          # Staging build
 npm run build:production       # Production build
 
-# Deploy (from apps/web)
+# Deploy Worker (from apps/web)
 npm run deploy:staging         # Deploy to staging
 npm run deploy:production      # Deploy to production
 
@@ -66,11 +81,11 @@ npm run deploy:production      # Deploy production infrastructure
 
 ## Deployment Workflow
 
-| Step           | Tool           | Notes                             |
-| -------------- | -------------- | --------------------------------- |
-| Infrastructure | Pulumi CLI     | Manual — local backend, not in CI |
-| Worker code    | GitHub Actions | Automated on push to main/staging |
-| Migrations     | GitHub Actions | Automated with worker deploy      |
+| Step           | Tool           | Notes                                      |
+| -------------- | -------------- | ------------------------------------------ |
+| Infrastructure | Pulumi CLI     | Git-based state, runs in CI (preview only) |
+| Worker code    | GitHub Actions | Automated on push to main/staging          |
+| Migrations     | GitHub Actions | Automated with worker deploy               |
 
 ## wrangler.jsonc Key Config
 
@@ -90,23 +105,41 @@ npm run deploy:production      # Deploy production infrastructure
 
 ## GitHub Actions
 
-| Workflow                | Trigger           | Steps                        |
-| ----------------------- | ----------------- | ---------------------------- |
-| `ci.yml`                | PRs               | lint → typecheck → E2E tests |
-| `deploy-staging.yml`    | Push to `staging` | build → deploy → migrate     |
-| `deploy-production.yml` | Push to `main`    | build → deploy → migrate     |
+| Workflow                | Trigger           | Steps                                     |
+| ----------------------- | ----------------- | ----------------------------------------- |
+| `ci.yml`                | PRs               | lint → typecheck → E2E tests              |
+| `deploy-staging.yml`    | Push to `staging` | pulumi preview → build → deploy → migrate |
+| `deploy-production.yml` | Push to `main`    | pulumi preview → build → deploy → migrate |
 
 ### Required GitHub Secrets
 
-| Secret                 | Description                          |
-| ---------------------- | ------------------------------------ |
-| `CLOUDFLARE_API_TOKEN` | Cloudflare API token for deployments |
+| Secret                     | Description                          |
+| -------------------------- | ------------------------------------ |
+| `CLOUDFLARE_API_TOKEN`     | Cloudflare API token for deployments |
+| `PULUMI_CONFIG_PASSPHRASE` | Passphrase to decrypt Pulumi secrets |
 
 ## Local Development
+
+### Recommended: Dev Container
+
+All tooling pre-installed (Node.js, Playwright, Pulumi, Wrangler).
+
+```bash
+# Create .devcontainer/.env with credentials
+# Build devcontainer in VSCode/WebStorm
+cp apps/web/.env.staging apps/web/.env
+npm run dev
+```
+
+### Alternative: Local Setup
 
 ```bash
 brew install node@22
 npm install
+npx playwright install --with-deps chromium
+npx husky
 cp apps/web/.env.staging apps/web/.env
 npm run dev
 ```
+
+See `.github/LOCAL_SETUP.md` for detailed instructions.

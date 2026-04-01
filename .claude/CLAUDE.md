@@ -23,6 +23,14 @@ npm run test:e2e:headed    # with browser visible
 npm run test:e2e:ui        # Playwright interactive UI
 ```
 
+## Secrets Management
+
+- **NEVER commit secrets to git** — This includes API tokens, passwords, private keys
+- **NEVER display secret values in output** — Show placeholder like `<REDACTED>` or `<TOKEN>`
+- **NEVER write secrets to documentation files** — Use descriptions instead of actual values
+- **Secret files are gitignored** — `**/.env`, `**/.env.*`, `**/.dev.vars`
+- **If a secret is exposed** — Alert user immediately and help rotate it
+
 ## Dev Environment
 
 This project uses a **devcontainer** — Node.js and Playwright browsers are only available inside it. All `npm` and test commands must run within the devcontainer.
