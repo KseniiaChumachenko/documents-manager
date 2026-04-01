@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+
 import { waitForHydration } from './helpers';
 
 test.describe('Library > Settings', () => {
