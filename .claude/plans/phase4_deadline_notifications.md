@@ -1,9 +1,11 @@
 # Phase 4: Deadline Engine + Notifications
 
 ## Goal
+
 Automatically compute all upcoming tax and compliance deadlines. Send reminders via Telegram Bot API and in-app notification bell. Prevent penalties by alerting the owner well in advance.
 
 ## Prerequisites
+
 - Phase 2 complete: `tax_period` table exists (deadline engine reads filed/open quarters)
 - Phase 3 complete: `payroll` table exists (deadline engine checks quarterly payroll report)
 - Cloudflare Cron Triggers available (1 slot needed: daily at 8 AM)
@@ -80,6 +82,7 @@ Reminder cadence for each deadline: 10 days before, 5 days before, 2 days before
 ## 3. Cron Worker (`apps/web/app/workers/deadline-cron.ts`)
 
 Add to `wrangler.jsonc`:
+
 ```jsonc
 "triggers": {
   "crons": ["0 6 * * *"]  // Daily at 6 AM UTC
@@ -87,6 +90,7 @@ Add to `wrangler.jsonc`:
 ```
 
 Cron handler logic:
+
 1. Call `computeUpcomingDeadlines(new Date())`
 2. For each deadline at reminder threshold (10/5/2/1/0 days):
    a. Check if notification already sent today for this deadline type+date (skip if duplicate)
@@ -99,11 +103,13 @@ Cron handler logic:
 ## 4. Telegram Integration
 
 ### Setup:
+
 1. Owner creates bot via @BotFather, gets `botToken`
 2. Owner gets their `chatId` (can use `getUpdates` endpoint to find it)
 3. Both stored via `notificationSetting` row (or as Cloudflare Secrets for token)
 
 ### Send message from Worker:
+
 ```typescript
 async function sendTelegram(botToken: string, chatId: string, text: string) {
   await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
@@ -115,6 +121,7 @@ async function sendTelegram(botToken: string, chatId: string, text: string) {
 ```
 
 Message format example:
+
 ```
 ⚠️ <b>Нагадування</b>
 Декларація з ПДВ за березень — до <b>20 квітня 2026</b>
@@ -126,11 +133,13 @@ Message format example:
 ## 5. In-App Notification Bell
 
 ### API route: `apps/web/app/routes/_api/notifications.ts`
+
 - `GET` → list unacknowledged notifications, ordered by due_date
 - `POST action=acknowledge&id=X` → mark notification as acknowledged
 - `POST action=acknowledge-all` → mark all as acknowledged
 
 ### UI component: `apps/web/app/components/notification-bell/index.tsx`
+
 - Bell icon in sidebar header (or top bar)
 - Badge showing count of unacknowledged notifications
 - Dropdown panel listing notifications with due dates
@@ -158,6 +167,7 @@ Route: `apps/web/app/routes/library/settings/notifications.tsx` (or a top-level 
 ## 7. E2E Tests (`apps/web/e2e/notifications.spec.ts`)
 
 Required:
+
 1. Navigate to notifications settings — page renders with Telegram config form
 2. Save Telegram settings — form saves without error
 3. Notification bell renders in sidebar with correct unread count
@@ -165,6 +175,7 @@ Required:
 5. "Acknowledge all" — bell count goes to zero
 
 Unit tests (Vitest) for `deadline-engine.ts`:
+
 - VAT deadline on weekday → correct date
 - VAT deadline on Saturday → shifts to Friday
 - Q1 tax deadline → May 10
@@ -173,6 +184,7 @@ Unit tests (Vitest) for `deadline-engine.ts`:
 ---
 
 ## Definition of Done
+
 - [ ] Schema tables created and migration applied
 - [ ] `deadline-engine.ts` computes correct dates for all deadline types
 - [ ] Cron trigger configured in `wrangler.jsonc`

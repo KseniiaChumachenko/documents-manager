@@ -1,9 +1,11 @@
 # Phase 3: Employee Management + Payroll
 
 ## Goal
+
 Manage up to ~10 employees: profiles, monthly payroll calculation, timesheets, leave tracking. Generate payroll documents (розрахунково-платіжна відомість). Prepare quarterly unified report data (ЄСВ + ПДФО + ВЗ).
 
 ## Prerequisites
+
 - Library module complete (company, item tables)
 - Phase 1 optionally complete (payroll document generation reuses the document engine)
 - No dependency on Phase 2 — can be implemented in parallel
@@ -28,7 +30,9 @@ export const employee = sqliteTable('employee', {
 
 export const payroll = sqliteTable('payroll', {
   id: integer().primaryKey({ autoIncrement: true }),
-  employeeId: integer('employee_id').references(() => employee.id).notNull(),
+  employeeId: integer('employee_id')
+    .references(() => employee.id)
+    .notNull(),
   month: integer().notNull(), // 1–12
   year: integer().notNull(),
   workingDays: integer('working_days').notNull(), // actual days worked
@@ -44,7 +48,9 @@ export const payroll = sqliteTable('payroll', {
 
 export const timesheetEntry = sqliteTable('timesheet_entry', {
   id: integer().primaryKey({ autoIncrement: true }),
-  employeeId: integer('employee_id').references(() => employee.id).notNull(),
+  employeeId: integer('employee_id')
+    .references(() => employee.id)
+    .notNull(),
   date: text().notNull(), // ISO date
   hours: integer().notNull().default(8),
   type: text().notNull(), // 'work' | 'leave' | 'sick' | 'holiday' | 'unpaid'
@@ -52,7 +58,9 @@ export const timesheetEntry = sqliteTable('timesheet_entry', {
 
 export const leaveRecord = sqliteTable('leave_record', {
   id: integer().primaryKey({ autoIncrement: true }),
-  employeeId: integer('employee_id').references(() => employee.id).notNull(),
+  employeeId: integer('employee_id')
+    .references(() => employee.id)
+    .notNull(),
   type: text().notNull(), // 'annual' | 'sick' | 'unpaid'
   startDate: text('start_date').notNull(),
   endDate: text('end_date').notNull(),
@@ -69,8 +77,8 @@ After adding, run `npm run db:generate`.
 
 ```typescript
 // Tax rates (update in code when law changes, approx. annually)
-const PDFO_RATE = 0.18;      // ПДФО
-const VZ_RATE = 0.05;        // Військовий збір на зарплату
+const PDFO_RATE = 0.18; // ПДФО
+const VZ_RATE = 0.05; // Військовий збір на зарплату
 const ESV_EMPLOYER_RATE = 0.22; // ЄСВ роботодавця
 
 export function calculatePayroll(grossKopecks: number, bonusKopecks = 0) {
@@ -95,22 +103,26 @@ export function proratedGross(salaryGross: number, workedDays: number, totalWork
 All in `apps/web/app/routes/employees/_api/`:
 
 ### `employee-management.ts`
+
 - `GET ?action=list` → all employees (active + dismissed)
 - `POST action=create` → create employee
 - `POST action=update` → update employee (salary, position)
 - `POST action=dismiss` → set status=dismissed, dismissDate
 
 ### `payroll-management.ts`
+
 - `GET ?year=X&month=X` → list all payroll records for period
 - `POST action=calculate` → auto-calculate payroll for all active employees for given month (creates draft records)
 - `POST action=confirm` → mark payroll records as paid
 - `GET ?action=quarterly-report&year=X&quarter=X` → aggregate ЄСВ+ПДФО+ВЗ for quarterly report
 
 ### `timesheet-management.ts`
+
 - `GET ?employeeId=X&month=X&year=X` → get timesheet entries
 - `POST` → upsert timesheet entry (bulk for a month)
 
 ### `leave-management.ts`
+
 - `GET ?employeeId=X` → list leave records
 - `POST action=create` → create leave request
 - `POST action=approve` → approve, generate timesheet entries
@@ -120,17 +132,20 @@ All in `apps/web/app/routes/employees/_api/`:
 ## 4. UI Routes
 
 ### `/employees` — Employee List
+
 - DataTable: name, position, hire date, gross salary, status
 - "Новий працівник" button → dialog form (name, ІПН, position, hire date, salary)
 - Row click → employee detail
 
 ### `/employees/$id` — Employee Detail
+
 - Profile info (editable)
 - Monthly timesheet calendar view: each day shows type (work/leave/sick/holiday)
 - Leave records list with "Додати відпустку" button
 - Payroll history table
 
 ### `/employees/payroll` — Payroll
+
 - Month/year selector
 - Table: employee name, worked days, gross, ПДФО, ВЗ, ЄСВ роботодавця, net
 - "Розрахувати" button → auto-fills all rows from employee salaries + timesheets
@@ -142,6 +157,7 @@ All in `apps/web/app/routes/employees/_api/`:
 ## 5. Sidebar Navigation
 
 Add "Працівники" section to sidebar in `app/components/app-sidebar/index.tsx` with sub-items:
+
 - `/employees` — Список
 - `/employees/payroll` — Зарплата
 
@@ -150,6 +166,7 @@ Add "Працівники" section to sidebar in `app/components/app-sidebar/ind
 ## 6. i18n Additions (`apps/web/app/i18n.ts`)
 
 Add Ukrainian labels for:
+
 - Employee fields: ІПН, посада, дата прийому, оклад, статус
 - Payroll fields: відпрацьовано, нараховано, ПДФО, ВЗ, ЄСВ, до виплати
 - Leave types: щорічна відпустка, лікарняний, без збереження зарплати
@@ -160,6 +177,7 @@ Add Ukrainian labels for:
 ## 7. E2E Tests (`apps/web/e2e/employees.spec.ts`)
 
 Required:
+
 1. Navigate to `/employees` — employee list renders
 2. Create an employee — appears in list with correct data
 3. Navigate to `/employees/payroll` — payroll page renders
@@ -171,6 +189,7 @@ Required:
 ---
 
 ## Definition of Done
+
 - [ ] All schema tables created and migration applied
 - [ ] Employees can be created, edited, dismissed
 - [ ] Payroll auto-calculates correctly for all employees

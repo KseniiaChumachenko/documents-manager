@@ -61,9 +61,7 @@ test.describe('Library > Items', () => {
 
   test('item dialog has save button', async ({ page }) => {
     await page.getByRole('button', { name: 'Додати новий товар' }).click();
-    await expect(
-      page.getByRole('dialog').getByRole('button', { name: 'Зберегти' })
-    ).toBeVisible();
+    await expect(page.getByRole('dialog').getByRole('button', { name: 'Зберегти' })).toBeVisible();
   });
 
   test('add item and verify it appears in the table', async ({ page }) => {

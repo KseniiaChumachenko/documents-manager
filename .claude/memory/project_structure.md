@@ -5,6 +5,7 @@ type: project
 ---
 
 ## Top-Level Layout
+
 ```
 documents-manager/
 ├── .claude/memory/        # Project-level Claude memories
@@ -16,6 +17,7 @@ documents-manager/
 ```
 
 ## `apps/web/` Key Paths
+
 ```
 apps/web/
 ├── app/
@@ -65,6 +67,7 @@ apps/web/
 ```
 
 ## `packages/infra/` Key Paths
+
 ```
 packages/infra/
 ├── src/
@@ -74,6 +77,7 @@ packages/infra/
 ```
 
 ## R2 Bucket Bindings (wrangler.jsonc)
+
 - `staging-web` — static assets
 - `staging-poa` — Power of Attorney documents
 - `staging-invoice` — Invoice documents
@@ -81,6 +85,7 @@ packages/infra/
 - `staging-template` — Document templates
 
 ## Important Conventions
+
 - All route files in `app/routes/` — React Router auto-discovers them
 - API-only routes in `_api/` subdirectory (no default export)
 - `context.db` = Drizzle DB instance (D1 binding, set up in root loader)

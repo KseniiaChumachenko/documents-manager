@@ -7,7 +7,7 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 const useRemoteBindings = process.env.VITE_LOCAL !== 'true';
 
 export default defineConfig({
-  server:{
+  server: {
     host: '127.0.0.1',
   },
   plugins: [

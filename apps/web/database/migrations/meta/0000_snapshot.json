@@ -53,9 +53,7 @@
       "indexes": {
         "item_name_unique": {
           "name": "item_name_unique",
-          "columns": [
-            "name"
-          ],
+          "columns": ["name"],
           "isUnique": true
         }
       },
@@ -64,12 +62,8 @@
           "name": "item_typeId_item_type_id_fk",
           "tableFrom": "item",
           "tableTo": "item_type",
-          "columnsFrom": [
-            "typeId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["typeId"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -99,9 +93,7 @@
       "indexes": {
         "item_type_name_unique": {
           "name": "item_type_name_unique",
-          "columns": [
-            "name"
-          ],
+          "columns": ["name"],
           "isUnique": true
         }
       },
@@ -131,9 +123,7 @@
       "indexes": {
         "unit_name_unique": {
           "name": "unit_name_unique",
-          "columns": [
-            "name"
-          ],
+          "columns": ["name"],
           "isUnique": true
         }
       },

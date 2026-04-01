@@ -31,13 +31,13 @@ npm run dev
 
 ## Available Commands
 
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Start development server |
-| `npm run lint` | Run ESLint |
-| `npm run test:e2e` | Run E2E tests |
-| `npm run deploy:staging` | Deploy to staging |
-| `npm run deploy:production` | Deploy to production |
+| Command                     | Description              |
+| --------------------------- | ------------------------ |
+| `npm run dev`               | Start development server |
+| `npm run lint`              | Run ESLint               |
+| `npm run test:e2e`          | Run E2E tests            |
+| `npm run deploy:staging`    | Deploy to staging        |
+| `npm run deploy:production` | Deploy to production     |
 
 ## Environment Files
 
@@ -49,8 +49,8 @@ npm run dev
 
 Set these secrets at: https://github.com/KseniiaChumachenko/documents-manager/settings/secrets/actions
 
-| Secret | Value |
-|--------|-------|
+| Secret                 | Value                     |
+| ---------------------- | ------------------------- |
 | `CLOUDFLARE_API_TOKEN` | Your Cloudflare API token |
 
 ## Deployed Environments

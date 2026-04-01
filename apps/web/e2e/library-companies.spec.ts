@@ -97,9 +97,7 @@ test.describe('Library > Clients (/library/client)', () => {
   });
 
   test('renders clients page with add button', async ({ page }) => {
-    await expect(
-      page.getByRole('button', { name: 'Додати нового клієнта' })
-    ).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Додати нового клієнта' })).toBeVisible();
   });
 
   test('renders clients data table with headers', async ({ page }) => {
@@ -116,9 +114,7 @@ test.describe('Library > Clients (/library/client)', () => {
 
     const dialog = page.getByRole('dialog');
     await expect(dialog).toBeVisible();
-    await expect(
-      dialog.getByText('Введіть ЄДРПОУ (8 цифр) або ІК (10 цифр)')
-    ).toBeVisible();
+    await expect(dialog.getByText('Введіть ЄДРПОУ (8 цифр) або ІК (10 цифр)')).toBeVisible();
   });
 
   test('add company dialog has code search input and button', async ({ page }) => {
@@ -321,9 +317,7 @@ test.describe('Library > Sources (/library/source)', () => {
   });
 
   test('renders sources page with add button', async ({ page }) => {
-    await expect(
-      page.getByRole('button', { name: 'Додати нового продавця' })
-    ).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Додати нового продавця' })).toBeVisible();
   });
 
   test('renders sources data table with headers', async ({ page }) => {
@@ -338,9 +332,7 @@ test.describe('Library > Sources (/library/source)', () => {
     await page.getByRole('button', { name: 'Додати нового продавця' }).click();
     const dialog = page.getByRole('dialog');
     await expect(dialog).toBeVisible();
-    await expect(
-      dialog.getByText('Введіть ЄДРПОУ (8 цифр) або ІК (10 цифр)')
-    ).toBeVisible();
+    await expect(dialog.getByText('Введіть ЄДРПОУ (8 цифр) або ІК (10 цифр)')).toBeVisible();
   });
 
   test('save button disabled without search results', async ({ page }) => {

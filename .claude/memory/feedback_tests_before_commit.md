@@ -11,6 +11,7 @@ If tests fail, do NOT commit — diagnose the failure, fix the implementation or
 **Why:** User explicitly requested this workflow. Tests must gate every commit to prevent regressions.
 
 **How to apply:**
+
 1. After implementing a feature or fix, write or update E2E tests in `apps/web/e2e/` covering the change.
 2. Before running `git commit`, always run `cd apps/web && npx playwright test` first.
 3. If any test fails: read the failure output, determine if the issue is in the implementation or the test, fix it, re-run tests, and only then commit.

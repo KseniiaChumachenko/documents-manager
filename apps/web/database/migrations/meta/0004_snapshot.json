@@ -95,16 +95,12 @@
       "indexes": {
         "company_name_unique": {
           "name": "company_name_unique",
-          "columns": [
-            "name"
-          ],
+          "columns": ["name"],
           "isUnique": true
         },
         "company_name_short_unique": {
           "name": "company_name_short_unique",
-          "columns": [
-            "name_short"
-          ],
+          "columns": ["name_short"],
           "isUnique": true
         }
       },
@@ -113,12 +109,8 @@
           "name": "company_type_company_type_name_fk",
           "tableFrom": "company",
           "tableTo": "company_type",
-          "columnsFrom": [
-            "type"
-          ],
-          "columnsTo": [
-            "name"
-          ],
+          "columnsFrom": ["type"],
+          "columnsTo": ["name"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -200,9 +192,7 @@
       "indexes": {
         "item_name_unique": {
           "name": "item_name_unique",
-          "columns": [
-            "name"
-          ],
+          "columns": ["name"],
           "isUnique": true
         }
       },
@@ -211,12 +201,8 @@
           "name": "item_type_item_type_name_fk",
           "tableFrom": "item",
           "tableTo": "item_type",
-          "columnsFrom": [
-            "type"
-          ],
-          "columnsTo": [
-            "name"
-          ],
+          "columnsFrom": ["type"],
+          "columnsTo": ["name"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -224,12 +210,8 @@
           "name": "item_unit_unit_name_fk",
           "tableFrom": "item",
           "tableTo": "unit",
-          "columnsFrom": [
-            "unit"
-          ],
-          "columnsTo": [
-            "name"
-          ],
+          "columnsFrom": ["unit"],
+          "columnsTo": ["name"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
