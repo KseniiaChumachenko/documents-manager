@@ -4,8 +4,6 @@ import { company, companyType } from '~/database/schema';
 
 import type { Route } from '../../../../.react-router/types/app/routes/library/_api/+types/save-company';
 
-
-
 export async function loader({ request, context }: Route.LoaderArgs) {
   const sp = new URL(request.url).searchParams;
   const type = sp.get('type');

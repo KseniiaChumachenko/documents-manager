@@ -6,11 +6,18 @@
     "dev:web": "npm --workspace @documents-manager/web run dev",
     "dev": "npm run dev:web",
     "lint": "nx run-many --target=lint --all",
+    "lint:fix": "nx run-many --target=lint --all --fix",
+    "format:check": "prettier --check .",
+    "format:write": "prettier --write .",
+    "typecheck": "npm run typecheck --workspace=@documents-manager/web",
+    "test:e2e": "npm run test:e2e --workspace=@documents-manager/web",
+    "precommit": "npm run lint && npm run format:check && npm run typecheck && npm run test:e2e",
     "prepare": "husky"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
-      "nx format:write"
+      "eslint --fix .",
+      "prettier --write ."
     ]
   },
   "private": true,

@@ -6,8 +6,6 @@ import { company } from '~/database/schema';
 
 import type { Route } from '../../../../.react-router/types/app/routes/library/_api/+types/search-company';
 
-
-
 export async function loader({ request, context }: Route.LoaderArgs) {
   const reqUrl = new URL(request.url);
   const code = reqUrl.searchParams.get('code');

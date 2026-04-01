@@ -2,7 +2,7 @@
 
 set -e
 
-echo "🔍 Running pre-commit checks..."
+echo "🔍 Running pre-push checks..."
 
 echo ""
 echo "1️⃣ Linting..."
@@ -17,8 +17,4 @@ echo "3️⃣ Type checking..."
 npm run typecheck
 
 echo ""
-echo "4️⃣ Running E2E tests..."
-VITE_LOCAL=true npm run test:e2e
-
-echo ""
-echo "✅ All pre-commit checks passed!"
+echo "✅ All pre-push checks passed!"

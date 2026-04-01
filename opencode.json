@@ -37,7 +37,7 @@
     "github": {
       "type": "local",
       "command": ["npx", "github-mcp-server", "stdio"],
-      "enabled": true,
+      "enabled": true
     }
   }
 }

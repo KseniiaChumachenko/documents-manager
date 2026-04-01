@@ -8,7 +8,7 @@ const useRemoteBindings = process.env.VITE_LOCAL !== 'true';
 
 export default defineConfig({
   root: new URL('.', import.meta.url).pathname,
-  server:{
+  server: {
     host: '127.0.0.1',
   },
   plugins: [
