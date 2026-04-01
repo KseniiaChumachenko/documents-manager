@@ -1,5 +1,12 @@
 # Project Rules
 
+## Git Workflow
+
+- **Create feature branch at start of session** — Use prefixes: `feat/`, `fix/`, `chore/`, `docs/`
+- **Never push to main directly** — Always use Pull Requests
+- **Always ask before pushing** — Require explicit user confirmation before any `git push`
+- **Commit in sensible chunks** — Group related changes with descriptive messages
+
 ## Testing Policy
 
 - **Write E2E tests for every change.** Before committing any feature, bug fix, or refactor, create or update Playwright E2E tests in `apps/web/e2e/` that cover the changed behavior.

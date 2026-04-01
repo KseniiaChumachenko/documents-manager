@@ -1,33 +1,45 @@
 ---
 name: Infrastructure & Deployment
-description: Cloudflare setup, deployment commands, environment variables, and staging configuration
+description: Cloudflare setup, deployment commands, environment variables, and staging/production configuration
 type: project
 ---
+
+## Environments
+
+| Environment    | Domain                  | D1 Database                            | R2 Buckets Prefix |
+| -------------- | ----------------------- | -------------------------------------- | ----------------- |
+| **Staging**    | `staging.aeroclime.com` | `d63c46d8-807f-4ae2-a668-045b7e4e7d79` | `staging-*`       |
+| **Production** | `app.aeroclime.com`     | `934e95cf-1a96-4be5-8def-007c95935922` | `production-*`    |
 
 ## Cloudflare Resources
 
 - **Workers**: SSR React Router app runs as Cloudflare Worker
 - **D1**: SQLite database (binding name `DB`)
-- **R2 Buckets**: staging-web, staging-poa, staging-invoice, staging-bill, staging-template
+- **R2 Buckets**: {env}-web, {env}-poa, {env}-invoice, {env}-bill, {env}-template
 - **Zero Trust / Access**: Authentication gateway — Google OAuth + email whitelist
-- **Custom Domain**: staging.aeroclime.com
+- **Custom Domains**: staging.aeroclime.com, app.aeroclime.com
+
+## Pulumi Infrastructure
+
+- **Stacks**: `staging`, `production` (local backend)
+- **Resources per stack**: 7 (D1, 5 R2 buckets, provider)
+- **State**: Stored locally in `~/.pulumi/stacks/DocumentManager/`
 
 ## Environment Variables
 
-### Required in `.env` / Cloudflare dashboard
+### Required in `.env.{env}` files
 
-| Variable                | Purpose                                                         |
-| ----------------------- | --------------------------------------------------------------- |
-| `CLOUDFLARE_TOKEN`      | Cloudflare API token                                            |
-| `CLOUDFLARE_ACCOUNT_ID` | Cloudflare account ID                                           |
-| `CLOUDFLARE_ENV`        | Environment name (staging/production)                           |
-| `WRANGLER_ENV`          | Wrangler environment                                            |
-| `DATABASE_ID`           | D1 database ID                                                  |
-| `VITE_GOV_API`          | Ukrainian gov registry API: `https://adm.tools/action/gov/api/` |
+| Variable                | Purpose                    |
+| ----------------------- | -------------------------- |
+| `CLOUDFLARE_API_TOKEN`  | Cloudflare API token       |
+| `CLOUDFLARE_ACCOUNT_ID` | Cloudflare account ID      |
+| `DATABASE_ID`           | D1 database ID             |
+| `VITE_GOV_API`          | Ukrainian gov registry API |
 
-### Dev Variables (`.dev.vars` for wrangler local)
+### Environment Files
 
-Same as above but for local development.
+- `apps/web/.env.staging` — staging environment config
+- `apps/web/.env.production` — production environment config
 
 ## Deployment Commands
 
@@ -36,29 +48,37 @@ Same as above but for local development.
 npm run dev                    # Vite dev server
 
 # Build
-npm run build                  # Production build
 npm run build:staging          # Staging build
+npm run build:production       # Production build
 
-# Deploy
-npm run deploy                 # Deploy to Cloudflare
-npm run deploy:staging         # Deploy to staging env
+# Deploy (from apps/web)
+npm run deploy:staging         # Deploy to staging
+npm run deploy:production      # Deploy to production
 
 # Database
-npm run db:generate            # Generate new migration from schema changes
 npm run db:migrate:stg         # Apply migrations to staging D1
-# Manual: npx wrangler d1 migrations apply DB --remote --env staging
+npm run db:migrate:prod        # Apply migrations to production D1
 
-# Infrastructure
-cd packages/infra && npm run deploy  # Deploy Pulumi infrastructure
+# Pulumi (from packages/infra)
+npm run deploy:staging         # Deploy staging infrastructure
+npm run deploy:production      # Deploy production infrastructure
 ```
+
+## Deployment Workflow
+
+| Step           | Tool           | Notes                             |
+| -------------- | -------------- | --------------------------------- |
+| Infrastructure | Pulumi CLI     | Manual — local backend, not in CI |
+| Worker code    | GitHub Actions | Automated on push to main/staging |
+| Migrations     | GitHub Actions | Automated with worker deploy      |
 
 ## wrangler.jsonc Key Config
 
-- Worker name: documents-manager (staging)
-- Compatibility date: recent (CF Workers)
-- D1 binding: `DB` → staging-db
-- R2 bindings: staging-web, staging-poa, staging-invoice, staging-bill, staging-template
-- Routes: staging.aeroclime.com/\*
+- Worker name: react-router-app
+- Compatibility date: 2025-04-04
+- D1 binding: `DB` → {env}-db
+- R2 bindings: {env}-web, {env}-poa, {env}-invoice, {env}-bill, {env}-template
+- Routes: staging.aeroclime.com, app.aeroclime.com
 - Observability: enabled
 
 ## Auth Flow
@@ -68,9 +88,25 @@ cd packages/infra && npm run deploy  # Deploy Pulumi infrastructure
 3. React Router server reads header → `context.user.email`
 4. Email whitelist enforced at CF level (no code change needed to add/remove users)
 
-## NX Build Targets (apps/web)
+## GitHub Actions
 
-- `serve`: dev server
-- `build`: production build
-- `lint`: ESLint
-- `test`: Vitest (passWithNoTests: true)
+| Workflow                | Trigger           | Steps                        |
+| ----------------------- | ----------------- | ---------------------------- |
+| `ci.yml`                | PRs               | lint → typecheck → E2E tests |
+| `deploy-staging.yml`    | Push to `staging` | build → deploy → migrate     |
+| `deploy-production.yml` | Push to `main`    | build → deploy → migrate     |
+
+### Required GitHub Secrets
+
+| Secret                 | Description                          |
+| ---------------------- | ------------------------------------ |
+| `CLOUDFLARE_API_TOKEN` | Cloudflare API token for deployments |
+
+## Local Development
+
+```bash
+brew install node@22
+npm install
+cp apps/web/.env.staging apps/web/.env
+npm run dev
+```
