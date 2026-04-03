@@ -49,7 +49,7 @@ jobs:
 
       - name: Deploy Worker
         working-directory: apps/web
-        run: npx wrangler deploy --env production
+        run: npx wrangler deploy
 
       - name: Run Migrations
         working-directory: apps/web
