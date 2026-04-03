@@ -16,4 +16,4 @@ If tests fail, do NOT commit — diagnose the failure, fix the implementation or
 2. Before running `git commit`, always run `cd apps/web && npx playwright test` first.
 3. If any test fails: read the failure output, determine if the issue is in the implementation or the test, fix it, re-run tests, and only then commit.
 4. Never skip tests or use `--no-verify` to bypass the pre-commit hook.
-5. The Husky pre-commit hook also enforces this — it runs `npm run test:e2e --workspace=@documents-manager/web` automatically (inside devcontainer only).
+5. The Husky pre-push hook enforces this — it runs E2E tests automatically before push.
