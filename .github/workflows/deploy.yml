@@ -144,10 +144,14 @@ jobs:
       - name: Build Worker
         working-directory: apps/web
         run: npm run build:${{ needs.changes.outputs.env-name }}
+        env:
+          CLOUDFLARE_ENV: ${{ needs.changes.outputs.env-name }}
 
       - name: Deploy Worker
         working-directory: apps/web
         run: npx wrangler deploy
+        env:
+          CLOUDFLARE_ENV: ${{ needs.changes.outputs.env-name }}
 
       - name: Deployment URL
         run: |
