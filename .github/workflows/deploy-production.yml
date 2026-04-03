@@ -30,6 +30,10 @@ jobs:
           curl -fsSL https://get.pulumi.com | sh
           echo "$HOME/.pulumi/bin" >> $GITHUB_PATH
 
+      - name: Initialize Pulumi state directory
+        working-directory: packages/infra
+        run: mkdir -p state/.pulumi
+
       - name: Pulumi Preview & Apply
         working-directory: packages/infra
         run: pulumi up --stack production --yes
