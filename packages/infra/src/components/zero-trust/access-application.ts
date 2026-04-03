@@ -1,6 +1,7 @@
 import * as cloudflare from '@pulumi/cloudflare';
 
 import { accountId, appHostname, appOrigin, emailDomain } from '../../bridges/constants';
+import { Provider } from '../../bridges/provider';
 
 import { getAccessApplicationName, getPolicyName } from './utils';
 
@@ -9,9 +10,9 @@ import { getAccessApplicationName, getPolicyName } from './utils';
  * This sets up the application with a login page and authentication settings
  * including Cloudflare's One-Time Pin (OTP) as a login option.
  *
- * @returns The created Access Application, Policy, and Identity Provider resources.
+ * @returns The created Access Application resource.
  */
-export const getAccessApplication = (): [cloudflare.AccessApplication] => {
+export const getAccessApplication = (): [cloudflare.ZeroTrustAccessApplication] => {
   const name = getAccessApplicationName();
   const policyName = getPolicyName();
 
@@ -47,11 +48,11 @@ export const getAccessApplication = (): [cloudflare.AccessApplication] => {
           ],
         },
       ],
-      selfHostedDomains: [appHostname + '/*'],
       sessionDuration: '24h',
       type: 'self_hosted',
     },
     {
+      provider: Provider,
       protect: true,
     }
   );

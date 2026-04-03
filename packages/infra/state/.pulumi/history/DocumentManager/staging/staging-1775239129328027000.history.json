@@ -1,0 +1,50 @@
+{
+    "kind": "update",
+    "startTime": 1775239127,
+    "message": "feat(infra): import existing Cloudflare resources into Pulumi and fix CI workflows",
+    "environment": {
+        "exec.kind": "cli",
+        "git.author": "Kori Kristensen",
+        "git.author.email": "kori.kristensen@gmail.com",
+        "git.committer": "Kori Kristensen",
+        "git.committer.email": "kori.kristensen@gmail.com",
+        "git.dirty": "true",
+        "git.head": "5e33c6ff4b835288b5bbae9fa71c1130b342e1ed",
+        "git.headName": "refs/heads/feat/ci-workflow-and-docs",
+        "pulumi.arch": "arm64",
+        "pulumi.env.PULUMI_BACKEND_URL": "set",
+        "pulumi.env.PULUMI_CONFIG_PASSPHRASE": "set",
+        "pulumi.flag.stack": "set",
+        "pulumi.flag.yes": "true",
+        "pulumi.os": "darwin",
+        "pulumi.version": "v3.229.0",
+        "runtime.executable": "/opt/homebrew/bin/node",
+        "runtime.metadata.packagemanager": "npm",
+        "runtime.metadata.packagemanagerVersion": "10.9.7",
+        "runtime.name": "nodejs",
+        "runtime.version": "v22.22.2",
+        "stack.environments": "[]",
+        "updatePlan": "false",
+        "vcs.kind": "github.com",
+        "vcs.owner": "KseniiaChumachenko",
+        "vcs.repo": "documents-manager",
+        "vcs.root": "packages/infra"
+    },
+    "config": {
+        "DocumentManager:accountId": {
+            "secure": "v1:Psvud0rJsT60gv3n:liKutx+0gjkHr0pKQJriM6IocLy7JqRJVIBDh8/y6QkSJW5ru/wtIjxEtUdNPNfF"
+        },
+        "DocumentManager:domainZoneId": "aa6501d53bef0671a974feea0eb810f3",
+        "DocumentManager:emailDomain": "aeroclime.com",
+        "cloudflare:apiToken": {
+            "secure": "v1:AKbY5DxFUrW6Q4ZI:BNZ/btZSc/yU5iPhy47uJrRnmkALIQWbjjxleZWGtR7NJ1g+WSUO8gIKc/8uyYIF8IN+/sIRz63k/2lAfuSHfzz0I8Q4"
+        }
+    },
+    "version": 0,
+    "result": "succeeded",
+    "endTime": 1775239129,
+    "resourceChanges": {
+        "same": 8,
+        "update": 1
+    }
+}

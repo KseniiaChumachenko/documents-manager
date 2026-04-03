@@ -1,0 +1,43 @@
+{
+    "kind": "resource-import",
+    "startTime": 1775238981,
+    "message": "feat(infra): import existing Cloudflare resources into Pulumi and fix CI workflows",
+    "environment": {
+        "exec.kind": "cli",
+        "git.author": "Kori Kristensen",
+        "git.author.email": "kori.kristensen@gmail.com",
+        "git.committer": "Kori Kristensen",
+        "git.committer.email": "kori.kristensen@gmail.com",
+        "git.dirty": "false",
+        "git.head": "5e33c6ff4b835288b5bbae9fa71c1130b342e1ed",
+        "git.headName": "refs/heads/feat/ci-workflow-and-docs",
+        "pulumi.arch": "arm64",
+        "pulumi.env.PULUMI_BACKEND_URL": "set",
+        "pulumi.env.PULUMI_CONFIG_PASSPHRASE": "set",
+        "pulumi.os": "darwin",
+        "pulumi.version": "v3.229.0",
+        "stack.environments": "[]",
+        "updatePlan": "false",
+        "vcs.kind": "github.com",
+        "vcs.owner": "KseniiaChumachenko",
+        "vcs.repo": "documents-manager",
+        "vcs.root": "packages/infra"
+    },
+    "config": {
+        "DocumentManager:accountId": {
+            "secure": "v1:Psvud0rJsT60gv3n:liKutx+0gjkHr0pKQJriM6IocLy7JqRJVIBDh8/y6QkSJW5ru/wtIjxEtUdNPNfF"
+        },
+        "DocumentManager:domainZoneId": "aa6501d53bef0671a974feea0eb810f3",
+        "DocumentManager:emailDomain": "aeroclime.com",
+        "cloudflare:apiToken": {
+            "secure": "v1:AKbY5DxFUrW6Q4ZI:BNZ/btZSc/yU5iPhy47uJrRnmkALIQWbjjxleZWGtR7NJ1g+WSUO8gIKc/8uyYIF8IN+/sIRz63k/2lAfuSHfzz0I8Q4"
+        }
+    },
+    "version": 0,
+    "result": "succeeded",
+    "endTime": 1775238983,
+    "resourceChanges": {
+        "import": 1,
+        "same": 8
+    }
+}
