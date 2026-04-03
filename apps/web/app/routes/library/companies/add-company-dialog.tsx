@@ -44,9 +44,14 @@ export const AddCompanyDialog = ({
       await saveFetcher.submit({ ik: code, type, ...fopForm }, { action: '/library/save-company' });
     } else if (searchFetcher.data?.data) {
       const data = searchFetcher.data.data;
-      const params = isFop ? { ik: data.ik, type } : { ...data, type };
-
-      await saveFetcher.submit(params, { action: '/library/save-company' });
+      if (isFop) {
+        await saveFetcher.submit(
+          { ik: ('ik' in data ? data.ik : '') as string, type },
+          { action: '/library/save-company' }
+        );
+      } else {
+        await saveFetcher.submit({ ...data, type }, { action: '/library/save-company' });
+      }
     }
     await revalidator.revalidate();
   };

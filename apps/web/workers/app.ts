@@ -1,6 +1,7 @@
 import { drizzle, type DrizzleD1Database } from 'drizzle-orm/d1';
 import { createRequestHandler } from 'react-router';
 
+import { refreshStaleCompanies } from '../app/workers/company-refresh';
 import * as schema from '../database/schema';
 
 declare module 'react-router' {
@@ -31,5 +32,25 @@ export default {
       db,
       user,
     });
+  },
+
+  async scheduled(controller, env, ctx) {
+    const cron = controller.cron;
+    console.log(`[scheduled] Cron triggered: ${cron}`);
+
+    if (cron === '0 3 1 * *') {
+      ctx.waitUntil(
+        (async () => {
+          console.log('[company-refresh] Starting weekly refresh');
+          const govApiUrl = import.meta.env.VITE_GOV_API;
+          if (!govApiUrl) {
+            console.error('[company-refresh] VITE_GOV_API not configured');
+            return;
+          }
+          const result = await refreshStaleCompanies(env.DB, govApiUrl);
+          console.log('[company-refresh] Result:', JSON.stringify(result));
+        })()
+      );
+    }
   },
 } satisfies ExportedHandler<Env>;

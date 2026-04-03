@@ -308,6 +308,47 @@ test.describe('Library > Clients (/library/client)', () => {
     await dialog.getByRole('button', { name: 'Зберегти' }).click();
     await expect(page.getByRole('dialog')).not.toBeVisible({ timeout: 5000 });
   });
+
+  test('last_sync field is set when saving legal entity', async ({ page }) => {
+    const savedCompany = {
+      ...mockCompanyData,
+      id: 1,
+      entity_type: 'legal',
+      type: 'client',
+      last_sync: new Date().toISOString(),
+    };
+
+    await page.route('**/*.data*', async (route) => {
+      const url = route.request().url();
+      if (url.includes('search-company')) {
+        await route.fulfill({
+          status: 200,
+          contentType: 'text/x-script',
+          body: mockRoute({ data: mockCompanyData, error: null, entity_type: 'legal' }),
+        });
+      } else if (url.includes('save-company')) {
+        await route.fulfill({
+          status: 200,
+          contentType: 'text/x-script',
+          body: encodeTurboStream('routes/library/_api/save-company', {
+            data: [savedCompany],
+            error: null,
+          }),
+        });
+      } else {
+        await route.continue();
+      }
+    });
+
+    await page.getByRole('button', { name: 'Додати нового клієнта' }).click();
+    const dialog = page.getByRole('dialog');
+    await dialog.locator('input[name="code"]').fill('12345678');
+    await dialog.getByRole('button', { name: 'Пошук' }).click();
+    await expect(dialog.getByText('ТОВ Тестова Компанія')).toBeVisible({ timeout: 10000 });
+
+    await dialog.getByRole('button', { name: 'Зберегти' }).click();
+    await expect(page.getByRole('dialog')).not.toBeVisible({ timeout: 5000 });
+  });
 });
 
 test.describe('Library > Sources (/library/source)', () => {

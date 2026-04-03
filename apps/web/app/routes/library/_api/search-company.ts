@@ -1,8 +1,7 @@
 import { eq } from 'drizzle-orm';
-import { XMLParser } from 'fast-xml-parser';
-import { decode as windows1251decode } from 'windows-1251';
 
 import { company } from '~/database/schema';
+import { fetchFromAdmTools } from '~/lib/adm-tools';
 
 import type { Route } from '../../../../.react-router/types/app/routes/library/_api/+types/search-company';
 
@@ -26,30 +25,13 @@ export async function loader({ request, context }: Route.LoaderArgs) {
     return { data: null, error: null, entity_type: 'fop' };
   }
 
-  const url = `${import.meta.env.VITE_GOV_API}?egrpou=${code}`;
-  const res = await fetch(url, { method: 'GET' });
+  const data = await fetchFromAdmTools(code, import.meta.env.VITE_GOV_API);
 
-  if (!res.ok) {
-    return { data: null, error: res.statusText, entity_type: 'legal' };
+  if (!data) {
+    return { data: null, error: 'Компанію не знайдено', entity_type: 'legal' };
   }
 
-  const arrayBuffer = await res.arrayBuffer();
-  const uint8 = new Uint8Array(arrayBuffer);
-
-  const xmlText = windows1251decode(uint8);
-
-  const parser = new XMLParser({
-    allowBooleanAttributes: true,
-    attributeNamePrefix: '',
-    ignoreAttributes: false,
-  });
-  const result = parser.parse(xmlText);
-
-  if (result?.error) {
-    return { data: null, error: result.error, entity_type: 'legal' };
-  }
-
-  return { data: result.export.company, error: null, entity_type: 'legal' };
+  return { data, error: null, entity_type: 'legal' };
 }
 
 export type SearchCompanyLoader = typeof loader;
