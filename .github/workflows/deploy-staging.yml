@@ -1,8 +1,8 @@
 name: Deploy Staging
 
 on:
-  push:
-    branches: [staging]
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 
 env:
