@@ -4,8 +4,8 @@ const BUCKETS_LOCATION = 'EEUR';
 
 const apiToken = CF.requireSecret('apiToken');
 const accountId = Config.requireSecret('accountId');
-const emailDomain = Config.requireSecret('emailDomain');
-const domainZoneId = Config.requireSecret('domainZoneId');
+const emailDomain = Config.require('emailDomain');
+const domainZoneId = Config.require('domainZoneId');
 
 const WEB_BUCKET_DNS_ROUTE_PATH = env !== 'production' ? env : 'app';
 const appHostname = `${WEB_BUCKET_DNS_ROUTE_PATH}.${emailDomain}`;

@@ -15,6 +15,8 @@ jobs:
     environment: staging
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -29,10 +31,6 @@ jobs:
         run: |
           curl -fsSL https://get.pulumi.com | sh
           echo "$HOME/.pulumi/bin" >> $GITHUB_PATH
-
-      - name: Initialize Pulumi state directory
-        working-directory: packages/infra
-        run: mkdir -p state/.pulumi
 
       - name: Pulumi Preview & Apply
         working-directory: packages/infra
@@ -59,9 +57,9 @@ jobs:
           if [[ -n $(git status --porcelain state/) ]]; then
             git config user.name "github-actions[bot]"
             git config user.email "github-actions[bot]@users.noreply.github.com"
-            git add state/
-            git commit -m "chore: update Pulumi state [skip ci]"
-            git push
+            git add state/ Pulumi.staging.yaml
+            git commit -m "chore: update Pulumi staging state [skip ci]"
+            git push origin HEAD
           fi
 
       - name: Get Deployment URL
