@@ -57,6 +57,8 @@ jobs:
 
       - name: Commit Pulumi state
         if: always()
+        env:
+          HUSKY: 0
         run: |
           cd packages/infra
           if [[ -n $(git status --porcelain state/) ]]; then
