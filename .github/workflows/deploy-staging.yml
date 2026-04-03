@@ -41,13 +41,17 @@ jobs:
         env:
           PULUMI_BACKEND_URL: file://./state
 
+      - name: Generate types
+        working-directory: apps/web
+        run: npx react-router typegen
+
       - name: Build Worker
         working-directory: apps/web
         run: npm run build:staging
 
       - name: Deploy Worker
         working-directory: apps/web
-        run: npx wrangler deploy
+        run: npx wrangler deploy --env staging
 
       - name: Run Migrations
         working-directory: apps/web
