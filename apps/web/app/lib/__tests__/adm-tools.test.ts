@@ -1,4 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { encode as windows1251encode } from 'windows-1251';
 
 import { fetchFromAdmTools } from '../adm-tools';
 
@@ -48,8 +49,7 @@ describe('fetchFromAdmTools', () => {
         </company>
       </export>`;
 
-    const encoder = new TextEncoder();
-    const encoded = encoder.encode(validXml);
+    const encoded = new Uint8Array(windows1251encode(validXml));
 
     vi.mocked(fetch).mockResolvedValueOnce(new Response(encoded, { status: 200 }));
 

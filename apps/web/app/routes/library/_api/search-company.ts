@@ -25,7 +25,7 @@ export async function loader({ request, context }: Route.LoaderArgs) {
     return { data: null, error: null, entity_type: 'fop' };
   }
 
-  const data = await fetchFromAdmTools(code, import.meta.env.VITE_GOV_API);
+  const data = await fetchFromAdmTools(code, context.cloudflare.env.GOV_API);
 
   if (!data) {
     return { data: null, error: 'Компанію не знайдено', entity_type: 'legal' };

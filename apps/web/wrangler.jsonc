@@ -19,6 +19,9 @@
       "migrations_dir": "database/migrations"
     }
   ],
+  "vars": {
+    "GOV_API": "https://adm.tools/action/gov/api/"
+  },
   "env": {
     "staging": {
       "routes": [

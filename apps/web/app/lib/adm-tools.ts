@@ -28,6 +28,8 @@ export async function fetchFromAdmTools(
     allowBooleanAttributes: true,
     attributeNamePrefix: '',
     ignoreAttributes: false,
+    parseTagValue: false,
+    parseAttributeValue: false,
   });
 
   const result = parser.parse(xmlText);

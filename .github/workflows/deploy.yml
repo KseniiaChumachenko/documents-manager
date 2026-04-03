@@ -45,6 +45,7 @@ jobs:
               - 'packages/infra/**'
             app:
               - 'apps/web/app/**'
+              - 'apps/web/workers/**'
               - 'apps/web/components/**'
               - 'apps/web/lib/**'
               - 'apps/web/database/schema.ts'

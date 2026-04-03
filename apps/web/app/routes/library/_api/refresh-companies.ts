@@ -3,9 +3,9 @@ import type { ActionFunctionArgs } from 'react-router';
 import { refreshStaleCompanies } from '~/workers/company-refresh';
 
 export async function action({ context }: ActionFunctionArgs) {
-  const govApiUrl = import.meta.env.VITE_GOV_API;
+  const govApiUrl = context.cloudflare.env.GOV_API;
   if (!govApiUrl) {
-    return { data: null, error: 'VITE_GOV_API not configured' };
+    return { data: null, error: 'GOV_API binding not configured' };
   }
 
   const result = await refreshStaleCompanies(context.cloudflare.env.DB, govApiUrl);
