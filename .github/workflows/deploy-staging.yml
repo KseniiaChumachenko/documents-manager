@@ -32,9 +32,9 @@ jobs:
           stack-name: staging
           work-dir: packages/infra
 
-      - name: Pulumi Preview
+      - name: Pulumi Preview & Apply
         working-directory: packages/infra
-        run: pulumi preview --stack staging
+        run: pulumi up --stack staging --yes
         env:
           PULUMI_BACKEND_URL: file://./state
 

@@ -5,15 +5,11 @@ set -e
 echo "🔍 Running pre-commit checks..."
 
 echo ""
-echo "1️⃣ Linting..."
-npm run lint:fix
+echo "1️⃣ Linting & formatting staged files..."
+npx lint-staged
 
 echo ""
-echo "2️⃣ Checking formatting..."
-npm run format:write
-
-echo ""
-echo "3️⃣ Type checking..."
+echo "2️⃣ Type checking..."
 npm run typecheck
 
 echo ""
