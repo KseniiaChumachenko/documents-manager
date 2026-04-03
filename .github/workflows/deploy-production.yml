@@ -26,11 +26,9 @@ jobs:
         run: npm ci
 
       - name: Install Pulumi
-        uses: pulumi/actions@v6
-        with:
-          command: none
-          stack-name: production
-          work-dir: packages/infra
+        run: |
+          curl -fsSL https://get.pulumi.com | sh
+          echo "$HOME/.pulumi/bin" >> $GITHUB_PATH
 
       - name: Pulumi Preview & Apply
         working-directory: packages/infra
