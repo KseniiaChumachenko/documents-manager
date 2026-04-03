@@ -4,7 +4,7 @@
         "stack": "organization/DocumentManager/staging",
         "latest": {
             "manifest": {
-                "time": "2026-04-03T20:11:59.375257704Z",
+                "time": "2026-04-03T20:18:08.629681704Z",
                 "magic": "88d0da18f668d21177091127bf6af43a4706b834600c4edf2e942a3f566ca00e",
                 "version": "v3.229.0"
             },
@@ -23,7 +23,7 @@
                         "accessApplication": {
                             "accountId": {
                                 "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                                "ciphertext": "v1:1AZLbxKe+iV8FmOp:HTuVbRI9Ke3KR6F/JNZZdYp5+ErJl1MeHYcCyRpU1lfuU3yeOqG8VkD2ExNpuNmU9GY="
+                                "ciphertext": "v1:K5RsvqGi53pnuea9:Q2ABeHi2BasKKbwiZjPZQhJjbOSGL4gaU6LRIjKhx2MdgUg4EAVqdNs56iF7mo86/B8="
                             },
                             "appLauncherVisible": true,
                             "aud": "5f6a4c869c444d442ae07966ff4d4295459131739676d9ef996622c6d6790d0a",
@@ -70,7 +70,7 @@
                         "billBucket": {
                             "accountId": {
                                 "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                                "ciphertext": "v1:vH9/rikQh/SZLSp5:NMwKTOxJkOU8geC1O8oCnQF49MnZ/l5oSKeHGCNskXGBHNlRm6Ow7T5L4235i0RWzKY="
+                                "ciphertext": "v1:hkFYzU4a+3njjDDh:ywQgMb9rABeMP2VSyj9+9rSFIFYirDQpyo/jKaRRjbMz3/tgwGBX2N5twseEJqHVCRU="
                             },
                             "creationDate": "2025-07-16T18:10:21.988Z",
                             "id": "staging-bill",
@@ -84,7 +84,7 @@
                         "db": {
                             "accountId": {
                                 "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                                "ciphertext": "v1:kSIWb6+dwhG5JuWh:gOa/o6CxOUHDdy1SLxwt3SQ8JuXFHVPZect1dDoXOmvFd9/g6ZmaNYPt8WolYAVVOuc="
+                                "ciphertext": "v1:lFtP1jjtIRmJFOK1:cATQ/SjH3DkZG4SvbLRc4g9at0GgsARII59Dj7GlGPTC4u824XYZalSLcRUNV/tVrds="
                             },
                             "createdAt": "2025-07-16T18:24:04Z",
                             "fileSize": 69632,
@@ -101,7 +101,7 @@
                         "invoiceBucket": {
                             "accountId": {
                                 "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                                "ciphertext": "v1:ySQioex3d9ZUzcDS:ZvrYI8+oeBEpWMAPEs/9a8viN31DQ5/Lg/l0KcbhToy9mtyrgIpIGL96Dn9H9RPEyiM="
+                                "ciphertext": "v1:4Im3HE2anwzJoioB:9Ui2CXmyZVxKqfDRmroDdm4GAvuA75IxFoCFk19jrbfLTLebxTH4ETtMX/y2KRbVwm8="
                             },
                             "creationDate": "2025-07-16T18:10:22.389Z",
                             "id": "staging-invoice",
@@ -114,7 +114,7 @@
                         "poaBucket": {
                             "accountId": {
                                 "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                                "ciphertext": "v1:PU5J5/+hVc5oC6iM:JFgWuokha+ZLF+ba9odw1TG0BNIPsSP3e22njr/gJdKtif+kVdcYULkaKFFa/RJviKA="
+                                "ciphertext": "v1:UE1KigdZJyfjSYFX:wCZ9MdxDBif3F2jhsNYWX/swVQgmmQiaqmoFrsOOVISF6XCZrAg1/pWthmNvS0xGbag="
                             },
                             "creationDate": "2025-07-16T18:10:22.072Z",
                             "id": "staging-poa",
@@ -127,7 +127,7 @@
                         "templateBucket": {
                             "accountId": {
                                 "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                                "ciphertext": "v1:JPD0oUHN6+PHJp2+:zzzlA3d4DRtxNsuTt4pEq1qugZGVHC26O4gAHCr1WxZxukRmOY7m7997UgWwQfTJk3M="
+                                "ciphertext": "v1:Jo8uMoslgsrlpD1s:ECaH4eK6HJmr8TwpHwUkeTF+jhyfiI/KNA2f1vnzTqoddk1GxESnZ7Z6mEg78+6sQ2g="
                             },
                             "creationDate": "2025-07-16T18:10:22.029Z",
                             "id": "staging-template",
@@ -140,7 +140,7 @@
                         "webHostingBucket": {
                             "accountId": {
                                 "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                                "ciphertext": "v1:rDA2SyiEbVSSWE3I:u9sjwb1KmLJpw4cePKkOf6GaMsMDgG1pMCLKgW7Tk8/yhAbJGtTENatJa/3MDvn2q/E="
+                                "ciphertext": "v1:dfOJKBvHHcPjtMtV:6VVO5DlJ0iYnvnlVVYwL7asD1rFIl7hNbh0BGyzFPKx4dfnhrBOeJvGBGj5NJx/g+ZY="
                             },
                             "creationDate": "2025-07-15T11:28:41.820Z",
                             "id": "staging-web",
@@ -156,6 +156,29 @@
                     "sourcePosition": "project:///../../node_modules/@pulumi/runtime/stack.ts#37,19"
                 },
                 {
+                    "urn": "urn:pulumi:staging::DocumentManager::pulumi:providers:cloudflare::default_6_14_0",
+                    "custom": true,
+                    "id": "1588e795-c7e6-4622-9034-0ae55f4f3a69",
+                    "type": "pulumi:providers:cloudflare",
+                    "inputs": {
+                        "__internal": {},
+                        "apiToken": {
+                            "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                            "ciphertext": "v1:RvxUFwuBjj4OzLo7:YDbzPf9CzQy6eWEFdm/s6XUPG8lyRjIXCdN9NqlxhMSFI01ZUWdqN1RWLRxSdYTyuRidPcAwvBfU415RfJNuBYDST5xGSNI="
+                        },
+                        "version": "6.14.0"
+                    },
+                    "outputs": {
+                        "apiToken": {
+                            "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                            "ciphertext": "v1:lhb80ko/OJBoUY0U:QjcEnN+QJvpH4J+0ktUSReXL3bAX2EaY0YSLOs3TRtz8CrFGdXQsRtheFv0gNyN97oFFhPsJ0hYrWfxD2Ek1p4sSmceXzX8="
+                        },
+                        "version": "6.14.0"
+                    },
+                    "created": "2026-04-03T17:28:16.862915Z",
+                    "modified": "2026-04-03T17:28:16.862915Z"
+                },
+                {
                     "urn": "urn:pulumi:staging::DocumentManager::pulumi:providers:cloudflare::cloudflare",
                     "custom": true,
                     "id": "48a7e2be-6adf-426d-9dba-9da5676031c0",
@@ -164,14 +187,14 @@
                         "__internal": {},
                         "apiToken": {
                             "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                            "ciphertext": "v1:XHfwuSjqKL884tD6:l6WNSWynZBfQ/f423jO9oFn/UvNzPR3jDu0221G4LGwlrEZrnxKhw2IZMAmuFWv1t0s/ccy5blffFF2m6LShSZ4lpktzlmA="
+                            "ciphertext": "v1:iSruoBLQT1il2NnW:MNWnBSh8CZWnM/NGvAS5W5pkvUnhC58qHG/5jP81zI8acakWVamUXmrYR9lJ/zXKJnZzDF1O7X1f/Dxe4gvDecYyO2fvZ0A="
                         },
                         "version": "6.14.0"
                     },
                     "outputs": {
                         "apiToken": {
                             "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                            "ciphertext": "v1:OepQ7IUsbi6VcdXU:L4wDpcNCWV575h1zMLCWJGCDmTB4UqBDQkfAl0HMoSfqbTn3f7/CXo8zIPYtvOj+t4OW/sSqdbSSjYIoGAPZoup+zW6z0Vc="
+                            "ciphertext": "v1:mZhVvBqo5v1H13Ai:7eTRTu6FTb5RPTPOWpmCp1wZrDgPo+XaV54cszr3VCJlHnUjJWnn/8MUFX0lqyABOX3JkA1kiqTa90Hj+xqLIP3EilVQxIg="
                         },
                         "version": "6.14.0"
                     },
@@ -189,117 +212,63 @@
                     "sourcePosition": "project:///../../node_modules/@pulumi/provider.ts#74,9"
                 },
                 {
-                    "urn": "urn:pulumi:staging::DocumentManager::pulumi:providers:cloudflare::default_6_14_0",
+                    "urn": "urn:pulumi:staging::DocumentManager::cloudflare:index/d1Database:D1Database::staging-db",
                     "custom": true,
-                    "id": "1588e795-c7e6-4622-9034-0ae55f4f3a69",
-                    "type": "pulumi:providers:cloudflare",
-                    "inputs": {
-                        "__internal": {},
-                        "apiToken": {
-                            "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                            "ciphertext": "v1:mt/Sa08RyVAYgCtI:Sym6L9LEwrwOTkzLAM2uCDsSMtxVg28pthJIkGW3fVermjVaRMzgsbYgtbf2N+J34I7n6aDG/ZEeiO27U1RdhR8h2Re+ouE="
-                        },
-                        "version": "6.14.0"
-                    },
-                    "outputs": {
-                        "apiToken": {
-                            "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                            "ciphertext": "v1:ggqqC/NtAcKO+jm2:nQw4r7SiTZVi4hyB1pM3F6tQnKNkxbdRrmYNIxq3pPKHX/iuKqSHbE7B9ZIOJ3zXO0qv/mXXzOzGsDC4/0gep9pjLFcjlug="
-                        },
-                        "version": "6.14.0"
-                    },
-                    "created": "2026-04-03T17:28:16.862915Z",
-                    "modified": "2026-04-03T17:28:16.862915Z"
-                },
-                {
-                    "urn": "urn:pulumi:staging::DocumentManager::cloudflare:index/r2Bucket:R2Bucket::staging-invoice",
-                    "custom": true,
-                    "id": "staging-invoice",
-                    "type": "cloudflare:index/r2Bucket:R2Bucket",
+                    "id": "d63c46d8-807f-4ae2-a668-045b7e4e7d79",
+                    "type": "cloudflare:index/d1Database:D1Database",
                     "inputs": {
                         "accountId": {
                             "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                            "ciphertext": "v1:fX6s+QuF7dM2T+YP:Luhmessg+SjkX2O+kekI9bIM52RaYkoC0RstV7PjsQ0nAGyrfltCrninUjJAQbyIY34="
+                            "ciphertext": "v1:TWvUeQJ0yoFSPFH5:WkjuZVH/ptOTj/cNRzQ56SbxUrslfO3z6xTvT8cckqNdXL45lRhOr03ys5PUV1lvDZo="
                         },
-                        "jurisdiction": "default",
-                        "location": "EEUR",
-                        "name": "staging-invoice",
-                        "storageClass": "Standard"
+                        "name": "staging-db",
+                        "readReplication": {
+                            "mode": "disabled"
+                        }
                     },
                     "outputs": {
-                        "__meta": "{\"schema_version\":\"1\"}",
                         "__pulumi_raw_state_delta": {
-                            "obj": {}
+                            "obj": {
+                                "ps": {
+                                    "jurisdiction": {
+                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                        "ciphertext": "v1:RnrW1MFLcVhp0uTx:GFG7iSKJHbbmTBgqXlulZ3gVfRSKCGogkfHYqE9ckM4XpzoNuiNvew=="
+                                    },
+                                    "primaryLocationHint": {
+                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                        "ciphertext": "v1:ig2mkJhdv4U6o3uJ:temAdNQGPL+0cBXk9uVwilK8HL0zFP0LnwDJeUTlmh+hew/DUSYmqQ=="
+                                    },
+                                    "readReplication": {
+                                        "obj": {}
+                                    }
+                                }
+                            }
                         },
                         "accountId": {
                             "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                            "ciphertext": "v1:lnhfRr6oKYV7Q4yQ:1MpmLbrGlI6ArkPivbErwUkhE1yHJZYHNjavj1jwot5N6/8Ua+8ACuekA2cxHZisa48="
+                            "ciphertext": "v1:oMJ1oBglq0hUlpnt:lYoeZX/kvcaCOBNd8wztLePgTUL43oiY22WweCOlQRV7tF3ozliJwCYxnas4FURiM/8="
                         },
-                        "creationDate": "2025-07-16T18:10:22.389Z",
-                        "id": "staging-invoice",
-                        "jurisdiction": "default",
-                        "location": "EEUR",
-                        "name": "staging-invoice",
-                        "storageClass": "Standard"
+                        "createdAt": "2025-07-16T18:24:04Z",
+                        "fileSize": 69632,
+                        "id": "d63c46d8-807f-4ae2-a668-045b7e4e7d79",
+                        "name": "staging-db",
+                        "numTables": 6,
+                        "readReplication": {
+                            "mode": "disabled"
+                        },
+                        "uuid": "d63c46d8-807f-4ae2-a668-045b7e4e7d79",
+                        "version": "production"
                     },
                     "parent": "urn:pulumi:staging::DocumentManager::pulumi:pulumi:Stack::DocumentManager-staging",
-                    "protect": true,
-                    "provider": "urn:pulumi:staging::DocumentManager::pulumi:providers:cloudflare::cloudflare::48a7e2be-6adf-426d-9dba-9da5676031c0",
+                    "provider": "urn:pulumi:staging::DocumentManager::pulumi:providers:cloudflare::default_6_14_0::1588e795-c7e6-4622-9034-0ae55f4f3a69",
                     "propertyDependencies": {
                         "accountId": [],
-                        "jurisdiction": [],
-                        "location": [],
                         "name": [],
-                        "storageClass": []
+                        "readReplication": []
                     },
-                    "created": "2026-04-03T17:25:17.423415Z",
-                    "modified": "2026-04-03T17:25:17.423415Z",
-                    "sourcePosition": "project:///src/components/r2/buckets.ts#19,18"
-                },
-                {
-                    "urn": "urn:pulumi:staging::DocumentManager::cloudflare:index/r2Bucket:R2Bucket::staging-web",
-                    "custom": true,
-                    "id": "staging-web",
-                    "type": "cloudflare:index/r2Bucket:R2Bucket",
-                    "inputs": {
-                        "accountId": {
-                            "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                            "ciphertext": "v1:ynPJuCu33D+jAxoa:DXEsIdTu40lS9a105yvZuUY7rLW00Bdg9Yun95pMGETevL71lpPgIfOnbuyDoInde0M="
-                        },
-                        "jurisdiction": "default",
-                        "location": "EEUR",
-                        "name": "staging-web",
-                        "storageClass": "Standard"
-                    },
-                    "outputs": {
-                        "__meta": "{\"schema_version\":\"1\"}",
-                        "__pulumi_raw_state_delta": {
-                            "obj": {}
-                        },
-                        "accountId": {
-                            "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                            "ciphertext": "v1:b+G8jSigXHxq9lv0:6f/AjD/d/cjA4Bq1Lfk5aY1k4f7zWusC3SXQkpEd5fW4LBzQqVp4ihvKMc2630bFj8A="
-                        },
-                        "creationDate": "2025-07-15T11:28:41.820Z",
-                        "id": "staging-web",
-                        "jurisdiction": "default",
-                        "location": "EEUR",
-                        "name": "staging-web",
-                        "storageClass": "Standard"
-                    },
-                    "parent": "urn:pulumi:staging::DocumentManager::pulumi:pulumi:Stack::DocumentManager-staging",
-                    "protect": true,
-                    "provider": "urn:pulumi:staging::DocumentManager::pulumi:providers:cloudflare::cloudflare::48a7e2be-6adf-426d-9dba-9da5676031c0",
-                    "propertyDependencies": {
-                        "accountId": [],
-                        "jurisdiction": [],
-                        "location": [],
-                        "name": [],
-                        "storageClass": []
-                    },
-                    "created": "2026-04-03T17:23:12.579457Z",
-                    "modified": "2026-04-03T17:23:12.579457Z",
-                    "sourcePosition": "project:///src/components/r2/buckets.ts#19,18"
+                    "created": "2026-04-03T17:26:17.638325Z",
+                    "modified": "2026-04-03T17:26:17.638325Z",
+                    "sourcePosition": "project:///src/components/db/index.ts#9,3"
                 },
                 {
                     "urn": "urn:pulumi:staging::DocumentManager::cloudflare:index/r2Bucket:R2Bucket::staging-template",
@@ -309,7 +278,7 @@
                     "inputs": {
                         "accountId": {
                             "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                            "ciphertext": "v1:UHKeGaiorzkv2aTa:Mvh53KQE+DP2oS/AtC7iSnFQNtMLx/BLal3EqGsKKO/8N6117n3nfHWFNJI3CzyMhyA="
+                            "ciphertext": "v1:P0EGEspw8WnTLsry:HJ7z/6zanso0YmxeuWmVFO2h/yoVYd6Bp9GUZm3cTqLJ44PPusUjX0N/qoUGa0CVLQg="
                         },
                         "jurisdiction": "default",
                         "location": "EEUR",
@@ -323,7 +292,7 @@
                         },
                         "accountId": {
                             "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                            "ciphertext": "v1:RSd/LAu9+ah5nl4F:XICpPDL9XeLsyJBnb8LLTD3y1CRMrY0hd6FrSL9lLXg8PnkDJ3j6zZpqWgDmfwl7hHU="
+                            "ciphertext": "v1:MnzjT+uMtr1Q/yP+:K5pA0RE5QGvJeoirRi48ZnmovMvT1Zg11RWocLhGVhw/05sUrfyq4kCktgfsXLp/iLU="
                         },
                         "creationDate": "2025-07-16T18:10:22.029Z",
                         "id": "staging-template",
@@ -347,6 +316,51 @@
                     "sourcePosition": "project:///src/components/r2/buckets.ts#19,18"
                 },
                 {
+                    "urn": "urn:pulumi:staging::DocumentManager::cloudflare:index/r2Bucket:R2Bucket::staging-invoice",
+                    "custom": true,
+                    "id": "staging-invoice",
+                    "type": "cloudflare:index/r2Bucket:R2Bucket",
+                    "inputs": {
+                        "accountId": {
+                            "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                            "ciphertext": "v1:XRHvf9XhJrb4Q/9S:H04YJZD/sJyV6pPfpn0TQ34eTqtOt3BUGzbTK2PlA1zfdTjbO3/2UXfQ7iv0Dhbrj6w="
+                        },
+                        "jurisdiction": "default",
+                        "location": "EEUR",
+                        "name": "staging-invoice",
+                        "storageClass": "Standard"
+                    },
+                    "outputs": {
+                        "__meta": "{\"schema_version\":\"1\"}",
+                        "__pulumi_raw_state_delta": {
+                            "obj": {}
+                        },
+                        "accountId": {
+                            "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                            "ciphertext": "v1:fHZPJp+5hIFBAy36:HvfKilNtjdrY0EvkAqGkxL2pMrvop9zl2bq0/jz670X83ajDd/xBXNxUu9EU0zGCdrA="
+                        },
+                        "creationDate": "2025-07-16T18:10:22.389Z",
+                        "id": "staging-invoice",
+                        "jurisdiction": "default",
+                        "location": "EEUR",
+                        "name": "staging-invoice",
+                        "storageClass": "Standard"
+                    },
+                    "parent": "urn:pulumi:staging::DocumentManager::pulumi:pulumi:Stack::DocumentManager-staging",
+                    "protect": true,
+                    "provider": "urn:pulumi:staging::DocumentManager::pulumi:providers:cloudflare::cloudflare::48a7e2be-6adf-426d-9dba-9da5676031c0",
+                    "propertyDependencies": {
+                        "accountId": [],
+                        "jurisdiction": [],
+                        "location": [],
+                        "name": [],
+                        "storageClass": []
+                    },
+                    "created": "2026-04-03T17:25:17.423415Z",
+                    "modified": "2026-04-03T17:25:17.423415Z",
+                    "sourcePosition": "project:///src/components/r2/buckets.ts#19,18"
+                },
+                {
                     "urn": "urn:pulumi:staging::DocumentManager::cloudflare:index/zeroTrustAccessApplication:ZeroTrustAccessApplication::staging-document-manager-app",
                     "custom": true,
                     "id": "5a4e5d08-ffd8-4657-99f8-cfa93c80f8a8",
@@ -354,7 +368,7 @@
                     "inputs": {
                         "accountId": {
                             "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                            "ciphertext": "v1:nfV+EkZaj9Yi9I94:jZlG/DoPZsJeOaek8nOt6/uYRTZLVsKkKr9gY9ZhCUlbOVQ5zWKBoBwnRWA/pJTQKoA="
+                            "ciphertext": "v1:cu1nsdw8MdBVF6+3:lxcYLM+/sC1pML6qMqSrVZiB/0QWGReN+66z6XaDh1HghT0g9gD3IgOAd5P4L/GGrH8="
                         },
                         "appLauncherVisible": true,
                         "corsHeaders": {
@@ -397,46 +411,46 @@
                                 "ps": {
                                     "allowAuthenticateViaWarp": {
                                         "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                                        "ciphertext": "v1:+w1DFzY0ppOTuTVu:aHNrpFeyxssqgkDXX/1R+bWfb8NyVeoc739zeiYckKP5LPjr9U5Tvg=="
+                                        "ciphertext": "v1:Gfr3HfTN7d/TPwNl:tEDeG80DUQ5vlk3SIw55bPl9uGR0QIuy/wD9v8AY5JWMq8RTmN3FgQ=="
                                     },
                                     "allowIframe": {
                                         "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                                        "ciphertext": "v1:WarE2WOX/RWOxqNb:gZDt8oO4FvdeJQAtm5gNwOzeaLfI6N1uvlUYie5dILVFPbzc4MV4+Q=="
+                                        "ciphertext": "v1:bpy0sUXDfRdmpDT7:OSMNapjTCEOrQel0H/nD3ropG0KbDIGA1DK6VbG3f5W8sE5IO7LWTg=="
                                     },
                                     "allowedIdps": {
                                         "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                                        "ciphertext": "v1:OxZaA9D0Sxo8DSYg:KZiu9BYrRn/Vph2m7XWIwQd0KAq14rB0MJ+5G84NyyZBEoTc2jum8w=="
+                                        "ciphertext": "v1:T5AI8cSiu8Bbeabl:mLf2HkBMeJtEZtxNM1BYJ7aGSpsfgIbfQPPpgOEUbLU4F1vW+Y6pPw=="
                                     },
                                     "appLauncherLogoUrl": {
                                         "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                                        "ciphertext": "v1:bESnkgxOw9Y9DKm5:erXSTJnk89kpO1GwwsvbZYImEmISRfeqO2pz+utQ56ukyLTl7MNkiw=="
+                                        "ciphertext": "v1:gz7aN6yb5GRYaW/M:qNY0Q8dsuBEV/pmTqXG2JomOMAQ3+ofmPzZ3ZD2UFhBzR8wc0u8tAw=="
                                     },
                                     "autoRedirectToIdentity": {
                                         "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                                        "ciphertext": "v1:aO5IIVq/aYbOv/7k:QbypdByrliRfK3jxuCAL7DQ4zEwghlwhcmUaSkDTBL5I/sbgaVr0TA=="
+                                        "ciphertext": "v1:IQRg/mQOc+CwYtiU:MqbofnckOfPPgJa3QLIPgIW2k1zLeNHQfSuFBGfytQ54BnlkAZ7ZNQ=="
                                     },
                                     "bgColor": {
                                         "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                                        "ciphertext": "v1:cLj9A1VlFqAo9GLq:s0AZ4Q068vrrL5HkUroCgrlivLDxhbRdUerpN6suNOZhdDNBZlcI0A=="
+                                        "ciphertext": "v1:Ro+7rntEwcgz/dfS:uR65L4SkkZs2fw05hq5s482rpkkyi8gQ5u/pckMW6tlpa2UGPuU0yA=="
                                     },
                                     "corsHeaders": {
                                         "obj": {
                                             "ps": {
                                                 "allowAllOrigins": {
                                                     "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                                                    "ciphertext": "v1:RCJinvI1NJuH6l3Q:IOmxtKQ82GuQZBIxUl5oE8MyV7s88RNwStuvcaUBPiid1mGeuJaxwQ=="
+                                                    "ciphertext": "v1:r5uY6g58PEGSH6er:KKwxA6d0ZJ4TZvBZoB9n85XHLWSxNAZyMRxILxSV6buz90FS5efLvA=="
                                                 },
                                                 "allowCredentials": {
                                                     "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                                                    "ciphertext": "v1:h/43FFZIowILjbfQ:0QeYJwCUgLcoyAGUmlzQrB+INAi2/401YmJAqLddI7LQUhb3Rm0tWg=="
+                                                    "ciphertext": "v1:+H2xJTZSeMy62Ndf:e92ZAk5H7pWK3mqQC1CPYN4ieMAlK84jsr6cXaKnSfGxhCN1pAYwOA=="
                                                 },
                                                 "allowedHeaders": {
                                                     "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                                                    "ciphertext": "v1:5H7cgmNe0u0PrFx2:q2M5pJMUmDdvEZnlmWZ0Qqv6sVqS++ajTEsqRDnVAFQDC54RmL81cA=="
+                                                    "ciphertext": "v1:F1l/bNLR/4FX4rEC:bLSla2vfuEJH44RqxR0ou66wF+YllIdK1n7spKSUk3WI7DqI6Kin+A=="
                                                 },
                                                 "allowedMethods": {
                                                     "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                                                    "ciphertext": "v1:yWzI8Z6LzSY0Ijo2:QKdrhyeI8iLzCFC2JiCPLDVBGRLYDpXReDRmdmu522gvBSMsecLk+w=="
+                                                    "ciphertext": "v1:yOZba3FYxzUmwBz5:qzk6szoNAKIaFumN4bIU6eX/DY5WfGy2OkUerbnxevZ79GmBhT7xzw=="
                                                 },
                                                 "allowedOrigins": {
                                                     "arr": {}
@@ -446,19 +460,19 @@
                                     },
                                     "customDenyMessage": {
                                         "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                                        "ciphertext": "v1:Hz/fsF/HZWKn9J9d:GnzGMF7to7aJC2PbcVQs9VlC1RaO5/ttl94Fuw/ElekhCwxmdx03SA=="
+                                        "ciphertext": "v1:1LRgriPs4yJYIUp5:AjRSVMA0+4yYOFbwKSo25TKYS3hPgaX6/1QPO+C02RAy3bgbscNg/w=="
                                     },
                                     "customDenyUrl": {
                                         "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                                        "ciphertext": "v1:NT8ZFko63FMueLpW:QW59B2qzUD6DTrtL93ErwQqcpRq7+PAl/ImETWg4UOjOE+Ga6Nd/Nw=="
+                                        "ciphertext": "v1:y/EBl/eoPcGgA8Ia:jb7CSouwnykg3t6xlDqXZLlIy4xb0BVqEnFz1SdTLpou8dBszQDDWw=="
                                     },
                                     "customNonIdentityDenyUrl": {
                                         "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                                        "ciphertext": "v1:Vi43bBzy8Xq3seNV:/WnNbcguFRyIFUmGVO5RW4v9L13cpQ5iZDdtr5eSmMZCgOlmcYHaMw=="
+                                        "ciphertext": "v1:jIsNJJd8KLitJAB3:+seRjjgmwo8DkVHvyyP+pKE2RUwllHM01eSgavdZyjc7tBq5aLFtfA=="
                                     },
                                     "customPages": {
                                         "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                                        "ciphertext": "v1:zbaaBj90HQ0N5qyk:wlilAsp7wnHtQsURRqZs2Y+fXcPshBNX8GdxIY4H+UlM+M5ASMi+Uw=="
+                                        "ciphertext": "v1:8ChIGfM78JhpmaQA:DzuvdNJmRp3hJOCCxg6yJR7eaG6m2QQTVCCKNbfaiPh8Blv9j/HFAg=="
                                     },
                                     "destinations": {
                                         "arr": {
@@ -468,27 +482,27 @@
                                                         "ps": {
                                                             "cidr": {
                                                                 "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                                                                "ciphertext": "v1:9zNsG/mbE74UzFMT:QrsI+95yBXQanLKasggdt7tGND7XCrWzenEw8z/ZLMw68prvMpbKLg=="
+                                                                "ciphertext": "v1:ScqgfnUACyaRH5K7:9rwy4C6tJ5VwvR1XlqVakSu/L+YTSetrgVN/EofqN2vzrZm9+AUuCA=="
                                                             },
                                                             "hostname": {
                                                                 "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                                                                "ciphertext": "v1:h9UdF01Jb1MUhbtn:JewJvT5l81XAoOFDKEmUV/JfPMZyvyEt34osi7+o30UC3tcEkh2Nyg=="
+                                                                "ciphertext": "v1:xofsDxxLgt/NTyoL:e4rk3LlUMDFL4qC25N2shLOfK+i29I0wYaGM+ypIibJlJcaZO5OaOQ=="
                                                             },
                                                             "l4Protocol": {
                                                                 "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                                                                "ciphertext": "v1:jr91sg6mxdLXrMd1:layUaExZkwj/OlBOrMqLezHvYI53pOuYo9BgYBbX7K1MFobQik9EoQ=="
+                                                                "ciphertext": "v1:LH8OIWgPGt+7QVRs:GT3pzIho4VAZEyA0ILyN4mNhli016MGxYAGHdHVuDpDNgw4dijRmLg=="
                                                             },
                                                             "mcpServerId": {
                                                                 "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                                                                "ciphertext": "v1:F5F+/QLJfatcesRf:nYRI5d1nEThSmmuO1z1zMp6PEgwMxhuVhGkIyx7dOJpbtih83MhkuQ=="
+                                                                "ciphertext": "v1:n6t0GGFV+ro4gl2a:r+HYCTuHoSKlV9syL2L2spualW81StPkAjMKrbHkBJLJKRNQdzPMeg=="
                                                             },
                                                             "portRange": {
                                                                 "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                                                                "ciphertext": "v1:MH/x/CUY+wVHZnSW:kp4lqJEigs3Fde2IJmOsUOboBZig5YYvshOn/yM/VbzQsGA1FYIqdw=="
+                                                                "ciphertext": "v1:tIVsQJLSJIX1G9Ac:ziCWJGh1TatmLw/X89mQRH24DaF+aOMtqWKGasA87Y45m5H2GlbNLA=="
                                                             },
                                                             "vnetId": {
                                                                 "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                                                                "ciphertext": "v1:dUy3a+h35dV42QgA:8diDKSzeUlKfHEncma/9woncuO3+J9NS0NUBQBbEsm+jZHmyB9giUw=="
+                                                                "ciphertext": "v1:TTaaUsH8ciDVFy/v:xmmrv4hUfsPijWmYEWftJ5eCrEBBW3LW7ULcJ6on6mAamPkR1rIJzg=="
                                                             }
                                                         }
                                                     }
@@ -498,31 +512,31 @@
                                     },
                                     "enableBindingCookie": {
                                         "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                                        "ciphertext": "v1:J8dNMqvaTVIPC1Y+:BDEenFVVdm6G+TAn+nk2LkaYMJxY5t9WSKT+6wZb3dKVFknjihbg3g=="
+                                        "ciphertext": "v1:HeyEBSVMTXwbCOqU:k9T8R4LOPRIyXaxfzLxv52jjc/OnIGI/eDPgtLf0mnY2zdh4fm2KXA=="
                                     },
                                     "footerLinks": {
                                         "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                                        "ciphertext": "v1:nkFgcA4satGxvYxQ:/Lb/TZNlz0Qpfyg2s7WlvLKx2C7X2ShHYEFpNysNfNVNzv3rZY3gzg=="
+                                        "ciphertext": "v1:8vQa1/StwOQIONsV:DViasTxnWbxe1TgyHwy0f6uRIznVscZiNVastDkGGP/gJ4ez/eTY2A=="
                                     },
                                     "headerBgColor": {
                                         "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                                        "ciphertext": "v1:yt42WN7mEuRl+Cvl:9+b8bf3rHsKSKWXEAKEzxS7Lj8UGLkpORPaeEFgkT56ZrY5NAH+XxA=="
+                                        "ciphertext": "v1:4Mp8xV9+vDMT427d:GY8ykI/DVcz+pjhw2uA83ysoIy+aeHx30HvbumyZW/Nx/w0gAAgLzg=="
                                     },
                                     "landingPageDesign": {
                                         "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                                        "ciphertext": "v1:KZha+NM5x9mY3iex:RsGQ4g+goH8ekXYIUX5s28X/MBGw9YgOg86dNhz32L08FmqWqeoVAw=="
+                                        "ciphertext": "v1:Wkkru5dPTTAwmgg+:m20uUPgg4JWrzBZeJEUNTZ5P9S6Vj1AK+iOhN30YaGY4LRqpHur0sg=="
                                     },
                                     "logoUrl": {
                                         "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                                        "ciphertext": "v1:WH1c63tUjxCqXt64:ewLhmZFlBow78AcPV7mDsPg7gsY5gc11Hx8LCqBunXl8UWdfDVF5Ag=="
+                                        "ciphertext": "v1:eTUB26TKmfgk4bZ8:5ScEbBknHAQuUdd8AMlNdiPxFndGMvtd8p/uxYfAzjaYKqL40xSw3A=="
                                     },
                                     "optionsPreflightBypass": {
                                         "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                                        "ciphertext": "v1:76A8og9Z40fBSPQO:W5yezZoL8qmiCtk/P8hOctxk8bRRjvFKPgB4Tsg1KtXQd0AQdmdYNg=="
+                                        "ciphertext": "v1:vr6bxWubgDGbUeml:gFaxJN4UwqQPEbljU9HSP3mVm2UZWa+au7OVLbt/KrMWCwwjmOCcEA=="
                                     },
                                     "pathCookieAttribute": {
                                         "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                                        "ciphertext": "v1:Edjm7+F3WVA+w16h:26fG4XJcJt8kPzkfyXnO5uFXNWbw//m08gPefLS6mW8M7woj2LpyRQ=="
+                                        "ciphertext": "v1:p7e4+B9P9lq5x6Ke:LdpFwirGFrpWCSHHONRJ5Dy4trcmwhBlKi5A3FAc08h3rHeYANDL5A=="
                                     },
                                     "policies": {
                                         "arr": {
@@ -532,15 +546,15 @@
                                                         "ps": {
                                                             "connectionRules": {
                                                                 "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                                                                "ciphertext": "v1:3uv0qt94m56zkHFE:z52pxxwEDzz8CgyuZKuuV4BfL44WjNlwxqTqh+AFAJpAFmr2qBOYMA=="
+                                                                "ciphertext": "v1:oKfOnGICVmBKYb1b:ZBbSjfOtBLbLY1GuJWovzQHQT9qyvSHNP/m8yS92Fa+LBql5yiCpDQ=="
                                                             },
                                                             "excludes": {
                                                                 "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                                                                "ciphertext": "v1:Vrb/Z7ucKbUmzsga:R37nsuCF6qFUrFyR6pejjQ8jqfYDRVYoHziwNknpUBNqcOjaE8aecg=="
+                                                                "ciphertext": "v1:qmNeaHAHdI7mpGgL:eK+DlOK2kBXmLxOR+AMz4xrj6HTsPVJgXbfDfTdv4cwcbfEZ7xijaQ=="
                                                             },
                                                             "id": {
                                                                 "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                                                                "ciphertext": "v1:coMUulBdNqo2T6FY:C049po7mZ64g4OC48pNaNDkLg32xhSw8i0erI7zVABIpZPTjzn+vQg=="
+                                                                "ciphertext": "v1:vYkqM+haNBUSKvdP:wquktG29bRN5AB9v7gWnpJDNFPhcEjF9iMvYUY3/eTPXC6MJ14hOrA=="
                                                             },
                                                             "includes": {
                                                                 "arr": {
@@ -550,98 +564,98 @@
                                                                                 "ps": {
                                                                                     "anyValidServiceToken": {
                                                                                         "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                                                                                        "ciphertext": "v1:64izwQ01GMHbnaga:ajbwDADZvWVLlddwVcoXxjB0PKC+D+VPJmgx1yxGERX594MjXBbs6Q=="
+                                                                                        "ciphertext": "v1:XMkR7keSKs5qGqkC:vjg4EnOUYbDBk/n1qPdA/9xGXQsN2rrWSdTOw8LINbrY6VwvNv+8jg=="
                                                                                     },
                                                                                     "authContext": {
                                                                                         "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                                                                                        "ciphertext": "v1:UAmCAQl4lOAYhdQd:nUEHoLEteWsYw1W8aSyTexonELgjTn9at840pf1G9E0eFn3L6tHpuA=="
+                                                                                        "ciphertext": "v1:MgVFZdzCQSMdR+03:dJSHRvx22Y2bkARUU+VGn6E/4F3WFMCqKxDRuJhkYdvuC6wPFEcGsA=="
                                                                                     },
                                                                                     "authMethod": {
                                                                                         "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                                                                                        "ciphertext": "v1:0jDdVw4+viuuMXCh:shRe76HnoRCOG5CGTK0JLS1YqpOSjWxDbllsJT7GftRTgX5QHgXxtA=="
+                                                                                        "ciphertext": "v1:oQ+yvbU3pIY6JxNd:m4w9kfjIkaKB4kSi5lTo/QDHLMYoqWjXINp/n9FoodRZ2iRJR/y/HA=="
                                                                                     },
                                                                                     "azureAd": {
                                                                                         "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                                                                                        "ciphertext": "v1:toxfv+FLdW6Z03HJ:BRIPOSHYw/9aSsCCetpOFGvdXCnkN4jOQ8NPRfFNXF1gt/9p0GTSFw=="
+                                                                                        "ciphertext": "v1:0Fh1xy5zhAwKvYoS:VoRGygWDUzfZdZv2Mruj90+E9D6+mts0z9JblM9WCxTqVytcf9OAgQ=="
                                                                                     },
                                                                                     "certificate": {
                                                                                         "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                                                                                        "ciphertext": "v1:tMW7TUIWvb1UjZ9u:oGqFH94UJ4wbSaJX2SVlRBLnxdRlOPIytkB0+CZrrOil4u9ZOF7byg=="
+                                                                                        "ciphertext": "v1:yCkURnK+vtkDEiS6:oQtGJAWcpsYvj5Ts0EE2TV1Te7efrl73bonr5yTeBGoIpH/K2m5bBQ=="
                                                                                     },
                                                                                     "commonName": {
                                                                                         "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                                                                                        "ciphertext": "v1:Dr3YccIKj12O8IMQ:6OtchvO+ajULhTxPoMWiqOr8ntPIFHs8+SXEwVCh2deMO6BmDlRUnQ=="
+                                                                                        "ciphertext": "v1:crWkGl7kRSVX98kN:Ob5/bbfcvigGpXPtayAfSZpth8RqvNjytEgQzbXJzV2oM0H8ToahGA=="
                                                                                     },
                                                                                     "devicePosture": {
                                                                                         "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                                                                                        "ciphertext": "v1:YR7jgPPF7BPDic1y:TA/6Wye/qKEo65S7fJO59r3jtwvyEEsneDSx5N0KR0OlodACN4Z5bA=="
+                                                                                        "ciphertext": "v1:GYByR/TZIt8/YUz6:vbd6SS+zVEvwVFdnBLKMsT495HLjDTqHpcWjS0Ml9QZx8S6lh3tMXQ=="
                                                                                     },
                                                                                     "email": {
                                                                                         "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                                                                                        "ciphertext": "v1:2uIwoxx480uS54lP:YjN9HQYizWBKtGn8NJ69kyAzB8PRpATdd22tqJoGtXuqrgXj3kPyxg=="
+                                                                                        "ciphertext": "v1:jtqUzy442Y79+ZBh:/3q+haplXUso7ZfceZc8mOsdJMQmn/pGOTfcgPYzF9zeWLCX9AX2FA=="
                                                                                     },
                                                                                     "emailDomain": {
                                                                                         "obj": {}
                                                                                     },
                                                                                     "emailList": {
                                                                                         "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                                                                                        "ciphertext": "v1:E/KABPjVfO6117V/:6vy4rIGqt5Rehcanuu8W6eXVbffeZWuWLvZzQIXlUFDxnLl6UFQNOg=="
+                                                                                        "ciphertext": "v1:ziDFwqXoI4pnLltp:F5U5RCuPMq1SRppRx2KfzluYXa9ZsthPZIahh82/qZ+1JuqymnjdOw=="
                                                                                     },
                                                                                     "everyone": {
                                                                                         "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                                                                                        "ciphertext": "v1:olHbqAPeG0TsUjlI:y6uf7DBXCKJ7gkrhGOPTcoLR28Gzyp/r5HrplE2eViQIka2m/dhsXQ=="
+                                                                                        "ciphertext": "v1:rBTeBxy+4TO9Bvj2:+AmLtw0upqMLgk5ZaLCc8Hy17hGwzK1mwKR45P3iSCuUyWkNHX/6iA=="
                                                                                     },
                                                                                     "externalEvaluation": {
                                                                                         "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                                                                                        "ciphertext": "v1:qzlPzGYWrvpznYOS:/E6H7qBLHf8Xtr5/HvDJpbD98DbzTPyJsfT+XYEWLRmrAcUH8ZQ2CQ=="
+                                                                                        "ciphertext": "v1:5vUOcD46LcsrVnkn:cmL27uFYtM/+bDPUh5g2lDYIaJvetstzTtuovtfAOoSmkXrOyJWO/A=="
                                                                                     },
                                                                                     "geo": {
                                                                                         "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                                                                                        "ciphertext": "v1:0X2a0FehcMMhszkr:G1/Zrnl+e3WFqToidMyInaGzsl/LpEucWnEGqmdrpZKrvf1DZwV9vQ=="
+                                                                                        "ciphertext": "v1:fBxkqVlLWFf22Rmm:2mz0mZp+k0MssWskloodivcLPHhmYMqknQmd+beB4nmT2hSb1TN2Qw=="
                                                                                     },
                                                                                     "githubOrganization": {
                                                                                         "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                                                                                        "ciphertext": "v1:95dr0cfhfYWimiWZ:wbPgjLaXw3n025Pa6UiYoSxafk2lHXJ10RIwyUQh7geXVae+6C/phg=="
+                                                                                        "ciphertext": "v1:V3I72ww9FygQe++B:lGNFzcNpE4UhykuMtRTyjFlZvW0JfgASFu5VXOemLR2Ya5ocqBXvzA=="
                                                                                     },
                                                                                     "group": {
                                                                                         "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                                                                                        "ciphertext": "v1:Jtxx/ChvJKNtfox6:WvaTXWpxWAEKuOqChohUdC6VojZr5c0xmqkpTDGWA1d9dPg1QTGJsg=="
+                                                                                        "ciphertext": "v1:zRt5+ljqP8zZm7ve:oJn2b4tQpwUHlQWMZoS673BtjFp5SpkU74hO1ZOvo6Jiioo/LvyU+Q=="
                                                                                     },
                                                                                     "gsuite": {
                                                                                         "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                                                                                        "ciphertext": "v1:Ybr95WszwSGtp+bW:GvN3dFcYIY1gjqw+JsiyHbYXi7D47ITyFXcwaw+mNSj4liTywtYhqg=="
+                                                                                        "ciphertext": "v1:oOfVRpHiOLMfG2UG:+Gk/iXPNSGHK5A/HFCZtM0TUEWtboqKcGsXe+fzvMLu8jjuMcS5qiA=="
                                                                                     },
                                                                                     "ip": {
                                                                                         "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                                                                                        "ciphertext": "v1:CP3sWpMyo83+5rCq:oMqhFw9PSJaRp5oH44gwKCudrhdc3MoXK5U4SVMKBoUxp6LmkmJEiQ=="
+                                                                                        "ciphertext": "v1:Kzg3CPkBuVJvs8wI:Tdw3DCYd1yOIrwvKeQfloz60xUmLHmRe7ugwaps23CGlSiPs8n5zEQ=="
                                                                                     },
                                                                                     "ipList": {
                                                                                         "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                                                                                        "ciphertext": "v1:lqyvnm6zA006puta:gPJG+dE68z0e2ZHgNiyUthLp/gKP52l6YvSK11gchbYjELcjdcvMHA=="
+                                                                                        "ciphertext": "v1:4q0NkHA/E/UTXp3V:cSjmZblk+r4S/Ysr+iKLxmXmAPQ44KhaaN/WZ5MYX/q4h/vsHl8vIA=="
                                                                                     },
                                                                                     "linkedAppToken": {
                                                                                         "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                                                                                        "ciphertext": "v1:onjxWUqM6uLqLbnN:1XMRfAUVi33dSoG55LVsAucVDJ4BKdAD2Ett0llFIM/D0xvhwAoLww=="
+                                                                                        "ciphertext": "v1:B/z1GHvG9G0+5oZM:CHp6MbXFokGjvqhRWCu6l1ZZ4FG2OW6uqpBdb7JRSnsr3PKuearphw=="
                                                                                     },
                                                                                     "loginMethod": {
                                                                                         "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                                                                                        "ciphertext": "v1:eC1zrhPrba2eqaxk:sfheikgR+pQ69aFFUYoEdTJORGWMo9lbAmE1AdlMkSTb5OyDgpXBjQ=="
+                                                                                        "ciphertext": "v1:3tE0NWvK+8CzhiTf:ShX/ilR5FCxUDhAajr55gm7ZhuH7z7ECxLYNKzMskxkezpyw6/GlCQ=="
                                                                                     },
                                                                                     "oidc": {
                                                                                         "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                                                                                        "ciphertext": "v1:pPgYDOMwRmhmzgCy:7+lR8Mi0yPpUrrbmGvorJXfYSRn2m7gIt5LbBx5zhITzEA4r1hVtZw=="
+                                                                                        "ciphertext": "v1:gv/K3vigMIt6Jltq:sLkMdMJjRvcDyF44dIM938rbIcv3j8f5cSPbXKySQo06fyRMxRdjkg=="
                                                                                     },
                                                                                     "okta": {
                                                                                         "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                                                                                        "ciphertext": "v1:Vbdf/n9kOUVUajkz:obMN1gxBci7cdy6T7bJ01rfjnCXcwq+yAk094BVl/9dFSw3yrowK3g=="
+                                                                                        "ciphertext": "v1:/HV0Ebs7SmTRMrvA:B4pBSOh8SPzjphAux/78ab/vwKxchHwquhyv0cFpnGhp8u7qvFzq2Q=="
                                                                                     },
                                                                                     "saml": {
                                                                                         "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                                                                                        "ciphertext": "v1:MGwR2cxGSTYAxHqz:mDzPOUl8RuGcq/TRye/4caf/E7vSXXfqno/Hq0T9DDDHwFFsRApUHQ=="
+                                                                                        "ciphertext": "v1:+e0QupOU+/UbyYpR:DE/oWPvGzbEUba8amGhn+3fA7kFtFwuxBCseqJ62fG/aAICWIHSzow=="
                                                                                     },
                                                                                     "serviceToken": {
                                                                                         "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                                                                                        "ciphertext": "v1:DKOcnorOUFg4aZfM:Igob0NBCqQ5jmfQ/SqCZqofrWu6NrXqexKg9h9KTA9F4uKhqDMz1iw=="
+                                                                                        "ciphertext": "v1:9y6w8VmiwryNG7Y5:ZWa9ROtNkNiZlDDJ+id3Ez1kgSIexJLYzNe8ILN3P8trTRoFKCRsQA=="
                                                                                     }
                                                                                 }
                                                                             }
@@ -651,7 +665,7 @@
                                                             },
                                                             "requires": {
                                                                 "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                                                                "ciphertext": "v1:QfkyeCAnFYFcuAgV:qf/m+HBSsLxJKBd/qoJwVb7ht6uEpYP2eB6IZot7pRS+5ZioOWIQ1g=="
+                                                                "ciphertext": "v1:VCjkI9SPxCMm8mxK:1CtwU/7XnJFX1MMTZ2/GG7cSqPYbU3lUQao9DN6yZkjlMDgGpTGJAw=="
                                                             }
                                                         },
                                                         "renamed": {
@@ -666,46 +680,46 @@
                                     },
                                     "readServiceTokensFromHeader": {
                                         "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                                        "ciphertext": "v1:payy8tP2t88U6fpD:0xddlOqUYAlSBq6t9k9ceSNTlBt2yWDZh9bkSL/cI2EIILtQmK/76A=="
+                                        "ciphertext": "v1:f5InxkrJFUUjueFy:+F2RtGIXE6s4iyIwZLfVreYSOSJeJfeEpRRC2zv5aRb3pZuUJntLFg=="
                                     },
                                     "saasApp": {
                                         "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                                        "ciphertext": "v1:MB/k25rnYXqdHikQ:9TUmh5ElwJiUdAh2Urmyzvm1Ee7nNXIKqBPHKV0ppzFIKGb2nYFkUA=="
+                                        "ciphertext": "v1:PbruyGNe4aEhRDvq:a2dFQEIZW4VF8rg0nFQglE9LONkRKtXSB8LqFqchqos7NGzr6oCa6w=="
                                     },
                                     "sameSiteCookieAttribute": {
                                         "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                                        "ciphertext": "v1:GYh+7hz8iEM039qX:/A+10QNXGvDVUxNfaQe3+ftmFii8t8XklW15dVbUdkrcykS1F8/KDw=="
+                                        "ciphertext": "v1:UA4xalwhVqhTZoNX:CLIodJFOIdgZ0FtAOWjc4OoT9sixNIcIsABmUlRLVA3nvQj9JZDolQ=="
                                     },
                                     "scimConfig": {
                                         "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                                        "ciphertext": "v1:8dbP/28NxreNRc1a:gJbjgwB9Ont7Q+Br3d8wLLE9p8xmZ3PEaiJ1FBxcRqK3rnvsIO/8qA=="
+                                        "ciphertext": "v1:2RMJW03IndX4AvkI:3kd1CzIQ7Mxu3UjZ2SlRqmsqJ/PX26rST0Oo6+47dYTMoRTiW+vklA=="
                                     },
                                     "selfHostedDomains": {
                                         "arr": {}
                                     },
                                     "serviceAuth401Redirect": {
                                         "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                                        "ciphertext": "v1:o1cGY2TFqpyjjrA4:66fKXV39tp1xllym2zJ7ps0oAGu46IOLOE4VtQhIuMPYLJO7ZCwhdw=="
+                                        "ciphertext": "v1:PAQneo3yQx3A0vZg:2mGji2eQMtj45LaNloU14VxMuaR6AHVJsvt6jvT80/X898NgVLsMBQ=="
                                     },
                                     "skipAppLauncherLoginPage": {
                                         "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                                        "ciphertext": "v1:IRjAuVYS76/8HNAm:RvxrqYS5nr6Bh1JCkKufp7Me2mmmdiC2GtsNajPW7S87IyHAy1T91w=="
+                                        "ciphertext": "v1:cYtT1xyNQ05kc+gQ:jonbONZhTWcmf7my+4TTwV2eHzyyRBGlTuQMZSTboxsQiykh6l4tmg=="
                                     },
                                     "skipInterstitial": {
                                         "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                                        "ciphertext": "v1:2GZS/MC+TkWi7lVl:v8Xh47FGADAO6vqpjNDbI9DpLPkDpubRRgokqgfehMF/anP4iLK6MA=="
+                                        "ciphertext": "v1:hMf50mzPm6c20L6G:mhECwMopXBrXmWC182Sh6vbbky+L1F/HIkEWt4PtEFTWgvpVrvgPfA=="
                                     },
                                     "tags": {
                                         "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                                        "ciphertext": "v1:2vbZGKT7UTXmAs5H:ljVSdULeOSJcmSIBqlVO7B7qv5IybOO3thST3EeS+1iBhnWLbpG5Rg=="
+                                        "ciphertext": "v1:IXkJO4HCHrFmnUEf:Xqotv2uXiOZUPeUT8E2bLwzX/3tYISc0q9z4qZ5AHvy9DrLjGIx8SA=="
                                     },
                                     "targetCriterias": {
                                         "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                                        "ciphertext": "v1:GbPf4vejfN60OQsF:O8h/AzRMRUOfzEDAZ0Z5dy0P/eYZ5UbuwqOYibe1r6Z5nFZb0KIW9A=="
+                                        "ciphertext": "v1:06/MzGJogoznPjbA:F7z5o7doTidfuJanuDcjmx+p267AoQq1EIHbkMDWTmpQ4fVsOB9+nQ=="
                                     },
                                     "zoneId": {
                                         "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                                        "ciphertext": "v1:p114kFcfeUCqv2GR:LtEGfdGOaYWICwliUerPUCPStdjWDBik3pDesAJdGj3k+3i2F4/XlA=="
+                                        "ciphertext": "v1:7q3oxeH7oJpKe0BS:iK4CCDHHkfDeiSnABk2NlVeoSzKZcExuwzJDxJCIQ2FOyyg27qRlqQ=="
                                     }
                                 },
                                 "renamed": {
@@ -716,7 +730,7 @@
                         },
                         "accountId": {
                             "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                            "ciphertext": "v1:R6UjZ6numKhtW/Ns:cGYUsOXDPTmonZqaKvvE5vh2iTwtVbTLxtASg0JYjy0EvgTWh+XzOLd+EY7WQn6F2p0="
+                            "ciphertext": "v1:yi0sr7OaNMeIXBXt:B4riu4t/qGkGK54f/6EY8spM+mAUFRBNJ+posNIxqHfxPW3zn8Md0I0Ql8j7Bfq4h8E="
                         },
                         "appLauncherVisible": true,
                         "aud": "5f6a4c869c444d442ae07966ff4d4295459131739676d9ef996622c6d6790d0a",
@@ -785,7 +799,7 @@
                     "inputs": {
                         "accountId": {
                             "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                            "ciphertext": "v1:/wF/QNXgqNRDOrL6:JTYekKpwLDoSI+3icH/6zyZjSb1lbANtFJFplgmujMmmUantAQxtkwzcWh0OVq8ktsQ="
+                            "ciphertext": "v1:YNJ5t62n13P32M71:xF75+v9Qug3aoSj6cAjSj0kmRSov2pWmkaE7J4AHKc/uOJYBJTtrtWj0i1DzInRNcSg="
                         },
                         "jurisdiction": "default",
                         "location": "EEUR",
@@ -799,7 +813,7 @@
                         },
                         "accountId": {
                             "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                            "ciphertext": "v1:gH9zLOaXXxRKF9kY:vMFxQGqBl7wzINPOhofatwi+KAWdMhWrF2MZqSSHIGY0grQFCK+3rh1XBgZMFkjyHrY="
+                            "ciphertext": "v1:v9x027hSpBbor2ye:n6YmMU+I8qEzHvhaMUKxqX0tsUUzf/3nPDFAkJv/aearM5ab+IlYNlTOvX9CUhkLNPQ="
                         },
                         "creationDate": "2025-07-16T18:10:21.988Z",
                         "id": "staging-bill",
@@ -823,6 +837,51 @@
                     "sourcePosition": "project:///src/components/r2/buckets.ts#19,18"
                 },
                 {
+                    "urn": "urn:pulumi:staging::DocumentManager::cloudflare:index/r2Bucket:R2Bucket::staging-web",
+                    "custom": true,
+                    "id": "staging-web",
+                    "type": "cloudflare:index/r2Bucket:R2Bucket",
+                    "inputs": {
+                        "accountId": {
+                            "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                            "ciphertext": "v1:ERqaKnYz3y1NFOqP:WoH3UHC9NGg2PUyfwWKNum5nqMOXyJXcohRaxTvj2SK3ep7PCMOlHD4knslBD8RFrMY="
+                        },
+                        "jurisdiction": "default",
+                        "location": "EEUR",
+                        "name": "staging-web",
+                        "storageClass": "Standard"
+                    },
+                    "outputs": {
+                        "__meta": "{\"schema_version\":\"1\"}",
+                        "__pulumi_raw_state_delta": {
+                            "obj": {}
+                        },
+                        "accountId": {
+                            "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                            "ciphertext": "v1:iTL31lT0jOAIwh3E:Og2ju0TkPqTH1ZtlJSdb/YRoMTWh4D0icHw2UkAfug20/8TGFUQ2wpsl/Axi+6LR+O8="
+                        },
+                        "creationDate": "2025-07-15T11:28:41.820Z",
+                        "id": "staging-web",
+                        "jurisdiction": "default",
+                        "location": "EEUR",
+                        "name": "staging-web",
+                        "storageClass": "Standard"
+                    },
+                    "parent": "urn:pulumi:staging::DocumentManager::pulumi:pulumi:Stack::DocumentManager-staging",
+                    "protect": true,
+                    "provider": "urn:pulumi:staging::DocumentManager::pulumi:providers:cloudflare::cloudflare::48a7e2be-6adf-426d-9dba-9da5676031c0",
+                    "propertyDependencies": {
+                        "accountId": [],
+                        "jurisdiction": [],
+                        "location": [],
+                        "name": [],
+                        "storageClass": []
+                    },
+                    "created": "2026-04-03T17:23:12.579457Z",
+                    "modified": "2026-04-03T17:23:12.579457Z",
+                    "sourcePosition": "project:///src/components/r2/buckets.ts#19,18"
+                },
+                {
                     "urn": "urn:pulumi:staging::DocumentManager::cloudflare:index/r2Bucket:R2Bucket::staging-poa",
                     "custom": true,
                     "id": "staging-poa",
@@ -830,7 +889,7 @@
                     "inputs": {
                         "accountId": {
                             "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                            "ciphertext": "v1:0+0Bo56/HuPXVL38:atIlJ7M4paWvH32h0FTlsiXSgf1F5F2inAgg3pu15YybZAy84sY0CFBjGh2M32/XuGM="
+                            "ciphertext": "v1:JNWjLae23E0jDLG7:wks2sRwJLW4xPA3Q3gh2l3bj9ZtawgmzHz18ZiWjg9ksi6IaFXscTDRJCcqJkH62TtY="
                         },
                         "jurisdiction": "default",
                         "location": "EEUR",
@@ -844,7 +903,7 @@
                         },
                         "accountId": {
                             "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                            "ciphertext": "v1:y3sgeNx7H++ZrxKa:zJSAHXMR3pmPOklWqGNShlnjq+zMtJU6MHPf3i8PMQFzoRpMOolNxiEgXyM2+AdTMwQ="
+                            "ciphertext": "v1:ybAA+gx0NvZbaEpN:RxYHZ7QLyf7KQwe+pt7wL+BmYaL0hIKfgzX8XVJY9HkHPYDvwUfZg7bgUPT2xKgZtK8="
                         },
                         "creationDate": "2025-07-16T18:10:22.072Z",
                         "id": "staging-poa",
@@ -866,65 +925,6 @@
                     "created": "2026-04-03T17:24:50.295002Z",
                     "modified": "2026-04-03T17:24:50.295002Z",
                     "sourcePosition": "project:///src/components/r2/buckets.ts#19,18"
-                },
-                {
-                    "urn": "urn:pulumi:staging::DocumentManager::cloudflare:index/d1Database:D1Database::staging-db",
-                    "custom": true,
-                    "id": "d63c46d8-807f-4ae2-a668-045b7e4e7d79",
-                    "type": "cloudflare:index/d1Database:D1Database",
-                    "inputs": {
-                        "accountId": {
-                            "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                            "ciphertext": "v1:6RtsVW5AmOzVUxk1:nAcmqzGptOTuw7Vb6rR4jQ+IrJxI7nCfQosDUqH5MduutZ25jSfm2YLm9JZLjdxWp/E="
-                        },
-                        "name": "staging-db",
-                        "readReplication": {
-                            "mode": "disabled"
-                        }
-                    },
-                    "outputs": {
-                        "__pulumi_raw_state_delta": {
-                            "obj": {
-                                "ps": {
-                                    "jurisdiction": {
-                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                                        "ciphertext": "v1:eET3zNkhvmmhf+dr:l76L5MfuqqKzIMWMkLciX7uBD+IKs8KO04OIBTw7fYCDhgJqGmjwRQ=="
-                                    },
-                                    "primaryLocationHint": {
-                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                                        "ciphertext": "v1:DCQgK3h48QPHmqiC:S5uzvr2JJtFw0XW6hF+p2rFt8AVg9+qa7BZSAgTdORpEgYEiKACjIw=="
-                                    },
-                                    "readReplication": {
-                                        "obj": {}
-                                    }
-                                }
-                            }
-                        },
-                        "accountId": {
-                            "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                            "ciphertext": "v1:XD0NdbWptn9q0qnV:RpoNwdHznxMSHNUkZxNYvcQMN7WkWYyo8HDFTkE1OAtVkjGxB9yygnxcEMZx7qqGf+8="
-                        },
-                        "createdAt": "2025-07-16T18:24:04Z",
-                        "fileSize": 69632,
-                        "id": "d63c46d8-807f-4ae2-a668-045b7e4e7d79",
-                        "name": "staging-db",
-                        "numTables": 6,
-                        "readReplication": {
-                            "mode": "disabled"
-                        },
-                        "uuid": "d63c46d8-807f-4ae2-a668-045b7e4e7d79",
-                        "version": "production"
-                    },
-                    "parent": "urn:pulumi:staging::DocumentManager::pulumi:pulumi:Stack::DocumentManager-staging",
-                    "provider": "urn:pulumi:staging::DocumentManager::pulumi:providers:cloudflare::default_6_14_0::1588e795-c7e6-4622-9034-0ae55f4f3a69",
-                    "propertyDependencies": {
-                        "accountId": [],
-                        "name": [],
-                        "readReplication": []
-                    },
-                    "created": "2026-04-03T17:26:17.638325Z",
-                    "modified": "2026-04-03T17:26:17.638325Z",
-                    "sourcePosition": "project:///src/components/db/index.ts#9,3"
                 }
             ],
             "metadata": {}
