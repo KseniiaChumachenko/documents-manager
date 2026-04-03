@@ -5,7 +5,51 @@ on:
     branches: ['*']
 
 jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      lint: ${{ steps.filter.outputs.lint }}
+      typecheck: ${{ steps.filter.outputs.typecheck }}
+      test: ${{ steps.filter.outputs.test }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            lint:
+              - 'apps/web/app/**'
+              - 'apps/web/components/**'
+              - 'apps/web/lib/**'
+              - 'apps/web/database/schema.ts'
+              - 'packages/infra/**/*.ts'
+              - '.github/**'
+              - 'package.json'
+              - 'package-lock.json'
+              - 'apps/web/package.json'
+            typecheck:
+              - 'apps/web/**'
+              - 'packages/infra/**/*.ts'
+              - '.github/**'
+              - 'package.json'
+              - 'package-lock.json'
+              - 'apps/web/package.json'
+              - 'tsconfig*.json'
+            test:
+              - 'apps/web/app/**'
+              - 'apps/web/components/**'
+              - 'apps/web/lib/**'
+              - 'apps/web/database/**'
+              - 'apps/web/e2e/**'
+              - '.github/**'
+              - 'package.json'
+              - 'package-lock.json'
+              - 'apps/web/package.json'
+
   lint:
+    needs: changes
+    if: needs.changes.outputs.lint == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -23,6 +67,8 @@ jobs:
         run: npm run lint
 
   typecheck:
+    needs: changes
+    if: needs.changes.outputs.typecheck == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -47,6 +93,8 @@ jobs:
         run: npm run typecheck
 
   test:
+    needs: changes
+    if: needs.changes.outputs.test == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
