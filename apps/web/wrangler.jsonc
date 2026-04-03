@@ -24,6 +24,9 @@
   },
   "env": {
     "staging": {
+      "triggers": {
+        "crons": ["0 3 1 * *"]
+      },
       "vars": {
         "GOV_API": "https://adm.tools/action/gov/api/"
       },
@@ -67,6 +70,9 @@
       ]
     },
     "production": {
+      "triggers": {
+        "crons": ["0 3 1 * *"]
+      },
       "vars": {
         "GOV_API": "https://adm.tools/action/gov/api/"
       },
