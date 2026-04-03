@@ -19,8 +19,14 @@
       "migrations_dir": "database/migrations"
     }
   ],
+  "vars": {
+    "GOV_API": "https://adm.tools/action/gov/api/"
+  },
   "env": {
     "staging": {
+      "vars": {
+        "GOV_API": "https://adm.tools/action/gov/api/"
+      },
       "routes": [
         {
           "pattern": "staging.aeroclime.com",
@@ -61,6 +67,9 @@
       ]
     },
     "production": {
+      "vars": {
+        "GOV_API": "https://adm.tools/action/gov/api/"
+      },
       "routes": [
         {
           "pattern": "app.aeroclime.com",

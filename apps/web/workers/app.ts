@@ -41,10 +41,10 @@ export default {
     if (cron === '0 3 1 * *') {
       ctx.waitUntil(
         (async () => {
-          console.log('[company-refresh] Starting weekly refresh');
-          const govApiUrl = import.meta.env.VITE_GOV_API;
+          console.log('[company-refresh] Starting monthly refresh');
+          const govApiUrl = env.GOV_API;
           if (!govApiUrl) {
-            console.error('[company-refresh] VITE_GOV_API not configured');
+            console.error('[company-refresh] GOV_API binding not configured');
             return;
           }
           const result = await refreshStaleCompanies(env.DB, govApiUrl);
