@@ -40,11 +40,11 @@ pulumi up --stack staging --yes
 
 ## CI/CD (GitHub Actions)
 
-| Workflow                | Trigger        | Steps                                                       |
-| ----------------------- | -------------- | ----------------------------------------------------------- |
-| `ci.yml`                | PRs            | lint → typecheck → E2E tests                                |
-| `deploy-staging.yml`    | PR to main     | pulumi up → typegen → build → wrangler deploy → migrations → commit state |
-| `deploy-production.yml` | push to main   | pulumi up → typegen → build → wrangler deploy → migrations → commit state |
+| Workflow                | Trigger      | Steps                                                                     |
+| ----------------------- | ------------ | ------------------------------------------------------------------------- |
+| `ci.yml`                | PRs          | lint → typecheck → E2E tests                                              |
+| `deploy-staging.yml`    | PR to main   | pulumi up → typegen → build → wrangler deploy → migrations → commit state |
+| `deploy-production.yml` | push to main | pulumi up → typegen → build → wrangler deploy → migrations → commit state |
 
 ### Required GitHub Secrets
 
@@ -55,7 +55,9 @@ pulumi up --stack staging --yes
 
 ### CI Notes
 
-- `react-router build --mode staging` bakes environment into build output — `wrangler deploy` needs NO `--env` flag
+- `CLOUDFLARE_ENV` must be set in CI to select the correct environment from `wrangler.jsonc`
+- `react-router build --mode staging` loads `.env.staging` locally (gitignored), which sets `CLOUDFLARE_ENV=staging`
+- In CI, `CLOUDFLARE_ENV` must be set explicitly in the workflow environment variables
 - `react-router typegen` must run before build (generates `.react-router/types/` which is gitignored)
 - Pulumi state changes are committed back to the branch after each deploy
 
