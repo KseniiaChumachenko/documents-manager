@@ -1,0 +1,886 @@
+{
+    "version": 3,
+    "checkpoint": {
+        "stack": "organization/DocumentManager/production",
+        "latest": {
+            "manifest": {
+                "time": "2026-04-03T20:01:02.763417+02:00",
+                "magic": "88d0da18f668d21177091127bf6af43a4706b834600c4edf2e942a3f566ca00e",
+                "version": "v3.229.0"
+            },
+            "secrets_providers": {
+                "type": "passphrase",
+                "state": {
+                    "salt": "v1:KlDxOPrMYCQ=:v1:zjciJWblr6X0KpIM:ecUYMnBcPk4VCmQ60rFfy8ZGqa/TIQ=="
+                }
+            },
+            "resources": [
+                {
+                    "urn": "urn:pulumi:production::DocumentManager::pulumi:pulumi:Stack::DocumentManager-production",
+                    "custom": false,
+                    "type": "pulumi:pulumi:Stack",
+                    "outputs": {
+                        "billBucket": {
+                            "accountId": {
+                                "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                "ciphertext": "v1:BFZHfwJOZuR5jItO:JJ39pCHh9TugD3gru4KXP8lXN+PFg+CDsfs7Qmu1Tb8dkx/ZdtZnRvaCpoOgTjThBJ4="
+                            },
+                            "creationDate": "2026-04-01T16:57:04.361Z",
+                            "id": "production-bill",
+                            "jurisdiction": "default",
+                            "location": "EEUR",
+                            "name": "production-bill",
+                            "storageClass": "Standard",
+                            "urn": "urn:pulumi:production::DocumentManager::cloudflare:index/r2Bucket:R2Bucket::production-bill"
+                        },
+                        "databaseId": "934e95cf-1a96-4be5-8def-007c95935922",
+                        "db": {
+                            "accountId": {
+                                "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                "ciphertext": "v1:iWmYkpfVzZUF9LWq:jYgdxZvmyYrWUQp/sX7la9VpqcLgXYpm9u31xSn3Za+ACuREqzleutvUQmF2ZdkiYU8="
+                            },
+                            "createdAt": "2026-04-01T16:57:04Z",
+                            "fileSize": 69632,
+                            "id": "934e95cf-1a96-4be5-8def-007c95935922",
+                            "name": "production-db",
+                            "numTables": 6,
+                            "readReplication": {
+                                "mode": "disabled"
+                            },
+                            "urn": "urn:pulumi:production::DocumentManager::cloudflare:index/d1Database:D1Database::production-db",
+                            "uuid": "934e95cf-1a96-4be5-8def-007c95935922",
+                            "version": "production"
+                        },
+                        "invoiceBucket": {
+                            "accountId": {
+                                "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                "ciphertext": "v1:nmRSCvaePhzkxQPj:i6XCccknXz5YoYinuQ7o5B+jaQLbj52CXMGbMQQx2UzC+drbpNOnNrDrvkA4JrMRaRw="
+                            },
+                            "creationDate": "2026-04-01T16:57:04.365Z",
+                            "id": "production-invoice",
+                            "jurisdiction": "default",
+                            "location": "EEUR",
+                            "name": "production-invoice",
+                            "storageClass": "Standard",
+                            "urn": "urn:pulumi:production::DocumentManager::cloudflare:index/r2Bucket:R2Bucket::production-invoice"
+                        },
+                        "poaBucket": {
+                            "accountId": {
+                                "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                "ciphertext": "v1:tZU9IDDFXxU/+IDc:qHv/+C8yNjMFGmfVU7NLdvpanLzkR859GJSAtc5eWY1rjU9htHhpwv6IEX8Sd+df1Mg="
+                            },
+                            "creationDate": "2026-04-01T16:57:04.290Z",
+                            "id": "production-poa",
+                            "jurisdiction": "default",
+                            "location": "EEUR",
+                            "name": "production-poa",
+                            "storageClass": "Standard",
+                            "urn": "urn:pulumi:production::DocumentManager::cloudflare:index/r2Bucket:R2Bucket::production-poa"
+                        },
+                        "templateBucket": {
+                            "accountId": {
+                                "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                "ciphertext": "v1:pPtHRB+frfx+PXH0:895+bMDVeIRcQdrdEGv39v7A2cIgzGY4E80irYpFLgb3Q2LVZmLZiusbvrqCX+Z2ANs="
+                            },
+                            "creationDate": "2026-04-01T16:57:04.343Z",
+                            "id": "production-template",
+                            "jurisdiction": "default",
+                            "location": "EEUR",
+                            "name": "production-template",
+                            "storageClass": "Standard",
+                            "urn": "urn:pulumi:production::DocumentManager::cloudflare:index/r2Bucket:R2Bucket::production-template"
+                        },
+                        "webHostingBucket": {
+                            "accountId": {
+                                "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                "ciphertext": "v1:0N8ZR7aeWikTRtRG:e2ykQD15CnS8/sbV0XE/T0xn3lbnZHnGBr3kSfMqxEuZy/w5lb7hpalII5x87ZWCH3Y="
+                            },
+                            "creationDate": "2026-04-01T16:57:04.493Z",
+                            "id": "production-web",
+                            "jurisdiction": "default",
+                            "location": "EEUR",
+                            "name": "production-web",
+                            "storageClass": "Standard",
+                            "urn": "urn:pulumi:production::DocumentManager::cloudflare:index/r2Bucket:R2Bucket::production-web"
+                        }
+                    },
+                    "created": "2026-04-03T17:31:48.668626Z",
+                    "modified": "2026-04-03T17:31:48.668626Z",
+                    "sourcePosition": "project:///../../node_modules/@pulumi/runtime/stack.ts#37,19"
+                },
+                {
+                    "urn": "urn:pulumi:production::DocumentManager::pulumi:providers:cloudflare::cloudflare",
+                    "custom": true,
+                    "id": "c4f63e61-110f-4cb1-9046-e595cbb1f490",
+                    "type": "pulumi:providers:cloudflare",
+                    "inputs": {
+                        "__internal": {},
+                        "apiToken": {
+                            "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                            "ciphertext": "v1:5OVZ1CvtRfppUXUf:U3Gg7iEO5wxOl0cvYfBilD09T+pa49B2MxQch+V2if2DzFPsCIZOpl4mObBlhIIfCPRV0vLwQ5wJQ1O1SXmlaksc89db80g="
+                        },
+                        "version": "6.14.0"
+                    },
+                    "outputs": {
+                        "apiToken": {
+                            "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                            "ciphertext": "v1:77ZtOlU1qll7r3nP:rmYhth+ccJXR1ill/bbtQteVAz9w03aDcWyJcNUydOs7cgwOBeTG/k4Ef3nJh1ti8CWeEtB0qirA5omaq0hdB4MqcbbpSg4="
+                        },
+                        "version": "6.14.0"
+                    },
+                    "parent": "urn:pulumi:production::DocumentManager::pulumi:pulumi:Stack::DocumentManager-production",
+                    "propertyDependencies": {
+                        "apiToken": []
+                    },
+                    "additionalSecretOutputs": [
+                        "apiKey",
+                        "apiToken",
+                        "apiUserServiceKey"
+                    ],
+                    "created": "2026-04-03T17:33:43.049535Z",
+                    "modified": "2026-04-03T17:33:43.049535Z",
+                    "sourcePosition": "project:///../../node_modules/@pulumi/provider.ts#74,9"
+                },
+                {
+                    "urn": "urn:pulumi:production::DocumentManager::pulumi:providers:cloudflare::default_6_14_0",
+                    "custom": true,
+                    "id": "5c7ba3a6-00e1-4fb4-9cc4-5ef0695de048",
+                    "type": "pulumi:providers:cloudflare",
+                    "inputs": {
+                        "__internal": {},
+                        "apiToken": {
+                            "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                            "ciphertext": "v1:xvHeyG2a3WzSPt1l:wxlnhIHWL+RkH3diArgfuvwH+bLw5Chue8usI0qtEbiLTk9ya/FQ02Y1uxGeCWfM5PNpSL3l4caqMZO77IeWilzfXYpgPeE="
+                        },
+                        "version": "6.14.0"
+                    },
+                    "outputs": {
+                        "apiToken": {
+                            "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                            "ciphertext": "v1:f0ROM6d+hazFxX49:OI5fKyPIR80iXdS1tyf7j8BfFlvx0SQ6bM/d6OwkqYKN7wZIw6uuHSbJ9G8zg5fzwEg1frIu9RTtSOqTdqmgyiHost3WFqI="
+                        },
+                        "version": "6.14.0"
+                    },
+                    "created": "2026-04-03T17:33:43.145676Z",
+                    "modified": "2026-04-03T17:33:43.145676Z"
+                },
+                {
+                    "urn": "urn:pulumi:production::DocumentManager::cloudflare:index/r2Bucket:R2Bucket::production-template",
+                    "custom": true,
+                    "id": "production-template",
+                    "type": "cloudflare:index/r2Bucket:R2Bucket",
+                    "inputs": {
+                        "accountId": {
+                            "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                            "ciphertext": "v1:/5WaDegH/PLiSQeb:REnVFjrmCqlL3ilNW/avJuiXxs+2wRE8mT5CbTgw9IxiV6Hqzpmk0Ii9+G2uoyOc4dg="
+                        },
+                        "jurisdiction": "default",
+                        "location": "EEUR",
+                        "name": "production-template",
+                        "storageClass": "Standard"
+                    },
+                    "outputs": {
+                        "__meta": "{\"schema_version\":\"1\"}",
+                        "__pulumi_raw_state_delta": {
+                            "obj": {}
+                        },
+                        "accountId": {
+                            "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                            "ciphertext": "v1:eOEPuj96KA4A8Mw/:Gmd2ps6kqe8j5PSgjV7Ufb6w+AIPV9w426u+kT9+HzaO/B+NSppR0QoR35NmvrzgqGI="
+                        },
+                        "creationDate": "2026-04-01T16:57:04.343Z",
+                        "id": "production-template",
+                        "jurisdiction": "default",
+                        "location": "EEUR",
+                        "name": "production-template",
+                        "storageClass": "Standard"
+                    },
+                    "parent": "urn:pulumi:production::DocumentManager::pulumi:pulumi:Stack::DocumentManager-production",
+                    "protect": true,
+                    "provider": "urn:pulumi:production::DocumentManager::pulumi:providers:cloudflare::cloudflare::c4f63e61-110f-4cb1-9046-e595cbb1f490",
+                    "propertyDependencies": {
+                        "accountId": [],
+                        "jurisdiction": [],
+                        "location": [],
+                        "name": [],
+                        "storageClass": []
+                    },
+                    "created": "2026-04-03T17:32:07.582046Z",
+                    "modified": "2026-04-03T17:32:07.582046Z",
+                    "sourcePosition": "project:///src/components/r2/buckets.ts#19,18"
+                },
+                {
+                    "urn": "urn:pulumi:production::DocumentManager::cloudflare:index/r2Bucket:R2Bucket::production-poa",
+                    "custom": true,
+                    "id": "production-poa",
+                    "type": "cloudflare:index/r2Bucket:R2Bucket",
+                    "inputs": {
+                        "accountId": {
+                            "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                            "ciphertext": "v1:Z0XVCBpA/vFHnR67:f8hR1vuK/1Nj3S9C8LKrWAJ4i7P9M+xVETBJF1g1lMPGN7KYItmJuz5S3wCzUkKvjRo="
+                        },
+                        "jurisdiction": "default",
+                        "location": "EEUR",
+                        "name": "production-poa",
+                        "storageClass": "Standard"
+                    },
+                    "outputs": {
+                        "__meta": "{\"schema_version\":\"1\"}",
+                        "__pulumi_raw_state_delta": {
+                            "obj": {}
+                        },
+                        "accountId": {
+                            "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                            "ciphertext": "v1:rjIazF1zUK0sHNAg:0Xvg0F1xwtnAzr6QlcWAeknzpj9nGa7zyw8ekup4RXUpwTl9ED9uPie1KtcmXVoJZ8w="
+                        },
+                        "creationDate": "2026-04-01T16:57:04.290Z",
+                        "id": "production-poa",
+                        "jurisdiction": "default",
+                        "location": "EEUR",
+                        "name": "production-poa",
+                        "storageClass": "Standard"
+                    },
+                    "parent": "urn:pulumi:production::DocumentManager::pulumi:pulumi:Stack::DocumentManager-production",
+                    "protect": true,
+                    "provider": "urn:pulumi:production::DocumentManager::pulumi:providers:cloudflare::cloudflare::c4f63e61-110f-4cb1-9046-e595cbb1f490",
+                    "propertyDependencies": {
+                        "accountId": [],
+                        "jurisdiction": [],
+                        "location": [],
+                        "name": [],
+                        "storageClass": []
+                    },
+                    "created": "2026-04-03T17:32:24.07959Z",
+                    "modified": "2026-04-03T17:32:24.07959Z",
+                    "sourcePosition": "project:///src/components/r2/buckets.ts#19,18"
+                },
+                {
+                    "urn": "urn:pulumi:production::DocumentManager::cloudflare:index/r2Bucket:R2Bucket::production-web",
+                    "custom": true,
+                    "id": "production-web",
+                    "type": "cloudflare:index/r2Bucket:R2Bucket",
+                    "inputs": {
+                        "accountId": {
+                            "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                            "ciphertext": "v1:rGdIqx6iObGBU/9m:+st+cTM24R2S/BaED9QToFWjjqNxZtU/oJCPME4TcNP5dxBF/b3jCs/HfACb65JHP3c="
+                        },
+                        "jurisdiction": "default",
+                        "location": "EEUR",
+                        "name": "production-web",
+                        "storageClass": "Standard"
+                    },
+                    "outputs": {
+                        "__meta": "{\"schema_version\":\"1\"}",
+                        "__pulumi_raw_state_delta": {
+                            "obj": {}
+                        },
+                        "accountId": {
+                            "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                            "ciphertext": "v1:jX/0E979KCBZLhHN:UnN5cj8AKrczkv61TpbSE9sZ+IKw0rVN/lonhMYHGWZ+kU3k4/NiYiTdrD5rx5AqHac="
+                        },
+                        "creationDate": "2026-04-01T16:57:04.493Z",
+                        "id": "production-web",
+                        "jurisdiction": "default",
+                        "location": "EEUR",
+                        "name": "production-web",
+                        "storageClass": "Standard"
+                    },
+                    "parent": "urn:pulumi:production::DocumentManager::pulumi:pulumi:Stack::DocumentManager-production",
+                    "protect": true,
+                    "provider": "urn:pulumi:production::DocumentManager::pulumi:providers:cloudflare::cloudflare::c4f63e61-110f-4cb1-9046-e595cbb1f490",
+                    "propertyDependencies": {
+                        "accountId": [],
+                        "jurisdiction": [],
+                        "location": [],
+                        "name": [],
+                        "storageClass": []
+                    },
+                    "created": "2026-04-03T17:31:49.205524Z",
+                    "modified": "2026-04-03T17:31:49.205524Z",
+                    "sourcePosition": "project:///src/components/r2/buckets.ts#19,18"
+                },
+                {
+                    "urn": "urn:pulumi:production::DocumentManager::cloudflare:index/r2Bucket:R2Bucket::production-invoice",
+                    "custom": true,
+                    "id": "production-invoice",
+                    "type": "cloudflare:index/r2Bucket:R2Bucket",
+                    "inputs": {
+                        "accountId": {
+                            "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                            "ciphertext": "v1:IwWXbiC9HiP79sca:/7jpshHSt2WrPJi8rYFRzKSAl5yUOjWAO50Amy4ttijP7rKFQx1wer+6bMXrJLEMiyA="
+                        },
+                        "jurisdiction": "default",
+                        "location": "EEUR",
+                        "name": "production-invoice",
+                        "storageClass": "Standard"
+                    },
+                    "outputs": {
+                        "__meta": "{\"schema_version\":\"1\"}",
+                        "__pulumi_raw_state_delta": {
+                            "obj": {}
+                        },
+                        "accountId": {
+                            "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                            "ciphertext": "v1:cfMF1kRLGKrBBOv4:e0CEg4L5nT0wVwUCmWB3/827IHVHZc/yqoaxfk93tBwY1qog2I8M8OwEWNXINd6SSEI="
+                        },
+                        "creationDate": "2026-04-01T16:57:04.365Z",
+                        "id": "production-invoice",
+                        "jurisdiction": "default",
+                        "location": "EEUR",
+                        "name": "production-invoice",
+                        "storageClass": "Standard"
+                    },
+                    "parent": "urn:pulumi:production::DocumentManager::pulumi:pulumi:Stack::DocumentManager-production",
+                    "protect": true,
+                    "provider": "urn:pulumi:production::DocumentManager::pulumi:providers:cloudflare::cloudflare::c4f63e61-110f-4cb1-9046-e595cbb1f490",
+                    "propertyDependencies": {
+                        "accountId": [],
+                        "jurisdiction": [],
+                        "location": [],
+                        "name": [],
+                        "storageClass": []
+                    },
+                    "created": "2026-04-03T17:32:44.020598Z",
+                    "modified": "2026-04-03T17:32:44.020598Z",
+                    "sourcePosition": "project:///src/components/r2/buckets.ts#19,18"
+                },
+                {
+                    "urn": "urn:pulumi:production::DocumentManager::cloudflare:index/r2Bucket:R2Bucket::production-bill",
+                    "custom": true,
+                    "id": "production-bill",
+                    "type": "cloudflare:index/r2Bucket:R2Bucket",
+                    "inputs": {
+                        "accountId": {
+                            "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                            "ciphertext": "v1:uitWR8aMca+RSRme:Jcb7XN79xrv4i0nK7YKI5SYQ08neQQH79M5G/p/9mEVzgDX04bTNnFURbLICrGDqV5E="
+                        },
+                        "jurisdiction": "default",
+                        "location": "EEUR",
+                        "name": "production-bill",
+                        "storageClass": "Standard"
+                    },
+                    "outputs": {
+                        "__meta": "{\"schema_version\":\"1\"}",
+                        "__pulumi_raw_state_delta": {
+                            "obj": {}
+                        },
+                        "accountId": {
+                            "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                            "ciphertext": "v1:J3ou+820herHjDva:8YyF/BMPnZmRYTWatf4k+zZNI28xpEEnvoTt6MotHWE1hg3dMdo5Yo5ybO1zRRXkkBM="
+                        },
+                        "creationDate": "2026-04-01T16:57:04.361Z",
+                        "id": "production-bill",
+                        "jurisdiction": "default",
+                        "location": "EEUR",
+                        "name": "production-bill",
+                        "storageClass": "Standard"
+                    },
+                    "parent": "urn:pulumi:production::DocumentManager::pulumi:pulumi:Stack::DocumentManager-production",
+                    "protect": true,
+                    "provider": "urn:pulumi:production::DocumentManager::pulumi:providers:cloudflare::cloudflare::c4f63e61-110f-4cb1-9046-e595cbb1f490",
+                    "propertyDependencies": {
+                        "accountId": [],
+                        "jurisdiction": [],
+                        "location": [],
+                        "name": [],
+                        "storageClass": []
+                    },
+                    "created": "2026-04-03T17:33:04.960621Z",
+                    "modified": "2026-04-03T17:33:04.960621Z",
+                    "sourcePosition": "project:///src/components/r2/buckets.ts#19,18"
+                },
+                {
+                    "urn": "urn:pulumi:production::DocumentManager::cloudflare:index/d1Database:D1Database::production-db",
+                    "custom": true,
+                    "id": "934e95cf-1a96-4be5-8def-007c95935922",
+                    "type": "cloudflare:index/d1Database:D1Database",
+                    "inputs": {
+                        "accountId": {
+                            "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                            "ciphertext": "v1:OzNT0j7jWo8K4Cxx:ZeSAJnuiItNcdU/nFSDGm/kxtmB5p5S7fhn2lvstrCBeXK2cHTQrlX311ePzbCrLimI="
+                        },
+                        "name": "production-db",
+                        "readReplication": {
+                            "mode": "disabled"
+                        }
+                    },
+                    "outputs": {
+                        "__pulumi_raw_state_delta": {
+                            "obj": {
+                                "ps": {
+                                    "jurisdiction": {
+                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                        "ciphertext": "v1:mOc8zwEi9QaVoBjH:zH6xDmuRZ8W6KcIsxQO2oZdaUD6/GQm0nrx1XNeDm1iVVdV7Zf4rnw=="
+                                    },
+                                    "primaryLocationHint": {
+                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                        "ciphertext": "v1:rR05aztQ1fG8/VnM:ST6bOT6AxatTZiV6srEG1gK71uRap1qqTLCFS2uUllmaTuStRJGZHQ=="
+                                    },
+                                    "readReplication": {
+                                        "obj": {}
+                                    }
+                                }
+                            }
+                        },
+                        "accountId": {
+                            "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                            "ciphertext": "v1:QH51T+AffBoSI0Th:+f6PrInSb3KSH2Kkq29Ba2lWTOr4GVk6uHZhPiBK0lqwVs7t3bNl/hgvD/SJO79cj9A="
+                        },
+                        "createdAt": "2026-04-01T16:57:04Z",
+                        "fileSize": 69632,
+                        "id": "934e95cf-1a96-4be5-8def-007c95935922",
+                        "name": "production-db",
+                        "numTables": 6,
+                        "readReplication": {
+                            "mode": "disabled"
+                        },
+                        "uuid": "934e95cf-1a96-4be5-8def-007c95935922",
+                        "version": "production"
+                    },
+                    "parent": "urn:pulumi:production::DocumentManager::pulumi:pulumi:Stack::DocumentManager-production",
+                    "provider": "urn:pulumi:production::DocumentManager::pulumi:providers:cloudflare::default_6_14_0::5c7ba3a6-00e1-4fb4-9cc4-5ef0695de048",
+                    "propertyDependencies": {
+                        "accountId": [],
+                        "name": [],
+                        "readReplication": []
+                    },
+                    "created": "2026-04-03T17:33:27.318654Z",
+                    "modified": "2026-04-03T17:33:27.318654Z",
+                    "sourcePosition": "project:///src/components/db/index.ts#9,3"
+                },
+                {
+                    "urn": "urn:pulumi:production::DocumentManager::cloudflare:index/zeroTrustAccessApplication:ZeroTrustAccessApplication::production-document-manager-app",
+                    "custom": true,
+                    "id": "a6369279-389b-4abe-a7ea-66f6787bf6c5",
+                    "type": "cloudflare:index/zeroTrustAccessApplication:ZeroTrustAccessApplication",
+                    "inputs": {
+                        "accountId": {
+                            "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                            "ciphertext": "v1:P5AN/kxWYStfRL1I:4ryyUwH9q3rg6nNp7+hwU0HtxKkR1JYFEgbdrV4Bu+qjEQWAqfrLR/BSh7nEQs7DDqA="
+                        },
+                        "appLauncherVisible": true,
+                        "corsHeaders": {
+                            "allowAllHeaders": true,
+                            "allowAllMethods": true,
+                            "allowedOrigins": [
+                                "https://*.cloudflareaccess.com",
+                                "https://app.aeroclime.com/*"
+                            ],
+                            "maxAge": 3600
+                        },
+                        "destinations": [
+                            {
+                                "type": "public",
+                                "uri": "app.aeroclime.com/*"
+                            }
+                        ],
+                        "domain": "app.aeroclime.com/*",
+                        "name": "production-document-manager-app",
+                        "policies": [
+                            {
+                                "decision": "allow",
+                                "includes": [
+                                    {
+                                        "emailDomain": {
+                                            "domain": "aeroclime.com"
+                                        }
+                                    }
+                                ],
+                                "name": "production-identity-policy"
+                            }
+                        ],
+                        "sessionDuration": "24h",
+                        "type": "self_hosted"
+                    },
+                    "outputs": {
+                        "__meta": "{\"schema_version\":\"1\"}",
+                        "__pulumi_raw_state_delta": {
+                            "obj": {
+                                "ps": {
+                                    "allowAuthenticateViaWarp": {
+                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                        "ciphertext": "v1:snvg3wugS2l1M1M+:Ml8ska7+pYyNSHPyhJ9JIp2qCg8PBpMYUfeliffMTPUxoEvoHKa/3A=="
+                                    },
+                                    "allowIframe": {
+                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                        "ciphertext": "v1:2PU7eH5Ei4SY4JH8:iwNDjpLacBtOtYdaN2a6q0MMlEsHQ+u1Fyn0S1JyLWGaWILAwq1xrw=="
+                                    },
+                                    "allowedIdps": {
+                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                        "ciphertext": "v1:FLNbFAMw9I8iM9+t:iTU+QpgMqFuM1wPig+6U8QaQW2EfkZCstzqGZERQm40dvPqqnkSnGw=="
+                                    },
+                                    "appLauncherLogoUrl": {
+                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                        "ciphertext": "v1:6ghzVVNLyMrlkHsQ:ljIGT5BRVTj6cvLzm70SQzkXv+5usivjAdL6XDhFtxin0F+5cg28sA=="
+                                    },
+                                    "autoRedirectToIdentity": {
+                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                        "ciphertext": "v1:4V/9BG7zF2ZXUTQD:mJLD8D+pvNuz5a3SVlb6zUoFMKf1Nn3Z+Khn9ZD+OWGCAwlxuodiug=="
+                                    },
+                                    "bgColor": {
+                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                        "ciphertext": "v1:6vm3RwBc572GlqiG:qM4/FWuA1uq/7EpDlVHE2L4jyhNwq7H5y1KEEBEhmXXWLMe6xMjljQ=="
+                                    },
+                                    "corsHeaders": {
+                                        "obj": {
+                                            "ps": {
+                                                "allowAllOrigins": {
+                                                    "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                    "ciphertext": "v1:H7CkLyzvElwWD4ro:Q6XiEcgeEAs1NgU76N3VsNqvne0Izq/kdWOMbRipmN5xoRwZVJsqPg=="
+                                                },
+                                                "allowCredentials": {
+                                                    "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                    "ciphertext": "v1:I7QOE0ZdpYKIKE4b:82r3jOI9iJcWdDCaBdzkdj0IMt/iU2XNfg3BFMU1944p+knhjAQDpA=="
+                                                },
+                                                "allowedHeaders": {
+                                                    "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                    "ciphertext": "v1:7Tuu/xwXhfV8GjeG:Fgd8Q7I85fjPIvGqZBg0etNynd44jPXLPbUpxXTorlP9vXBlN9zJEA=="
+                                                },
+                                                "allowedMethods": {
+                                                    "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                    "ciphertext": "v1:9KzGuTg0+Rt0BMbm:1F9PD2nw08EMn+sF7aHxUePFKO8zjsIsfQgTNoC8+NZpoBQNOM05VQ=="
+                                                },
+                                                "allowedOrigins": {
+                                                    "arr": {}
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "customDenyMessage": {
+                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                        "ciphertext": "v1:U5jTzZaYL/O/oiWw:wQfQA75dKiN3CyuI56GjRk6bgctiYGxQqB2Dmbux4A7KhKPCkz4uWw=="
+                                    },
+                                    "customDenyUrl": {
+                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                        "ciphertext": "v1:PaHAZmYJ5OSboYxf:5+4nwaP5kRZu+WGbN3Bir/IxdrIuKXTtDnmTq4ohKK/bAJy+A1xqpA=="
+                                    },
+                                    "customNonIdentityDenyUrl": {
+                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                        "ciphertext": "v1:8cMXCTNTTS+Z7TBv:e6vK2ox+yfU40gQQfHK6ZxAZXJWZobbqram2OVK/Z6XE0jHDnIatrQ=="
+                                    },
+                                    "customPages": {
+                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                        "ciphertext": "v1:gz/OtaJyHUnV7Q5D:gsIVHiv3OnHHHlBJSP6fw+4Dwq58QqynUykMzlgK5MV3RH2OB6m8Dw=="
+                                    },
+                                    "destinations": {
+                                        "arr": {
+                                            "el": {
+                                                "0": {
+                                                    "obj": {
+                                                        "ps": {
+                                                            "cidr": {
+                                                                "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                                "ciphertext": "v1:8/xeBI7BmUag8rZt:mnE3HKYaDrdOxa/H6G2UxQCOk4brfeYqjH3jvz7Qf39NghgVnBD+sA=="
+                                                            },
+                                                            "hostname": {
+                                                                "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                                "ciphertext": "v1:uKZNC5iqUIwV9k2m:EAWOPf5RwduQdi7CLHFFoQ2SZ+bKHCve8+u7xMsIar+uvUYjQWPysA=="
+                                                            },
+                                                            "l4Protocol": {
+                                                                "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                                "ciphertext": "v1:7f9rRkgfFBxTV2ly:X5oHKKNALjT/RqYGzcthFHtG8WGP8QIqlCkbBFSAMeRbvcxcMELLNg=="
+                                                            },
+                                                            "mcpServerId": {
+                                                                "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                                "ciphertext": "v1:6ePwRsuWMJLC0WMM:aywjxnQzspLA3TTlqdGmj9arZCpo/UaDiEEFociO8VibLv8VfBJQUw=="
+                                                            },
+                                                            "portRange": {
+                                                                "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                                "ciphertext": "v1:xYq4jbPmz17uZXGk:IZ1rr2A6fLDGuNwhQU3X8ZpgqN1pcSuVCUT7aSIwATJxBFSD+8BjWw=="
+                                                            },
+                                                            "vnetId": {
+                                                                "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                                "ciphertext": "v1:RLqgNDQx0k/XDsxp:bXA3qH3E8pBVp+CiocpgVpX2qbsaLLSfdgPs82Pf1oh+vkkZQa2h7A=="
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "enableBindingCookie": {
+                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                        "ciphertext": "v1:JyFJIhWS57nPtEBO:ajKgrET7jqSnGsNiP9f+sihWg/tIiTGSQJ0Ur5WqvXiw0bRz488gzw=="
+                                    },
+                                    "footerLinks": {
+                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                        "ciphertext": "v1:4yg5jGqOlbpZ8VZE:9afOSPi6vPxQo/Ducu+A8dPNuzbzmtQy1VdTbqg2LGSg1JjTFDFL3g=="
+                                    },
+                                    "headerBgColor": {
+                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                        "ciphertext": "v1:kRwjxVjMGvr44uyp:7AKUrA4YivY2rx3mZumgtjwPg0jkiPu2aCopx1r+VuUXENUz2/LJiA=="
+                                    },
+                                    "landingPageDesign": {
+                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                        "ciphertext": "v1:ZkVQpkes+fFk9qgv:FX23ZbLTXYMrKN8pmUfwHGpQVmZmTyWRFFsRrQHBTajZ+LTmQojdIg=="
+                                    },
+                                    "logoUrl": {
+                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                        "ciphertext": "v1:w5dIDg6DDbMXbiXS:gDa97qCvOLjJrhA13iC5X+m00/cspJFZX/imVnMGi3P+GBlMl6WjaA=="
+                                    },
+                                    "optionsPreflightBypass": {
+                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                        "ciphertext": "v1:VQomduucDffCQdpG:RBMoHc4nhQz5VK9mOrUTGj3u7FArUveUbtL5UozRgmFnoY8IB3AvfA=="
+                                    },
+                                    "pathCookieAttribute": {
+                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                        "ciphertext": "v1:X7Qs58h3yEmfPTnM:YB2FYYGfaWxfwtP7dK2W94sIrTDHt6eW6d7gEhR4lJeLiXaBJqUCmw=="
+                                    },
+                                    "policies": {
+                                        "arr": {
+                                            "el": {
+                                                "0": {
+                                                    "obj": {
+                                                        "ps": {
+                                                            "connectionRules": {
+                                                                "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                                "ciphertext": "v1:G8Egp+x434ysYVKt:ZQTeaUkgEe7AClTG4+g224qhW5AK+l3AZKSnHwa00JUsYk/KgK6fIQ=="
+                                                            },
+                                                            "excludes": {
+                                                                "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                                "ciphertext": "v1:QnDckHZspCHUk5L8:aBNSh0JyNcbQ0rQZebtwp4mMFhVykWXdCPUabfS8KlQ9bBci47GhSw=="
+                                                            },
+                                                            "id": {
+                                                                "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                                "ciphertext": "v1:NxZYXbPxw2uNediC:CuCvilanZl0koxqCO+SPNXuBDu+QZ82Fa9lztGrcTm7qpSdYtE/Irg=="
+                                                            },
+                                                            "includes": {
+                                                                "arr": {
+                                                                    "el": {
+                                                                        "0": {
+                                                                            "obj": {
+                                                                                "ps": {
+                                                                                    "anyValidServiceToken": {
+                                                                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                                                        "ciphertext": "v1:XCHHE2bzKZP7p2QT:Zah2kaHsb7vvXrCoNhrqOugFueLhO6m54cXrMkt4fzdkEHqvIXoQQw=="
+                                                                                    },
+                                                                                    "authContext": {
+                                                                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                                                        "ciphertext": "v1:c3oN/W+9DLX5X1Qa:L/psLg9cXVn7YXjAJ8qZoPJAQ3o2ZqoquNUbfPTz5TAhgBChzZtMug=="
+                                                                                    },
+                                                                                    "authMethod": {
+                                                                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                                                        "ciphertext": "v1:PJd4VsNQFwTjBW9T:psoQ5piO/yeY6owYjp5QXZEBx33npicLrLYTStNJfud4w5TP73Ofww=="
+                                                                                    },
+                                                                                    "azureAd": {
+                                                                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                                                        "ciphertext": "v1:0xvHt9hNpuTpG2qG:0CDF3bqdS9X4ErXIztc8V2tCcub/rFkhoMPcHG53BQHJhbY1h74PlQ=="
+                                                                                    },
+                                                                                    "certificate": {
+                                                                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                                                        "ciphertext": "v1:opDPxXx5Kra5wZwL:U1isV52U4nQErVpnguGLseS11vOQftRHw92taCAbAL4DT2WbEwtWGQ=="
+                                                                                    },
+                                                                                    "commonName": {
+                                                                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                                                        "ciphertext": "v1:Tom9Tru1FWUJ6TI9:sOhxnhYFIUlueqR2cldKWI8BvAUAaeIouHI1T/Ijw/n/a5Gx8gXDUA=="
+                                                                                    },
+                                                                                    "devicePosture": {
+                                                                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                                                        "ciphertext": "v1:otSMe7k0UG+n7hho:Nbh8TxDG0A4BXw9euVRVnprjcwEWOv1H0wV4EwZL9gcz3xb1sRuCzw=="
+                                                                                    },
+                                                                                    "email": {
+                                                                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                                                        "ciphertext": "v1:vIfh865DPz1GrEB8:Fa1Z1vL+u8Igknk7104naw7aShW4x3CW1FDIXYr0Yyh5xdJM2RduHg=="
+                                                                                    },
+                                                                                    "emailDomain": {
+                                                                                        "obj": {}
+                                                                                    },
+                                                                                    "emailList": {
+                                                                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                                                        "ciphertext": "v1:mqubfJDwTTGiERot:d0qvPoJhQAYVaip3gRXrsBF6XKQUhwrZLRST2HDjZgph2/fBR2UtzA=="
+                                                                                    },
+                                                                                    "everyone": {
+                                                                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                                                        "ciphertext": "v1:Y49bTyFNW+YbmJ/7:I0M+qERzUWk7RF4I81BHFz8OXrX2NzIH/73wul3uAabUjUkPCoyMqA=="
+                                                                                    },
+                                                                                    "externalEvaluation": {
+                                                                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                                                        "ciphertext": "v1:s6KqtK5WExku646s:JIWCDxMMEXcE/WSmYIGHRArJJbz9R1w4q3sx0vifAWK+RsyqjEvWjg=="
+                                                                                    },
+                                                                                    "geo": {
+                                                                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                                                        "ciphertext": "v1:ioOB1iBCIxc6zq3o:TVYMrJPgopHXw6JvwtQcv1MlAqyTlaytLBU6rgSfWeyNfm2MJbcXIw=="
+                                                                                    },
+                                                                                    "githubOrganization": {
+                                                                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                                                        "ciphertext": "v1:9HvodXJeaanQ33yI:nhRxzKV/WGgcvZiYTiqvypUoQfNHAAuUEDlLra4BjpAuxCFNTvNnZQ=="
+                                                                                    },
+                                                                                    "group": {
+                                                                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                                                        "ciphertext": "v1:fBs5auuM4djugK9S:TxOLwFr7LS3ZDjDJ8KQu2xSyNgyCUDdwgmr9KG31UVinX5Difuz18A=="
+                                                                                    },
+                                                                                    "gsuite": {
+                                                                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                                                        "ciphertext": "v1:xRK/Sl3I8/xcpefh:49hGa7ObboKFkdo+/Q6yXZAkWRK7MX4d1GDeRKzdK/hBqhS2iyzYTA=="
+                                                                                    },
+                                                                                    "ip": {
+                                                                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                                                        "ciphertext": "v1:cMQo/m2HzOABhrCJ:XbhbHCBl/IqTJf6OSBVPZo3ZQqAHBhjdC/Hm8+UZqbM5N5q3rZWbag=="
+                                                                                    },
+                                                                                    "ipList": {
+                                                                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                                                        "ciphertext": "v1:5ksEE64TFnVuZ1h0:WmKon1uIdlTs9tQrmtpnRV84JTVZAe8fba7W0kIraWXUm+B2x4mRMg=="
+                                                                                    },
+                                                                                    "linkedAppToken": {
+                                                                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                                                        "ciphertext": "v1:44DqkkTl3RPjaSPr:+OMORtACC8ZTlWAoXte6Q9SwscwlmBRupW17oevDRRkFnR1mkqYh9w=="
+                                                                                    },
+                                                                                    "loginMethod": {
+                                                                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                                                        "ciphertext": "v1:gSK9Uff5U6FxxUNW:ceg86Zez9IaN5r6qK0tFe+AlbzQUGZFhaEEkpPeJAQKP9GRZWGU/5g=="
+                                                                                    },
+                                                                                    "oidc": {
+                                                                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                                                        "ciphertext": "v1:tZ/eBPInMHaQ/9ka:6a57Xq6q2wyLWaJbM0pCF6ddi3FwhmZLhyMsk1PfLBiX3Oy165r9VQ=="
+                                                                                    },
+                                                                                    "okta": {
+                                                                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                                                        "ciphertext": "v1:ZehPB664hpV/olb1:0jlkGV/mN9oISEtCYTQFPGR44GzDYf9DZbHO0c0ZXM2rVC2gmLqWcQ=="
+                                                                                    },
+                                                                                    "saml": {
+                                                                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                                                        "ciphertext": "v1:eLNsHSKjvoNuYhtV:MikppEWU6n0c7jEddDy2bGJxSKtAhojU8Uz2uwYwFj9V+n3/MAGGAg=="
+                                                                                    },
+                                                                                    "serviceToken": {
+                                                                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                                                        "ciphertext": "v1:rpyrUNSjihGmQgt7:eyxCclaf8+JwkDZTaQI4TFpV/kZ+Hgpk31nwJHN32C2CgaQupVGtlg=="
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            },
+                                                            "requires": {
+                                                                "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                                "ciphertext": "v1:S8yeQL77h306jjuA:PLtN7opkW8xscS9CtfDW/NyU/YKPa8P8XUeEcdl6n1K12oHq4qcr3Q=="
+                                                            }
+                                                        },
+                                                        "renamed": {
+                                                            "excludes": "exclude",
+                                                            "includes": "include",
+                                                            "requires": "require"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "readServiceTokensFromHeader": {
+                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                        "ciphertext": "v1:Wm4CfBgzwE6KlNls:PO6dhY06DAeIv2u1HzRuPEg3CfVJEsHjPnDfbxeqRfaSxF39VHttGg=="
+                                    },
+                                    "saasApp": {
+                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                        "ciphertext": "v1:UDaSUVnt4vmOTF4k:E8gTVIn7mZRGfxHiAqvH5M89kXtMpMhX/BoQYL6xnL+jbVRH76iIHg=="
+                                    },
+                                    "sameSiteCookieAttribute": {
+                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                        "ciphertext": "v1:QPPgQf6DqWnfrhpA:7Vsnfh3kPp7fl113dJ+mUA/bHuckzrImxpkM8uOjBWZdjqBuy3xTFQ=="
+                                    },
+                                    "scimConfig": {
+                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                        "ciphertext": "v1:nep0UQeBXYt9z9Cy:sEdqOpDEdUBSpjhs7a9xML6B849CsyiWtFClLPCtPeOKm4qtO32T5g=="
+                                    },
+                                    "selfHostedDomains": {
+                                        "arr": {}
+                                    },
+                                    "serviceAuth401Redirect": {
+                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                        "ciphertext": "v1:Xx9vtoiAEt2dCGyi:d/ko8g/g1+Cmu3Si1FJxRvw3YMIUe70EkKI3xWu1q0EuHSOhkOP8Yw=="
+                                    },
+                                    "skipAppLauncherLoginPage": {
+                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                        "ciphertext": "v1:Yh9hCjFvKUnuftrh:kPoJc0SrbD2bdvudR30Dim9RnuaNBwmjC8y2Zacu553TryT0mEBAfA=="
+                                    },
+                                    "skipInterstitial": {
+                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                        "ciphertext": "v1:sdRaHB2Hfj1a3/aY:uH33vaFVyvwM3jxEnX1C0y7owIhyMXL8w7fxqCkYx2Wn7vr1bJNzCg=="
+                                    },
+                                    "tags": {
+                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                        "ciphertext": "v1:yTQqE8WEJhZNwAj2:gQtjN4a4E4OxLzsSWKdC+ceotMnFTMN4aFICDsKb+em7cJklGDVDqw=="
+                                    },
+                                    "targetCriterias": {
+                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                        "ciphertext": "v1:RNE3VhufyRyttqHA:gyJOuMoApdpXUpE0V+GQUIj6J7IYd+3s4OgpPswCMC4OoK59M2ClHQ=="
+                                    },
+                                    "zoneId": {
+                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                        "ciphertext": "v1:rlsjSDJJ/TLFKQYZ:JjY3fkQr80f0JHsOvUqtQRfCKqTGZzAI6fSFH+LRoLGDHAleSh9Uhw=="
+                                    }
+                                },
+                                "renamed": {
+                                    "serviceAuth401Redirect": "service_auth_401_redirect",
+                                    "targetCriterias": "target_criteria"
+                                }
+                            }
+                        },
+                        "accountId": {
+                            "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                            "ciphertext": "v1:TKhvPdPXBt67xdPt:pIU89cGM5yZn3haAaFsgypDlZm15NjqdwrbaNRg15Oz3wJ40dHdJ3bPbRQKIgjD41HE="
+                        },
+                        "appLauncherVisible": true,
+                        "aud": "ced4e34601262114256a3714f65896edeed205e68afd2f083df18e5b868c1ced",
+                        "corsHeaders": {
+                            "allowAllHeaders": true,
+                            "allowAllMethods": true,
+                            "allowedOrigins": [
+                                "https://*.cloudflareaccess.com",
+                                "https://app.aeroclime.com/*"
+                            ],
+                            "maxAge": 3600
+                        },
+                        "destinations": [
+                            {
+                                "type": "public",
+                                "uri": "app.aeroclime.com/*"
+                            }
+                        ],
+                        "domain": "app.aeroclime.com/*",
+                        "httpOnlyCookieAttribute": true,
+                        "id": "a6369279-389b-4abe-a7ea-66f6787bf6c5",
+                        "name": "production-document-manager-app",
+                        "policies": [
+                            {
+                                "decision": "allow",
+                                "includes": [
+                                    {
+                                        "emailDomain": {
+                                            "domain": "aeroclime.com"
+                                        }
+                                    }
+                                ],
+                                "name": "production-identity-policy",
+                                "precedence": 1
+                            }
+                        ],
+                        "selfHostedDomains": [
+                            "app.aeroclime.com/*"
+                        ],
+                        "sessionDuration": "24h",
+                        "type": "self_hosted"
+                    },
+                    "parent": "urn:pulumi:production::DocumentManager::pulumi:pulumi:Stack::DocumentManager-production",
+                    "protect": true,
+                    "provider": "urn:pulumi:production::DocumentManager::pulumi:providers:cloudflare::cloudflare::c4f63e61-110f-4cb1-9046-e595cbb1f490",
+                    "propertyDependencies": {
+                        "accountId": [],
+                        "appLauncherVisible": [],
+                        "corsHeaders": [],
+                        "destinations": [],
+                        "domain": [],
+                        "name": [],
+                        "policies": [],
+                        "sessionDuration": [],
+                        "type": []
+                    },
+                    "created": "2026-04-03T18:01:02.763014Z",
+                    "modified": "2026-04-03T18:01:02.763014Z",
+                    "sourcePosition": "project:///src/components/zero-trust/access-application.ts#19,29"
+                }
+            ],
+            "metadata": {}
+        }
+    }
+}

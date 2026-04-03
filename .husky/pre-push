@@ -1,0 +1,12 @@
+#!/usr/bin/env sh
+
+set -e
+
+echo "🔍 Running pre-push checks..."
+
+echo ""
+echo "4️⃣ Running E2E tests..."
+VITE_LOCAL=true npm run test:e2e
+
+echo ""
+echo "✅ All pre-push checks passed!"

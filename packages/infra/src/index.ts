@@ -1,4 +1,5 @@
 import { getDB } from './components/db';
+// DNS is managed by wrangler custom_domain feature for Workers
 // import { getWebBucketDnsSet } from './components/dns';
 import {
   getWebHostingBucket,
@@ -7,19 +8,15 @@ import {
   getBillBucket,
   getPOABucket,
 } from './components/r2/buckets';
-// import { getAccessApplication } from './components/zero-trust';
+import { getAccessApplication } from './components/zero-trust';
 
 const [webHostingBucket] = getWebHostingBucket();
 const [templateBucket] = getTemplateBucket();
 const [invoiceBucket] = getInvoiceBucket();
 const [billBucket] = getBillBucket();
 const [poaBucket] = getPOABucket();
-// DNS is managed by wrangler custom_domain feature for Workers
-// const webHostingDns = getWebBucketDnsSet(webHostingBucket.id, webHostingBucket);
 const db = getDB();
-
-// Had to set-up manually due to API bug, same goes for bucket cors
-// const [accessApplication] = getAccessApplication();
+const [accessApplication] = getAccessApplication();
 
 export {
   webHostingBucket,
@@ -27,8 +24,7 @@ export {
   invoiceBucket,
   billBucket,
   poaBucket,
-  // webHostingDns,
-  // accessApplication,
+  accessApplication,
   db,
 };
 

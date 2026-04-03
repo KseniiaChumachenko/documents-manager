@@ -1,13 +1,16 @@
 #!/usr/bin/env sh
 
-# Only run inside devcontainer — skip silently on host machines
-if [ ! -f /.dockerenv ]; then
-  echo "Not in devcontainer — skipping pre-commit hooks"
-  exit 0
-fi
+set -e
 
+echo "🔍 Running pre-commit checks..."
+
+echo ""
+echo "1️⃣ Linting & formatting staged files..."
 npx lint-staged
 
-# Run E2E tests — block commit if any fail
-echo "Running E2E tests..."
-VITE_LOCAL=true npm run test:e2e --workspace=@documents-manager/web
+echo ""
+echo "2️⃣ Type checking..."
+npm run typecheck
+
+echo ""
+echo "✅ All pre-commit checks passed!"

@@ -12,5 +12,32 @@
       "apps/web/test-results/**",
       "apps/web/playwright-report/**"
     ]
+  },
+  "mcp": {
+    "nx-mcp": {
+      "type": "local",
+      "command": ["npx", "nx-mcp"],
+      "enabled": true
+    },
+    "cloudflare": {
+      "type": "local",
+      "command": ["npx", "mcp-remote", "https://bindings.mcp.cloudflare.com/sse"],
+      "enabled": true
+    },
+    "playwright": {
+      "type": "local",
+      "command": ["npx", "@playwright/mcp@latest"],
+      "enabled": true
+    },
+    "pulumi": {
+      "type": "local",
+      "command": ["npx", "mcp-remote", "https://mcp.ai.pulumi.com/mcp"],
+      "enabled": true
+    },
+    "github": {
+      "type": "local",
+      "command": ["npx", "github-mcp-server", "stdio"],
+      "enabled": true
+    }
   }
 }

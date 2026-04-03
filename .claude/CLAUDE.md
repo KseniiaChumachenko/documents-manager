@@ -1,5 +1,12 @@
 # Project Rules
 
+## Git Workflow
+
+- **Create feature branch at start of session** — Use prefixes: `feat/`, `fix/`, `chore/`, `docs/`
+- **Never push to main directly** — Always use Pull Requests
+- **Always ask before pushing** — Require explicit user confirmation before any `git push`
+- **Commit in sensible chunks** — Group related changes with descriptive messages
+
 ## Testing Policy
 
 - **Write E2E tests for every change.** Before committing any feature, bug fix, or refactor, create or update Playwright E2E tests in `apps/web/e2e/` that cover the changed behavior.
@@ -15,6 +22,14 @@ npm run test:e2e           # headless (CI-friendly)
 npm run test:e2e:headed    # with browser visible
 npm run test:e2e:ui        # Playwright interactive UI
 ```
+
+## Secrets Management
+
+- **NEVER commit secrets to git** — This includes API tokens, passwords, private keys
+- **NEVER display secret values in output** — Show placeholder like `<REDACTED>` or `<TOKEN>`
+- **NEVER write secrets to documentation files** — Use descriptions instead of actual values
+- **Secret files are gitignored** — `**/.env`, `**/.env.*`, `**/.dev.vars`
+- **If a secret is exposed** — Alert user immediately and help rotate it
 
 ## Dev Environment
 

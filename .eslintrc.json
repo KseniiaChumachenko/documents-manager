@@ -25,8 +25,11 @@
       "version": "detect"
     },
     "import/resolver": {
-      "typescript": {}
-    }
+      "typescript": {
+        "project": ["tsconfig.json", "apps/*/tsconfig.json", "packages/*/tsconfig.json"]
+      }
+    },
+    "import/ignore": ["virtual:react-router/server-build", "\\.react-router/types"]
   },
   "rules": {
     "@nx/enforce-module-boundaries": "error",
@@ -59,6 +62,23 @@
                 "onlyDependOnLibsWithTags": ["*"]
               }
             ]
+          }
+        ]
+      }
+    },
+    {
+      "files": ["**/workers/app.ts"],
+      "rules": {
+        "import/no-unresolved": ["error", { "ignore": ["^virtual:react-router/server-build$"] }]
+      }
+    },
+    {
+      "files": ["**/app/routes/**/*"],
+      "rules": {
+        "import/no-unresolved": [
+          "error",
+          {
+            "ignore": [".react-router/types"]
           }
         ]
       }

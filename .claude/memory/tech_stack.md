@@ -28,16 +28,16 @@ type: project
 - **TypeScript 5.8.2** strict mode
 - **NX v21.2.1** monorepo orchestration with caching
 - **Wrangler v4.25.0** for Cloudflare deployment
-- **Playwright** — E2E tests in `apps/web/e2e/`, enforced by Husky pre-commit hook
-- **Vitest v3.0.0** configured (workspace setup)
+- **Playwright** — 61 E2E tests in `apps/web/e2e/`, enforced by Husky pre-push hook
+- **Vitest v3.0.0** configured (workspace setup) for unit tests
 - **ESLint 8** + **Prettier 3.6.2**
-- **Husky** — pre-commit hooks (project-level, installed via `post-create.sh` inside devcontainer only)
+- **Husky** — pre-commit (lint + typecheck) and pre-push (E2E tests) hooks
 
 ## Infrastructure
 
-- **Pulumi v3** in `packages/infra/` for Cloudflare resource provisioning
-- **Cloudflare Zero Trust** (Access) for authentication — Google OAuth, email whitelist
-- **Devcontainer** — all dev tooling runs inside devcontainer; husky hooks only installed inside container
+- **Pulumi v3** in `packages/infra/` — manages R2 buckets, D1 databases, Zero Trust Access
+- **Cloudflare Zero Trust** (Access) for authentication — OTP (one-time pin), email domain whitelist (aeroclime.com)
+- **GitHub Actions** — CI/CD for staging (PR to main) and production (push to main)
 
 ## Path Aliases (tsconfig)
 

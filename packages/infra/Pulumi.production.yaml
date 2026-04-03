@@ -1,0 +1,8 @@
+encryptionsalt: v1:KlDxOPrMYCQ=:v1:zjciJWblr6X0KpIM:ecUYMnBcPk4VCmQ60rFfy8ZGqa/TIQ==
+config:
+  cloudflare:apiToken:
+    secure: v1:P/fDP0hES5/Q/upd:LjWyXHd4P53gLogAIc3xyxxrT9CIOO0cNym+KOL7lTV1ZzrOTDzokNj2Bi+KhgrEbblHpALVQN3x9QyljZiIWP0YUyAX
+  DocumentManager:accountId:
+    secure: v1:vn8H7EZGYDyF6UaA:lz70t1+BiRn4gcAyAs92pywoSUa86c3vB2HLNjduW1kY8S69eAvExHi4j9dvmkaj
+  DocumentManager:emailDomain: aeroclime.com
+  DocumentManager:domainZoneId: aa6501d53bef0671a974feea0eb810f3

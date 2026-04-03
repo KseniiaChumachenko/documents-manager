@@ -1,0 +1,173 @@
+{
+    "version": 3,
+    "checkpoint": {
+        "stack": "organization/DocumentManager/production",
+        "latest": {
+            "manifest": {
+                "time": "2026-04-03T19:32:44.022171+02:00",
+                "magic": "88d0da18f668d21177091127bf6af43a4706b834600c4edf2e942a3f566ca00e",
+                "version": "v3.229.0"
+            },
+            "secrets_providers": {
+                "type": "passphrase",
+                "state": {
+                    "salt": "v1:KlDxOPrMYCQ=:v1:zjciJWblr6X0KpIM:ecUYMnBcPk4VCmQ60rFfy8ZGqa/TIQ=="
+                }
+            },
+            "resources": [
+                {
+                    "urn": "urn:pulumi:production::DocumentManager::pulumi:pulumi:Stack::DocumentManager-production",
+                    "custom": false,
+                    "type": "pulumi:pulumi:Stack",
+                    "created": "2026-04-03T17:31:48.668626Z",
+                    "modified": "2026-04-03T17:31:48.668626Z"
+                },
+                {
+                    "urn": "urn:pulumi:production::DocumentManager::pulumi:providers:cloudflare::default",
+                    "custom": true,
+                    "id": "1a0e7e92-7608-4b62-925f-f6e4edf33a09",
+                    "type": "pulumi:providers:cloudflare",
+                    "inputs": {
+                        "apiToken": {
+                            "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                            "ciphertext": "v1:Q/5KLwgWUeMmdCCa:1aSf1comEnPU8fTcwHQkwamL8nupOHn1lMepOBFYk3UVcZbq95oFxLYGSYOMU8amzr4W1DJE2K9dWswhw3Oh91/2vJbkiaY="
+                        }
+                    },
+                    "outputs": {
+                        "apiToken": {
+                            "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                            "ciphertext": "v1:nVHAs5qKRGoGmpfc:D7AcvdIJOZi6EQyc6BsQB4uXvk2PDD3aFcdalu9oUjICbiwOBorX72r0nUb9RJB2Jomu3u5qzUhIRch8XsCzkyMrAMcPlFM="
+                        }
+                    },
+                    "created": "2026-04-03T17:31:48.777236Z",
+                    "modified": "2026-04-03T17:31:48.777236Z"
+                },
+                {
+                    "urn": "urn:pulumi:production::DocumentManager::cloudflare:index/r2Bucket:R2Bucket::production-web",
+                    "custom": true,
+                    "id": "production-web",
+                    "type": "cloudflare:index/r2Bucket:R2Bucket",
+                    "inputs": {
+                        "accountId": "67f4010d9fb3be60f18824cdfc821819",
+                        "jurisdiction": "default",
+                        "location": "EEUR",
+                        "name": "production-web",
+                        "storageClass": "Standard"
+                    },
+                    "outputs": {
+                        "__meta": "{\"schema_version\":\"1\"}",
+                        "__pulumi_raw_state_delta": {
+                            "obj": {}
+                        },
+                        "accountId": "67f4010d9fb3be60f18824cdfc821819",
+                        "creationDate": "2026-04-01T16:57:04.493Z",
+                        "id": "production-web",
+                        "jurisdiction": "default",
+                        "location": "EEUR",
+                        "name": "production-web",
+                        "storageClass": "Standard"
+                    },
+                    "parent": "urn:pulumi:production::DocumentManager::pulumi:pulumi:Stack::DocumentManager-production",
+                    "protect": true,
+                    "provider": "urn:pulumi:production::DocumentManager::pulumi:providers:cloudflare::default::1a0e7e92-7608-4b62-925f-f6e4edf33a09",
+                    "created": "2026-04-03T17:31:49.205524Z",
+                    "modified": "2026-04-03T17:31:49.205524Z"
+                },
+                {
+                    "urn": "urn:pulumi:production::DocumentManager::cloudflare:index/r2Bucket:R2Bucket::production-template",
+                    "custom": true,
+                    "id": "production-template",
+                    "type": "cloudflare:index/r2Bucket:R2Bucket",
+                    "inputs": {
+                        "accountId": "67f4010d9fb3be60f18824cdfc821819",
+                        "jurisdiction": "default",
+                        "location": "EEUR",
+                        "name": "production-template",
+                        "storageClass": "Standard"
+                    },
+                    "outputs": {
+                        "__meta": "{\"schema_version\":\"1\"}",
+                        "__pulumi_raw_state_delta": {
+                            "obj": {}
+                        },
+                        "accountId": "67f4010d9fb3be60f18824cdfc821819",
+                        "creationDate": "2026-04-01T16:57:04.343Z",
+                        "id": "production-template",
+                        "jurisdiction": "default",
+                        "location": "EEUR",
+                        "name": "production-template",
+                        "storageClass": "Standard"
+                    },
+                    "parent": "urn:pulumi:production::DocumentManager::pulumi:pulumi:Stack::DocumentManager-production",
+                    "protect": true,
+                    "provider": "urn:pulumi:production::DocumentManager::pulumi:providers:cloudflare::default::1a0e7e92-7608-4b62-925f-f6e4edf33a09",
+                    "created": "2026-04-03T17:32:07.582046Z",
+                    "modified": "2026-04-03T17:32:07.582046Z"
+                },
+                {
+                    "urn": "urn:pulumi:production::DocumentManager::cloudflare:index/r2Bucket:R2Bucket::production-poa",
+                    "custom": true,
+                    "id": "production-poa",
+                    "type": "cloudflare:index/r2Bucket:R2Bucket",
+                    "inputs": {
+                        "accountId": "67f4010d9fb3be60f18824cdfc821819",
+                        "jurisdiction": "default",
+                        "location": "EEUR",
+                        "name": "production-poa",
+                        "storageClass": "Standard"
+                    },
+                    "outputs": {
+                        "__meta": "{\"schema_version\":\"1\"}",
+                        "__pulumi_raw_state_delta": {
+                            "obj": {}
+                        },
+                        "accountId": "67f4010d9fb3be60f18824cdfc821819",
+                        "creationDate": "2026-04-01T16:57:04.290Z",
+                        "id": "production-poa",
+                        "jurisdiction": "default",
+                        "location": "EEUR",
+                        "name": "production-poa",
+                        "storageClass": "Standard"
+                    },
+                    "parent": "urn:pulumi:production::DocumentManager::pulumi:pulumi:Stack::DocumentManager-production",
+                    "protect": true,
+                    "provider": "urn:pulumi:production::DocumentManager::pulumi:providers:cloudflare::default::1a0e7e92-7608-4b62-925f-f6e4edf33a09",
+                    "created": "2026-04-03T17:32:24.07959Z",
+                    "modified": "2026-04-03T17:32:24.07959Z"
+                },
+                {
+                    "urn": "urn:pulumi:production::DocumentManager::cloudflare:index/r2Bucket:R2Bucket::production-invoice",
+                    "custom": true,
+                    "id": "production-invoice",
+                    "type": "cloudflare:index/r2Bucket:R2Bucket",
+                    "inputs": {
+                        "accountId": "67f4010d9fb3be60f18824cdfc821819",
+                        "jurisdiction": "default",
+                        "location": "EEUR",
+                        "name": "production-invoice",
+                        "storageClass": "Standard"
+                    },
+                    "outputs": {
+                        "__meta": "{\"schema_version\":\"1\"}",
+                        "__pulumi_raw_state_delta": {
+                            "obj": {}
+                        },
+                        "accountId": "67f4010d9fb3be60f18824cdfc821819",
+                        "creationDate": "2026-04-01T16:57:04.365Z",
+                        "id": "production-invoice",
+                        "jurisdiction": "default",
+                        "location": "EEUR",
+                        "name": "production-invoice",
+                        "storageClass": "Standard"
+                    },
+                    "parent": "urn:pulumi:production::DocumentManager::pulumi:pulumi:Stack::DocumentManager-production",
+                    "protect": true,
+                    "provider": "urn:pulumi:production::DocumentManager::pulumi:providers:cloudflare::default::1a0e7e92-7608-4b62-925f-f6e4edf33a09",
+                    "created": "2026-04-03T17:32:44.020598Z",
+                    "modified": "2026-04-03T17:32:44.020598Z"
+                }
+            ],
+            "metadata": {}
+        }
+    }
+}

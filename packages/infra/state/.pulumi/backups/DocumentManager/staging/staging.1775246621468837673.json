@@ -1,0 +1,933 @@
+{
+    "version": 3,
+    "checkpoint": {
+        "stack": "organization/DocumentManager/staging",
+        "latest": {
+            "manifest": {
+                "time": "2026-04-03T20:03:41.463918122Z",
+                "magic": "88d0da18f668d21177091127bf6af43a4706b834600c4edf2e942a3f566ca00e",
+                "version": "v3.229.0"
+            },
+            "secrets_providers": {
+                "type": "passphrase",
+                "state": {
+                    "salt": "v1:jLGIsq93R9E=:v1:SbAPLZCNcShLT3Qq:E5aeLKD7nEemgyB3Ss0k7TCORPUICw=="
+                }
+            },
+            "resources": [
+                {
+                    "urn": "urn:pulumi:staging::DocumentManager::pulumi:pulumi:Stack::DocumentManager-staging",
+                    "custom": false,
+                    "type": "pulumi:pulumi:Stack",
+                    "outputs": {
+                        "accessApplication": {
+                            "accountId": {
+                                "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                "ciphertext": "v1:Dc/qu5O1F1Vd1+60:qcn3+S02wkmQDw/FKRwlE/L7+OgRBxlNzgcOLSRirTtaj0xLExSOrCp4tIXNW0Af6tc="
+                            },
+                            "appLauncherVisible": true,
+                            "aud": "5f6a4c869c444d442ae07966ff4d4295459131739676d9ef996622c6d6790d0a",
+                            "corsHeaders": {
+                                "allowAllHeaders": true,
+                                "allowAllMethods": true,
+                                "allowedOrigins": [
+                                    "https://*.cloudflareaccess.com",
+                                    "https://staging.aeroclime.com/*"
+                                ],
+                                "maxAge": 3600
+                            },
+                            "destinations": [
+                                {
+                                    "type": "public",
+                                    "uri": "staging.aeroclime.com/*"
+                                }
+                            ],
+                            "domain": "staging.aeroclime.com/*",
+                            "httpOnlyCookieAttribute": true,
+                            "id": "5a4e5d08-ffd8-4657-99f8-cfa93c80f8a8",
+                            "name": "staging-document-manager-app",
+                            "policies": [
+                                {
+                                    "decision": "allow",
+                                    "includes": [
+                                        {
+                                            "emailDomain": {
+                                                "domain": "aeroclime.com"
+                                            }
+                                        }
+                                    ],
+                                    "name": "staging-identity-policy",
+                                    "precedence": 1
+                                }
+                            ],
+                            "selfHostedDomains": [
+                                "staging.aeroclime.com/*"
+                            ],
+                            "sessionDuration": "24h",
+                            "type": "self_hosted",
+                            "urn": "urn:pulumi:staging::DocumentManager::cloudflare:index/zeroTrustAccessApplication:ZeroTrustAccessApplication::staging-document-manager-app"
+                        },
+                        "billBucket": {
+                            "accountId": {
+                                "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                "ciphertext": "v1:psLMxZJnjEAUYdH3:P83wo/e9LTPPZS22zjXlsPP+2WHqahHXpIaPnhasbmN/QqGZvl48tPk9ORwlQd3FChM="
+                            },
+                            "creationDate": "2025-07-16T18:10:21.988Z",
+                            "id": "staging-bill",
+                            "jurisdiction": "default",
+                            "location": "EEUR",
+                            "name": "staging-bill",
+                            "storageClass": "Standard",
+                            "urn": "urn:pulumi:staging::DocumentManager::cloudflare:index/r2Bucket:R2Bucket::staging-bill"
+                        },
+                        "databaseId": "d63c46d8-807f-4ae2-a668-045b7e4e7d79",
+                        "db": {
+                            "accountId": {
+                                "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                "ciphertext": "v1:aqS168JPh8jvw1UH:Nkh4WuZMHt9DYOlwGyUQifCv3Phm2A7FG1tjCi9wu6fKV1RIpJq/XdQN/msceQcTu8o="
+                            },
+                            "createdAt": "2025-07-16T18:24:04Z",
+                            "fileSize": 69632,
+                            "id": "d63c46d8-807f-4ae2-a668-045b7e4e7d79",
+                            "name": "staging-db",
+                            "numTables": 6,
+                            "readReplication": {
+                                "mode": "disabled"
+                            },
+                            "urn": "urn:pulumi:staging::DocumentManager::cloudflare:index/d1Database:D1Database::staging-db",
+                            "uuid": "d63c46d8-807f-4ae2-a668-045b7e4e7d79",
+                            "version": "production"
+                        },
+                        "invoiceBucket": {
+                            "accountId": {
+                                "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                "ciphertext": "v1:CIGXTrVCgqSeIS3+:VVXm2PfwPzQheqW565BLzFxTN+8RA9LkgDoYizavPzytDTbmUdjKpsHrhAiRzv+Nf1s="
+                            },
+                            "creationDate": "2025-07-16T18:10:22.389Z",
+                            "id": "staging-invoice",
+                            "jurisdiction": "default",
+                            "location": "EEUR",
+                            "name": "staging-invoice",
+                            "storageClass": "Standard",
+                            "urn": "urn:pulumi:staging::DocumentManager::cloudflare:index/r2Bucket:R2Bucket::staging-invoice"
+                        },
+                        "poaBucket": {
+                            "accountId": {
+                                "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                "ciphertext": "v1:mdqYqlRA0KBqZWOU:nmZvvV+DMY2uW1L35hH2110jOLFz2FxZjL2tw9F3qYfdhSm96rcPDzP2b+UISsiD0Rs="
+                            },
+                            "creationDate": "2025-07-16T18:10:22.072Z",
+                            "id": "staging-poa",
+                            "jurisdiction": "default",
+                            "location": "EEUR",
+                            "name": "staging-poa",
+                            "storageClass": "Standard",
+                            "urn": "urn:pulumi:staging::DocumentManager::cloudflare:index/r2Bucket:R2Bucket::staging-poa"
+                        },
+                        "templateBucket": {
+                            "accountId": {
+                                "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                "ciphertext": "v1:4qtDkB9sxTvjIhGF:JQdvI74xOO+gA1Z14hmOPurXB22HWElZ61dXTN3cOlbbilCdE1cwy49y2NyDWIvakZE="
+                            },
+                            "creationDate": "2025-07-16T18:10:22.029Z",
+                            "id": "staging-template",
+                            "jurisdiction": "default",
+                            "location": "EEUR",
+                            "name": "staging-template",
+                            "storageClass": "Standard",
+                            "urn": "urn:pulumi:staging::DocumentManager::cloudflare:index/r2Bucket:R2Bucket::staging-template"
+                        },
+                        "webHostingBucket": {
+                            "accountId": {
+                                "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                "ciphertext": "v1:iPB2x2nlBPXKe/Rw:1r64F8HZydUc5iImNcjNB3Hb855sURVSBueM4Xzmq5GvF7XB3seJWj9Cxyme/MU7LWk="
+                            },
+                            "creationDate": "2025-07-15T11:28:41.820Z",
+                            "id": "staging-web",
+                            "jurisdiction": "default",
+                            "location": "EEUR",
+                            "name": "staging-web",
+                            "storageClass": "Standard",
+                            "urn": "urn:pulumi:staging::DocumentManager::cloudflare:index/r2Bucket:R2Bucket::staging-web"
+                        }
+                    },
+                    "created": "2026-04-03T17:23:11.916332Z",
+                    "modified": "2026-04-03T17:23:11.916332Z",
+                    "sourcePosition": "project:///../../node_modules/@pulumi/runtime/stack.ts#37,19"
+                },
+                {
+                    "urn": "urn:pulumi:staging::DocumentManager::pulumi:providers:cloudflare::cloudflare",
+                    "custom": true,
+                    "id": "48a7e2be-6adf-426d-9dba-9da5676031c0",
+                    "type": "pulumi:providers:cloudflare",
+                    "inputs": {
+                        "__internal": {},
+                        "apiToken": {
+                            "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                            "ciphertext": "v1:JutjjEDSqN22+nGC:wdZLx8bZXIQS+YPdNXkBCxVUkhLWiupNO0DWCdR3YxrzpXGQKGwDNCHNbhrH9sOkx231xGhCb1y3+n/eYHlaAOYe1ykA0HY="
+                        },
+                        "version": "6.14.0"
+                    },
+                    "outputs": {
+                        "apiToken": {
+                            "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                            "ciphertext": "v1:5kL+F47k3UUZOc/p:7vN5ZLF10fYa6NKTfHGj+aK30ia4DtcPNmKg8OaTL3NmuQwX0O43ggpjro+FHtsDsMvFTUTWU1n5AGG24kj7gw0pj3r/GWQ="
+                        },
+                        "version": "6.14.0"
+                    },
+                    "parent": "urn:pulumi:staging::DocumentManager::pulumi:pulumi:Stack::DocumentManager-staging",
+                    "propertyDependencies": {
+                        "apiToken": []
+                    },
+                    "additionalSecretOutputs": [
+                        "apiKey",
+                        "apiToken",
+                        "apiUserServiceKey"
+                    ],
+                    "created": "2026-04-03T17:28:16.96028Z",
+                    "modified": "2026-04-03T17:28:16.96028Z",
+                    "sourcePosition": "project:///../../node_modules/@pulumi/provider.ts#74,9"
+                },
+                {
+                    "urn": "urn:pulumi:staging::DocumentManager::pulumi:providers:cloudflare::default_6_14_0",
+                    "custom": true,
+                    "id": "1588e795-c7e6-4622-9034-0ae55f4f3a69",
+                    "type": "pulumi:providers:cloudflare",
+                    "inputs": {
+                        "__internal": {},
+                        "apiToken": {
+                            "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                            "ciphertext": "v1:vdllcdutPjQ5Jwej:opk+YRcNv5QWPh0kpWM7ZGpP2oSpuwhTFs8bjXazbOE/cDvPQXJ7VTAzDrh2rvXXH/drlgADdBXP9w8qF4IAyma/J8NKcFk="
+                        },
+                        "version": "6.14.0"
+                    },
+                    "outputs": {
+                        "apiToken": {
+                            "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                            "ciphertext": "v1:QOlzi6KZzDEZUs2+:EH1IORaWdNE7g59p+327p/E+R9F95KrfC0jzjoOu6VPTERjLnSUPKfxWwsM39H+qIKZsePY21KBblSJiQBKuul+QI33mbBI="
+                        },
+                        "version": "6.14.0"
+                    },
+                    "created": "2026-04-03T17:28:16.862915Z",
+                    "modified": "2026-04-03T17:28:16.862915Z"
+                },
+                {
+                    "urn": "urn:pulumi:staging::DocumentManager::cloudflare:index/r2Bucket:R2Bucket::staging-bill",
+                    "custom": true,
+                    "id": "staging-bill",
+                    "type": "cloudflare:index/r2Bucket:R2Bucket",
+                    "inputs": {
+                        "accountId": {
+                            "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                            "ciphertext": "v1:l1li85g73H7BpQG9:P9+CRySmWeD+kJ2ranA6vhtoC2siXKmaZm2lBtdM2OQAKJKsQmJG0303cTM3iyy6xNI="
+                        },
+                        "jurisdiction": "default",
+                        "location": "EEUR",
+                        "name": "staging-bill",
+                        "storageClass": "Standard"
+                    },
+                    "outputs": {
+                        "__meta": "{\"schema_version\":\"1\"}",
+                        "__pulumi_raw_state_delta": {
+                            "obj": {}
+                        },
+                        "accountId": {
+                            "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                            "ciphertext": "v1:87S+6sWoJyyIPx/S:j3edMbJA/MSG/a/VRg3otOoh3+lfvAck5c6Pa/IxSDZzCmGgya0ikHKUZsWtePafWgs="
+                        },
+                        "creationDate": "2025-07-16T18:10:21.988Z",
+                        "id": "staging-bill",
+                        "jurisdiction": "default",
+                        "location": "EEUR",
+                        "name": "staging-bill",
+                        "storageClass": "Standard"
+                    },
+                    "parent": "urn:pulumi:staging::DocumentManager::pulumi:pulumi:Stack::DocumentManager-staging",
+                    "protect": true,
+                    "provider": "urn:pulumi:staging::DocumentManager::pulumi:providers:cloudflare::cloudflare::48a7e2be-6adf-426d-9dba-9da5676031c0",
+                    "propertyDependencies": {
+                        "accountId": [],
+                        "jurisdiction": [],
+                        "location": [],
+                        "name": [],
+                        "storageClass": []
+                    },
+                    "created": "2026-04-03T17:25:43.617174Z",
+                    "modified": "2026-04-03T17:25:43.617174Z",
+                    "sourcePosition": "project:///src/components/r2/buckets.ts#19,18"
+                },
+                {
+                    "urn": "urn:pulumi:staging::DocumentManager::cloudflare:index/r2Bucket:R2Bucket::staging-poa",
+                    "custom": true,
+                    "id": "staging-poa",
+                    "type": "cloudflare:index/r2Bucket:R2Bucket",
+                    "inputs": {
+                        "accountId": {
+                            "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                            "ciphertext": "v1:OLubdWGiOZQJYvnp:MMlhugB2io1lQ/0yF5g+jmnBHnYiCjw0/eu54RdzhIDo5QRlA08BbHvPSibxBvibYWk="
+                        },
+                        "jurisdiction": "default",
+                        "location": "EEUR",
+                        "name": "staging-poa",
+                        "storageClass": "Standard"
+                    },
+                    "outputs": {
+                        "__meta": "{\"schema_version\":\"1\"}",
+                        "__pulumi_raw_state_delta": {
+                            "obj": {}
+                        },
+                        "accountId": {
+                            "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                            "ciphertext": "v1:Ak1RgH+Lju+hwanz:SjSae1PBreXhd4P+puFCfiSdqXhIzlC6p6aSNtT3AaZyVNr1UMLbCLoJU8WT5wnkVsU="
+                        },
+                        "creationDate": "2025-07-16T18:10:22.072Z",
+                        "id": "staging-poa",
+                        "jurisdiction": "default",
+                        "location": "EEUR",
+                        "name": "staging-poa",
+                        "storageClass": "Standard"
+                    },
+                    "parent": "urn:pulumi:staging::DocumentManager::pulumi:pulumi:Stack::DocumentManager-staging",
+                    "protect": true,
+                    "provider": "urn:pulumi:staging::DocumentManager::pulumi:providers:cloudflare::cloudflare::48a7e2be-6adf-426d-9dba-9da5676031c0",
+                    "propertyDependencies": {
+                        "accountId": [],
+                        "jurisdiction": [],
+                        "location": [],
+                        "name": [],
+                        "storageClass": []
+                    },
+                    "created": "2026-04-03T17:24:50.295002Z",
+                    "modified": "2026-04-03T17:24:50.295002Z",
+                    "sourcePosition": "project:///src/components/r2/buckets.ts#19,18"
+                },
+                {
+                    "urn": "urn:pulumi:staging::DocumentManager::cloudflare:index/r2Bucket:R2Bucket::staging-template",
+                    "custom": true,
+                    "id": "staging-template",
+                    "type": "cloudflare:index/r2Bucket:R2Bucket",
+                    "inputs": {
+                        "accountId": {
+                            "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                            "ciphertext": "v1:RhGuNv2SxzHdQT8S:mR6dsxRKdfrOtwGonj16BhYCZigwXcUx3UCBnLYWiaZlF4C4yYMSbiYwhgsMyIMJNRQ="
+                        },
+                        "jurisdiction": "default",
+                        "location": "EEUR",
+                        "name": "staging-template",
+                        "storageClass": "Standard"
+                    },
+                    "outputs": {
+                        "__meta": "{\"schema_version\":\"1\"}",
+                        "__pulumi_raw_state_delta": {
+                            "obj": {}
+                        },
+                        "accountId": {
+                            "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                            "ciphertext": "v1:sZy53qTN7gk9UBJf:m+SPBO2MUq7TewQQb9q1zyM3nfit1fM/Kqo5lDAIXkoNR32gra7XymYv9YscmHwy1QM="
+                        },
+                        "creationDate": "2025-07-16T18:10:22.029Z",
+                        "id": "staging-template",
+                        "jurisdiction": "default",
+                        "location": "EEUR",
+                        "name": "staging-template",
+                        "storageClass": "Standard"
+                    },
+                    "parent": "urn:pulumi:staging::DocumentManager::pulumi:pulumi:Stack::DocumentManager-staging",
+                    "protect": true,
+                    "provider": "urn:pulumi:staging::DocumentManager::pulumi:providers:cloudflare::cloudflare::48a7e2be-6adf-426d-9dba-9da5676031c0",
+                    "propertyDependencies": {
+                        "accountId": [],
+                        "jurisdiction": [],
+                        "location": [],
+                        "name": [],
+                        "storageClass": []
+                    },
+                    "created": "2026-04-03T17:24:06.465604Z",
+                    "modified": "2026-04-03T17:24:06.465604Z",
+                    "sourcePosition": "project:///src/components/r2/buckets.ts#19,18"
+                },
+                {
+                    "urn": "urn:pulumi:staging::DocumentManager::cloudflare:index/r2Bucket:R2Bucket::staging-invoice",
+                    "custom": true,
+                    "id": "staging-invoice",
+                    "type": "cloudflare:index/r2Bucket:R2Bucket",
+                    "inputs": {
+                        "accountId": {
+                            "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                            "ciphertext": "v1:cK/wr+FG+K6DVo6E:fQRQmXN5CglxZkCGFLAIgjjOtD/ildO1Rqn/xivoQBg98kOextObzn04nzRas2R4hHM="
+                        },
+                        "jurisdiction": "default",
+                        "location": "EEUR",
+                        "name": "staging-invoice",
+                        "storageClass": "Standard"
+                    },
+                    "outputs": {
+                        "__meta": "{\"schema_version\":\"1\"}",
+                        "__pulumi_raw_state_delta": {
+                            "obj": {}
+                        },
+                        "accountId": {
+                            "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                            "ciphertext": "v1:UoMzGkmRM3OQRxB7:R8LWtawxIq9S5KY32+maksdTkEexaQl+pIInHUst1n1mhHosBu64rwUxMegFTqaraL0="
+                        },
+                        "creationDate": "2025-07-16T18:10:22.389Z",
+                        "id": "staging-invoice",
+                        "jurisdiction": "default",
+                        "location": "EEUR",
+                        "name": "staging-invoice",
+                        "storageClass": "Standard"
+                    },
+                    "parent": "urn:pulumi:staging::DocumentManager::pulumi:pulumi:Stack::DocumentManager-staging",
+                    "protect": true,
+                    "provider": "urn:pulumi:staging::DocumentManager::pulumi:providers:cloudflare::cloudflare::48a7e2be-6adf-426d-9dba-9da5676031c0",
+                    "propertyDependencies": {
+                        "accountId": [],
+                        "jurisdiction": [],
+                        "location": [],
+                        "name": [],
+                        "storageClass": []
+                    },
+                    "created": "2026-04-03T17:25:17.423415Z",
+                    "modified": "2026-04-03T17:25:17.423415Z",
+                    "sourcePosition": "project:///src/components/r2/buckets.ts#19,18"
+                },
+                {
+                    "urn": "urn:pulumi:staging::DocumentManager::cloudflare:index/r2Bucket:R2Bucket::staging-web",
+                    "custom": true,
+                    "id": "staging-web",
+                    "type": "cloudflare:index/r2Bucket:R2Bucket",
+                    "inputs": {
+                        "accountId": {
+                            "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                            "ciphertext": "v1:qTJeop7vlmSw222I:NSEvs8HDIyHk9AS2HFd9pvUOoqjMN4Yxz1Jd4YGtDQ2ANzqtXSMSVWmsoNkoj/J4IrE="
+                        },
+                        "jurisdiction": "default",
+                        "location": "EEUR",
+                        "name": "staging-web",
+                        "storageClass": "Standard"
+                    },
+                    "outputs": {
+                        "__meta": "{\"schema_version\":\"1\"}",
+                        "__pulumi_raw_state_delta": {
+                            "obj": {}
+                        },
+                        "accountId": {
+                            "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                            "ciphertext": "v1:0n+Ue/4mspTDhfIY:hxBhhFAKgg6vBKlhF1+itBJR9yGK2gBas0aZVWFqzFu+1V/CvcsjbS/KsY1Kr1g541c="
+                        },
+                        "creationDate": "2025-07-15T11:28:41.820Z",
+                        "id": "staging-web",
+                        "jurisdiction": "default",
+                        "location": "EEUR",
+                        "name": "staging-web",
+                        "storageClass": "Standard"
+                    },
+                    "parent": "urn:pulumi:staging::DocumentManager::pulumi:pulumi:Stack::DocumentManager-staging",
+                    "protect": true,
+                    "provider": "urn:pulumi:staging::DocumentManager::pulumi:providers:cloudflare::cloudflare::48a7e2be-6adf-426d-9dba-9da5676031c0",
+                    "propertyDependencies": {
+                        "accountId": [],
+                        "jurisdiction": [],
+                        "location": [],
+                        "name": [],
+                        "storageClass": []
+                    },
+                    "created": "2026-04-03T17:23:12.579457Z",
+                    "modified": "2026-04-03T17:23:12.579457Z",
+                    "sourcePosition": "project:///src/components/r2/buckets.ts#19,18"
+                },
+                {
+                    "urn": "urn:pulumi:staging::DocumentManager::cloudflare:index/zeroTrustAccessApplication:ZeroTrustAccessApplication::staging-document-manager-app",
+                    "custom": true,
+                    "id": "5a4e5d08-ffd8-4657-99f8-cfa93c80f8a8",
+                    "type": "cloudflare:index/zeroTrustAccessApplication:ZeroTrustAccessApplication",
+                    "inputs": {
+                        "accountId": {
+                            "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                            "ciphertext": "v1:2vBoNlezlNXedt+b:FQVkQO/GoOgVFpXEstkPf2r8cVeKH83lr+l91eiOCXItp/F+K39VDBBWzPrA9uY5dE8="
+                        },
+                        "appLauncherVisible": true,
+                        "corsHeaders": {
+                            "allowAllHeaders": true,
+                            "allowAllMethods": true,
+                            "allowedOrigins": [
+                                "https://*.cloudflareaccess.com",
+                                "https://staging.aeroclime.com/*"
+                            ],
+                            "maxAge": 3600
+                        },
+                        "destinations": [
+                            {
+                                "type": "public",
+                                "uri": "staging.aeroclime.com/*"
+                            }
+                        ],
+                        "domain": "staging.aeroclime.com/*",
+                        "name": "staging-document-manager-app",
+                        "policies": [
+                            {
+                                "decision": "allow",
+                                "includes": [
+                                    {
+                                        "emailDomain": {
+                                            "domain": "aeroclime.com"
+                                        }
+                                    }
+                                ],
+                                "name": "staging-identity-policy"
+                            }
+                        ],
+                        "sessionDuration": "24h",
+                        "type": "self_hosted"
+                    },
+                    "outputs": {
+                        "__meta": "{\"schema_version\":\"1\"}",
+                        "__pulumi_raw_state_delta": {
+                            "obj": {
+                                "ps": {
+                                    "allowAuthenticateViaWarp": {
+                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                        "ciphertext": "v1:bEeJP6Fcmsp5KgXF:5qk7EQ8bzSLS+3yoLRuHGeHSi6/2+LSsxRY6kK/AylkyS6zx0EnmMA=="
+                                    },
+                                    "allowIframe": {
+                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                        "ciphertext": "v1:u29+Gg74q18c2UEN:98drzuCU3ERsFLOhYhjhl2O03fSP3MzsL85ONx3kU9rhmxSaLwq8nQ=="
+                                    },
+                                    "allowedIdps": {
+                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                        "ciphertext": "v1:2O38Nwuv1zNFSsVk:h6lUG7ozqCxA4HNYiFAMLVDo00JvjPlwKB0FaF4J/VQLN6OD6Z4DGg=="
+                                    },
+                                    "appLauncherLogoUrl": {
+                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                        "ciphertext": "v1:B0vD33+lowu1X/nS:UVu99rJrU2WsOyzaTP7aXaRLgMV6L5HC8F+KxvIvMjlBgmj2fZW4Dg=="
+                                    },
+                                    "autoRedirectToIdentity": {
+                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                        "ciphertext": "v1:vpW+lKCxeInvSawx:vL0RxQF9AEPCWLczg+g25UDajSokVrXm5RxKoU2s4tsO6+EvMEIouw=="
+                                    },
+                                    "bgColor": {
+                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                        "ciphertext": "v1:3YSPTxystmKDbtXS:f27vFDgoM/Zqa2slhwkr0LCDsUYfQjDskixU188Xg8c2kX3583z57w=="
+                                    },
+                                    "corsHeaders": {
+                                        "obj": {
+                                            "ps": {
+                                                "allowAllOrigins": {
+                                                    "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                    "ciphertext": "v1:dgbLiJS5P6Yw8cGs:MUH6U4OLfXL5+8ZfQMc5Z9RKjKmDGvqdmCcLhikVT5KxuWbId85xfw=="
+                                                },
+                                                "allowCredentials": {
+                                                    "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                    "ciphertext": "v1:3CSrKE6Tmi36otzl:GsYcUlKw2OuvSMaKG4STGg9Z2kQ5lp91c8lmdv3i5T3yY+JIk+hpgA=="
+                                                },
+                                                "allowedHeaders": {
+                                                    "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                    "ciphertext": "v1:+3BlVbQmNZVi3H6E:VAOwqPWzXZ8Edxzzl7VkOxS8EK6yv7N948zFM5U55iMikdL48vZV0g=="
+                                                },
+                                                "allowedMethods": {
+                                                    "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                    "ciphertext": "v1:JuF5/DFr0z12tVCM:V6P9n0dLaAxCApyh1k81H/tI0kYECyJrb3OgHIp3T1CKmdOzrN1Stg=="
+                                                },
+                                                "allowedOrigins": {
+                                                    "arr": {}
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "customDenyMessage": {
+                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                        "ciphertext": "v1:jspXD/nzPEpAVJIR:BCM1MRZQsHiphPqgeOqfJ5XjwRycTarODkY275mFQj0l2/H/ffpGeQ=="
+                                    },
+                                    "customDenyUrl": {
+                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                        "ciphertext": "v1:bnpVBOALm3EMyJBx:7GLyKIlfxTzJvR31pRet6oP0OMM3VP6lNNKnTo2EoupAY5OmieRnWQ=="
+                                    },
+                                    "customNonIdentityDenyUrl": {
+                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                        "ciphertext": "v1:yq6gJhK5rC9WHcKG:tdqoEjWZtXQFObxF6UkAZYBxJ3NuunERxGLotmL39aV3ifJbatL1Kg=="
+                                    },
+                                    "customPages": {
+                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                        "ciphertext": "v1:a59Udgz/Fj5ePACe:jzukBO9shP9ulUBgrnw46FSJZxqAT/A49Ya8Z4bm6vA6mIl/GvWSiQ=="
+                                    },
+                                    "destinations": {
+                                        "arr": {
+                                            "el": {
+                                                "0": {
+                                                    "obj": {
+                                                        "ps": {
+                                                            "cidr": {
+                                                                "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                                "ciphertext": "v1:wPaIiSKPUn+9uZuo:ZeVPz8lOXJVOyfKC6CfyJVmBRdxJlBCoHtv2VMimrZYohPTNSulyQg=="
+                                                            },
+                                                            "hostname": {
+                                                                "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                                "ciphertext": "v1:xuekE+gKEUs8afwm:AqwwkrGpJSVqKj+tJPa1Yba4LU5+mokIksB8xM6C0WacGV2rzUmZdw=="
+                                                            },
+                                                            "l4Protocol": {
+                                                                "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                                "ciphertext": "v1:WCJqii13NT6+KnRE:933+zgwAfMguq20QQ6ytR5Hcg2YpsEXs8veWTAhDhIm0IiG4vJPgPg=="
+                                                            },
+                                                            "mcpServerId": {
+                                                                "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                                "ciphertext": "v1:U1vHF57I2t1wRJtE:b6rGghrVkDguAa5kWDVsl3UAEjhGE6yYuVVPzxPZioWpzM0RFs4fpQ=="
+                                                            },
+                                                            "portRange": {
+                                                                "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                                "ciphertext": "v1:kIxuyMQMK/xKgT23:mo8bDbq34Pd5EbOUgS6TS0eCHqaK1kysnmV2NxKOwx3tU4sGlHYZYA=="
+                                                            },
+                                                            "vnetId": {
+                                                                "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                                "ciphertext": "v1:6xXbEUmwiLCW0/Q4:2Ln/X/L98A9BF2CccdnGjfzgOCN/HDCsEQUVIahZmF3hQcemn75Yww=="
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "enableBindingCookie": {
+                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                        "ciphertext": "v1:ua7J8Ots6u+B4eJv:9wUugDua2TYDZcTNMDsnQq6S8R4o/CUws8d+uKWnb6Dz1gFaU20f/w=="
+                                    },
+                                    "footerLinks": {
+                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                        "ciphertext": "v1:Ciqwi6fA23+wWTs6:GPM2CbnQFLrww8JkGCm0svWMcRYWq9DO/XdzXx9kVber4Ho85pYqAg=="
+                                    },
+                                    "headerBgColor": {
+                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                        "ciphertext": "v1:sI9THY1yJ7UbTj5m:DAYAuvtysCuHhbkK2jYV9UK2vZapEl2O4dbSCT+X4pAUOq6bs/Hx1g=="
+                                    },
+                                    "landingPageDesign": {
+                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                        "ciphertext": "v1:TtL9mA7Y7C4YHmWJ:yJCZLDXlfG50jn4rkqDe4j/G6528oqmEmbac+SNkifCkglJU7cetKA=="
+                                    },
+                                    "logoUrl": {
+                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                        "ciphertext": "v1:X9yjhOYKAFBJRq84:SxyNYPZPMoxCFUBm1uAvSye+xz8ylEunW8DfNk4QM15NlYP8pQbrWA=="
+                                    },
+                                    "optionsPreflightBypass": {
+                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                        "ciphertext": "v1:GPSE+ETZjIUT59ip:eSTZpRpdqEZe52syvzBAPenSK1SxS4KQOyKMx61QoX0VAKOYiR4nmQ=="
+                                    },
+                                    "pathCookieAttribute": {
+                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                        "ciphertext": "v1:YZ6PVrZAC3/17oyU:T3urAKPQfmy6KJZzx2JHoogqtG1fSdc16vjWlmrEpkYrvwjeNWK22g=="
+                                    },
+                                    "policies": {
+                                        "arr": {
+                                            "el": {
+                                                "0": {
+                                                    "obj": {
+                                                        "ps": {
+                                                            "connectionRules": {
+                                                                "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                                "ciphertext": "v1:bkSCjnYy4FVSzZTp:lp5iybuimXKSly7gB3eoLCuVuaqNTNOh3LaHuKyhyUlMycpj1IECDA=="
+                                                            },
+                                                            "excludes": {
+                                                                "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                                "ciphertext": "v1:OQ6vauqoNljnszQx:EoeATXKEOEVK+ULdGkrgHRL8t2nLNhc7LVltBrx9hk45hhx7jZ/bCQ=="
+                                                            },
+                                                            "id": {
+                                                                "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                                "ciphertext": "v1:iJtgbsQaTPgb8UlT:fcafRBJAI3437an1VdZkOoeKkS49/DAM3yBXBTJuiNyY7amdrjTZZQ=="
+                                                            },
+                                                            "includes": {
+                                                                "arr": {
+                                                                    "el": {
+                                                                        "0": {
+                                                                            "obj": {
+                                                                                "ps": {
+                                                                                    "anyValidServiceToken": {
+                                                                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                                                        "ciphertext": "v1:admJ4iMW1xdqnr9a:becWPDgUYVYPHd8sVZcBVpjlSIpG0B+YDihysgkfGKPAo8DfzFWJFw=="
+                                                                                    },
+                                                                                    "authContext": {
+                                                                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                                                        "ciphertext": "v1:hkuRXm/Fl3B1V1dT:vKv4bEyKI3fD3dhC+j8gy+oM6FvPpX9yDjAl+DZ1CMrCX68mX3M3wg=="
+                                                                                    },
+                                                                                    "authMethod": {
+                                                                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                                                        "ciphertext": "v1:oksjOh5SWWa6aCjw:I4tJHYVeSqIort23g624egKbECibc3zw7im0ZPWesPyjNlw0IJM+Yw=="
+                                                                                    },
+                                                                                    "azureAd": {
+                                                                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                                                        "ciphertext": "v1:Dxr8R7IN0GYm1M4v:mIFy2e2+b7yNP8gQ0GzPxwksIn2os/AGZzgFiBulGM2qLssm/MjqFA=="
+                                                                                    },
+                                                                                    "certificate": {
+                                                                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                                                        "ciphertext": "v1:hn3ABf9aExVn2xXR:FWvQ2NLLtSqvTvO17IHa0cFRW0/GXzkCI21KQq0ARrk5GEhMpfNx+A=="
+                                                                                    },
+                                                                                    "commonName": {
+                                                                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                                                        "ciphertext": "v1:D4RM3ztoAChtGBpE:E/k/IwM6D0Nra/qwtWqPpXRuy5NnPLL7TOvxig8Zdj9LoVR6puldCg=="
+                                                                                    },
+                                                                                    "devicePosture": {
+                                                                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                                                        "ciphertext": "v1:XKvTOWJfqilrcHNi:usv5mB06AwyWgpKKsGdFBpqmpsUsq9CGIqTsVHsH8mGev1Y4a7MLnA=="
+                                                                                    },
+                                                                                    "email": {
+                                                                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                                                        "ciphertext": "v1:9VAmvAUwgp3aTkeT:A8yVvozlwgrMMDAhDfmKPzsgPY7oURglmATUWkoOP5PwHjvqs40mBg=="
+                                                                                    },
+                                                                                    "emailDomain": {
+                                                                                        "obj": {}
+                                                                                    },
+                                                                                    "emailList": {
+                                                                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                                                        "ciphertext": "v1:2HO7eHurZUEA/rJI:MiQ5WqN0rYLgOujtwqWQeCkwy1qXGLiFO6bNbzampsPXEidPF8qdIQ=="
+                                                                                    },
+                                                                                    "everyone": {
+                                                                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                                                        "ciphertext": "v1:X4wLHL0YlYYufUP2:avAgU+kUeBrNyYZuZuPUTNQunkBqllwes7wmpSDJg3cwU624Tlt37g=="
+                                                                                    },
+                                                                                    "externalEvaluation": {
+                                                                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                                                        "ciphertext": "v1:YVBeNzZkeTKSED3X:BMptgIvNMjZukCl7Bg3X9ulqYJeQ9/TSGjuXWVGywdUook4eUFRfRA=="
+                                                                                    },
+                                                                                    "geo": {
+                                                                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                                                        "ciphertext": "v1:X8SYBhID4v08Q6XW:NPgnx94BXA9ZBaJQnUxSrZsvDTBZjSWMWgV8/AWk2KqG/HKuuNnNAA=="
+                                                                                    },
+                                                                                    "githubOrganization": {
+                                                                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                                                        "ciphertext": "v1:M5rshzacEl2xdH25:hccu62cLMPyN6fHYSnaA7Hy6iu06AysaoCVHct4Zl2BAKyy9iMb8Uw=="
+                                                                                    },
+                                                                                    "group": {
+                                                                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                                                        "ciphertext": "v1:IchNPf1HtP3EgV4Y:ZNUknbzfek9fMWQyAclpkeTqyp59UiF5QBTgksVmN+1ExgsDopnRLA=="
+                                                                                    },
+                                                                                    "gsuite": {
+                                                                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                                                        "ciphertext": "v1:TX1710LaSoV8A1D0:FhfHy/+0GL0pArD0VzqgynKrwCIwKJ86l9x77HmrQuQqxYR1/yfFnw=="
+                                                                                    },
+                                                                                    "ip": {
+                                                                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                                                        "ciphertext": "v1:++ERYRLbY5mCARjG:NnEEg2Jueg9w/uIbl1+eas1zke1YXQ6o7Rw2fPjG+TkQrMdftBv+tg=="
+                                                                                    },
+                                                                                    "ipList": {
+                                                                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                                                        "ciphertext": "v1:LZOfTXhatp3EYLd2:uiv69t6BxzWLIBJckR8TIfCJnqkqIBg8AV7WdCJ9LB9H0vtAwbwKKA=="
+                                                                                    },
+                                                                                    "linkedAppToken": {
+                                                                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                                                        "ciphertext": "v1:riYYCasZBghDUxEo:ObMJNv2ZLTcxA+gzHHf2MFHyKU6O0q3ojY85wCpznRfbM8CmjvNLqg=="
+                                                                                    },
+                                                                                    "loginMethod": {
+                                                                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                                                        "ciphertext": "v1:0pY8h5vY45ofZPXs:zdQ9OaCsG+HRnmQNrQuIrtxWbY0KChfVYvrzARbDdslnzSk25OdQZA=="
+                                                                                    },
+                                                                                    "oidc": {
+                                                                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                                                        "ciphertext": "v1:OKFVmowAZTak41vj:2cCwdyzcdDO5SRPLA4lE+xlFwCkHFie/TiRevfQCpX0aKCQQom6wHg=="
+                                                                                    },
+                                                                                    "okta": {
+                                                                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                                                        "ciphertext": "v1:iPtu7y02bZFVPKeL:gBEYk9hQnU6PGRcCkt8KTgVVXNY6v2rs6PI5OGDZyXFPnlps+V23OQ=="
+                                                                                    },
+                                                                                    "saml": {
+                                                                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                                                        "ciphertext": "v1:Aa9mR9SOYJKn4nn2:SQrjRoeyh+o7e7qjCZ8/7yrz4BazbSfV14RrQrIytDNG9r/Vvg9uXg=="
+                                                                                    },
+                                                                                    "serviceToken": {
+                                                                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                                                        "ciphertext": "v1:daMnNGjiNRUH1qYq:DLP8HfDBACBAaM8kquDePIPLygDHkWpmlkp18vuvdGhSjzGY5RMUJw=="
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            },
+                                                            "requires": {
+                                                                "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                                                "ciphertext": "v1:POkLIX9qi2XuhnHT:tt5uHdZMQNvoVJvsVfbRBbUtwOmCCS1O3wE4NjCL7rwlRC1uRrkeOA=="
+                                                            }
+                                                        },
+                                                        "renamed": {
+                                                            "excludes": "exclude",
+                                                            "includes": "include",
+                                                            "requires": "require"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "readServiceTokensFromHeader": {
+                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                        "ciphertext": "v1:pXGCjEY4cOFn9ZTm:DMQqESWUzroXEtJe6RfmM+FsQQNrgasWvWPhh2re54JDiUIS96c3jA=="
+                                    },
+                                    "saasApp": {
+                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                        "ciphertext": "v1:3Fl9Gp4JY14iijcR:MliitzeeGwFHQkeWOCa6PTlaGyjlrsw042tgb9/tzdcwKM/Hu/mD/A=="
+                                    },
+                                    "sameSiteCookieAttribute": {
+                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                        "ciphertext": "v1:h++JmK3C1VJmGJXb:wT+FSfYCQfAUwJAtg6eQ6jiVZQq9PGi03qVWJLA8i0H3qko3aivtOQ=="
+                                    },
+                                    "scimConfig": {
+                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                        "ciphertext": "v1:Sz+xMajCZTLntn05:o0By3SwjTC48VaZmp3UNSzz18z+RCr78OEA6aW1OXruZcPYvA1ua6A=="
+                                    },
+                                    "selfHostedDomains": {
+                                        "arr": {}
+                                    },
+                                    "serviceAuth401Redirect": {
+                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                        "ciphertext": "v1:ym3gDI+h8h2KDScs:vLGm4K7SvlVhYFZ045SMFN/+G9+DKXUSP/oaOa7XeZ2Jocv+oMxzNQ=="
+                                    },
+                                    "skipAppLauncherLoginPage": {
+                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                        "ciphertext": "v1:jIeiZH+aoWw06lCj:ipOsGguF+nYRUD7SiwN6mB9Boe6btSug6CW18qtKHKD1FrqItfUBFw=="
+                                    },
+                                    "skipInterstitial": {
+                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                        "ciphertext": "v1:mc8SxFIs1EXIz25D:V7DmhSCg6kDt1Rm+cYN1wNutSQH0ObMBq44djbWS3botqksmCvbNpA=="
+                                    },
+                                    "tags": {
+                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                        "ciphertext": "v1:n9R+5TJQdK5HlU+X:RRpAQjofLhos8A1LyI50dhYNbDN1lXvsZtyqrXbR5c2mdQU+e9JRNw=="
+                                    },
+                                    "targetCriterias": {
+                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                        "ciphertext": "v1:0YMCY9tpfcYyDcbN:Zhhary3csF/O5E/2SHLOrursF2baqCjOsVvO9a4f3R6ENBbP94a3+w=="
+                                    },
+                                    "zoneId": {
+                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                        "ciphertext": "v1:xPGw9QaLUjD1g2Bs:pF6S37002oKcr0QF6ADky5VMlDY9qCvVQJHU2loIWnD0ZX/gXYcgjQ=="
+                                    }
+                                },
+                                "renamed": {
+                                    "serviceAuth401Redirect": "service_auth_401_redirect",
+                                    "targetCriterias": "target_criteria"
+                                }
+                            }
+                        },
+                        "accountId": {
+                            "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                            "ciphertext": "v1:i+vfQzZ459X7DPVq:+O7THf5vcn/eGR18quGezAeW7u1tJo+HVUpn4TnVTwRipHCdxq1zIhgqZFBQ8DLBxtk="
+                        },
+                        "appLauncherVisible": true,
+                        "aud": "5f6a4c869c444d442ae07966ff4d4295459131739676d9ef996622c6d6790d0a",
+                        "corsHeaders": {
+                            "allowAllHeaders": true,
+                            "allowAllMethods": true,
+                            "allowedOrigins": [
+                                "https://*.cloudflareaccess.com",
+                                "https://staging.aeroclime.com/*"
+                            ],
+                            "maxAge": 3600
+                        },
+                        "destinations": [
+                            {
+                                "type": "public",
+                                "uri": "staging.aeroclime.com/*"
+                            }
+                        ],
+                        "domain": "staging.aeroclime.com/*",
+                        "httpOnlyCookieAttribute": true,
+                        "id": "5a4e5d08-ffd8-4657-99f8-cfa93c80f8a8",
+                        "name": "staging-document-manager-app",
+                        "policies": [
+                            {
+                                "decision": "allow",
+                                "includes": [
+                                    {
+                                        "emailDomain": {
+                                            "domain": "aeroclime.com"
+                                        }
+                                    }
+                                ],
+                                "name": "staging-identity-policy",
+                                "precedence": 1
+                            }
+                        ],
+                        "selfHostedDomains": [
+                            "staging.aeroclime.com/*"
+                        ],
+                        "sessionDuration": "24h",
+                        "type": "self_hosted"
+                    },
+                    "parent": "urn:pulumi:staging::DocumentManager::pulumi:pulumi:Stack::DocumentManager-staging",
+                    "protect": true,
+                    "provider": "urn:pulumi:staging::DocumentManager::pulumi:providers:cloudflare::cloudflare::48a7e2be-6adf-426d-9dba-9da5676031c0",
+                    "propertyDependencies": {
+                        "accountId": [],
+                        "appLauncherVisible": [],
+                        "corsHeaders": [],
+                        "destinations": [],
+                        "domain": [],
+                        "name": [],
+                        "policies": [],
+                        "sessionDuration": [],
+                        "type": []
+                    },
+                    "created": "2026-04-03T17:56:23.109209Z",
+                    "modified": "2026-04-03T17:58:49.275357Z",
+                    "sourcePosition": "project:///src/components/zero-trust/access-application.ts#19,29"
+                },
+                {
+                    "urn": "urn:pulumi:staging::DocumentManager::cloudflare:index/d1Database:D1Database::staging-db",
+                    "custom": true,
+                    "id": "d63c46d8-807f-4ae2-a668-045b7e4e7d79",
+                    "type": "cloudflare:index/d1Database:D1Database",
+                    "inputs": {
+                        "accountId": {
+                            "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                            "ciphertext": "v1:JGSeiAXbO1YPu6hY:DScuj2XQH2SkENZtAQEUHfQWbEAjF8RbiaQBM/g+yax+PDyHW0JJYyUelu+4y8D9i4s="
+                        },
+                        "name": "staging-db",
+                        "readReplication": {
+                            "mode": "disabled"
+                        }
+                    },
+                    "outputs": {
+                        "__pulumi_raw_state_delta": {
+                            "obj": {
+                                "ps": {
+                                    "jurisdiction": {
+                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                        "ciphertext": "v1:iA990nD4hbHuZ3BL:1uPXZgn0hkuq9rPH7Wf3RfSRE2UDpSDo9E2TWdvFr/op54owUXQzHA=="
+                                    },
+                                    "primaryLocationHint": {
+                                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                                        "ciphertext": "v1:Yy+vbpCPKVgDk6Ne:6j3X+yx7AZBDnOhLQSKjPyCx/alidIB5JrQ2uLYaukg1nPFFEWSncQ=="
+                                    },
+                                    "readReplication": {
+                                        "obj": {}
+                                    }
+                                }
+                            }
+                        },
+                        "accountId": {
+                            "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                            "ciphertext": "v1:Y/dXcwb0hMSn7biZ:iWF/yetMMlo/rDarq9MhWq6EkEhGkeUAPEqEpzANg9oQadxBsqJQ17uqiWWQeOt0t8Q="
+                        },
+                        "createdAt": "2025-07-16T18:24:04Z",
+                        "fileSize": 69632,
+                        "id": "d63c46d8-807f-4ae2-a668-045b7e4e7d79",
+                        "name": "staging-db",
+                        "numTables": 6,
+                        "readReplication": {
+                            "mode": "disabled"
+                        },
+                        "uuid": "d63c46d8-807f-4ae2-a668-045b7e4e7d79",
+                        "version": "production"
+                    },
+                    "parent": "urn:pulumi:staging::DocumentManager::pulumi:pulumi:Stack::DocumentManager-staging",
+                    "provider": "urn:pulumi:staging::DocumentManager::pulumi:providers:cloudflare::default_6_14_0::1588e795-c7e6-4622-9034-0ae55f4f3a69",
+                    "propertyDependencies": {
+                        "accountId": [],
+                        "name": [],
+                        "readReplication": []
+                    },
+                    "created": "2026-04-03T17:26:17.638325Z",
+                    "modified": "2026-04-03T17:26:17.638325Z",
+                    "sourcePosition": "project:///src/components/db/index.ts#9,3"
+                }
+            ],
+            "metadata": {}
+        }
+    }
+}

@@ -38,4 +38,4 @@ type: project
 
 **Why:** Previous schema used egrpou as PK, didn't support ФОП, had no entity_type distinction.
 
-**How to apply:** Schema migration 0005 is written but may not be applied to staging yet. Check before assuming DB is up to date.
+**How to apply:** Migration 0005 has been applied to both staging and production (as of 2026-04-03).

@@ -1,0 +1,173 @@
+{
+    "version": 3,
+    "checkpoint": {
+        "stack": "organization/DocumentManager/staging",
+        "latest": {
+            "manifest": {
+                "time": "2026-04-03T19:25:17.425122+02:00",
+                "magic": "88d0da18f668d21177091127bf6af43a4706b834600c4edf2e942a3f566ca00e",
+                "version": "v3.229.0"
+            },
+            "secrets_providers": {
+                "type": "passphrase",
+                "state": {
+                    "salt": "v1:jLGIsq93R9E=:v1:SbAPLZCNcShLT3Qq:E5aeLKD7nEemgyB3Ss0k7TCORPUICw=="
+                }
+            },
+            "resources": [
+                {
+                    "urn": "urn:pulumi:staging::DocumentManager::pulumi:pulumi:Stack::DocumentManager-staging",
+                    "custom": false,
+                    "type": "pulumi:pulumi:Stack",
+                    "created": "2026-04-03T17:23:11.916332Z",
+                    "modified": "2026-04-03T17:23:11.916332Z"
+                },
+                {
+                    "urn": "urn:pulumi:staging::DocumentManager::pulumi:providers:cloudflare::default",
+                    "custom": true,
+                    "id": "3589b6a1-608d-4c2d-a971-8be551b484f9",
+                    "type": "pulumi:providers:cloudflare",
+                    "inputs": {
+                        "apiToken": {
+                            "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                            "ciphertext": "v1:CZxVCfaBoDqVSMTA:EJppmb+eY8MTIapPqmA9gv8S1TSEdCD3rjAxtsWGPDRxO6g0B0hmdkM8A6IzXiydWv17TUCY2pGPV/jnxY0+hM5PbfLNVps="
+                        }
+                    },
+                    "outputs": {
+                        "apiToken": {
+                            "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                            "ciphertext": "v1:cYVOdiA5IH6xdAFg:ssibMCVi3refl9IfQF7GVoq/oqOzfDFHpOx9Ih/zMF85bwoCBZ573Id3tvRJf9NY3vaUT6L5FamQBHfpQ+Iw8rck5OjhKX8="
+                        }
+                    },
+                    "created": "2026-04-03T17:23:12.024267Z",
+                    "modified": "2026-04-03T17:23:12.024267Z"
+                },
+                {
+                    "urn": "urn:pulumi:staging::DocumentManager::cloudflare:index/r2Bucket:R2Bucket::staging-web",
+                    "custom": true,
+                    "id": "staging-web",
+                    "type": "cloudflare:index/r2Bucket:R2Bucket",
+                    "inputs": {
+                        "accountId": "67f4010d9fb3be60f18824cdfc821819",
+                        "jurisdiction": "default",
+                        "location": "EEUR",
+                        "name": "staging-web",
+                        "storageClass": "Standard"
+                    },
+                    "outputs": {
+                        "__meta": "{\"schema_version\":\"1\"}",
+                        "__pulumi_raw_state_delta": {
+                            "obj": {}
+                        },
+                        "accountId": "67f4010d9fb3be60f18824cdfc821819",
+                        "creationDate": "2025-07-15T11:28:41.820Z",
+                        "id": "staging-web",
+                        "jurisdiction": "default",
+                        "location": "EEUR",
+                        "name": "staging-web",
+                        "storageClass": "Standard"
+                    },
+                    "parent": "urn:pulumi:staging::DocumentManager::pulumi:pulumi:Stack::DocumentManager-staging",
+                    "protect": true,
+                    "provider": "urn:pulumi:staging::DocumentManager::pulumi:providers:cloudflare::default::3589b6a1-608d-4c2d-a971-8be551b484f9",
+                    "created": "2026-04-03T17:23:12.579457Z",
+                    "modified": "2026-04-03T17:23:12.579457Z"
+                },
+                {
+                    "urn": "urn:pulumi:staging::DocumentManager::cloudflare:index/r2Bucket:R2Bucket::staging-template",
+                    "custom": true,
+                    "id": "staging-template",
+                    "type": "cloudflare:index/r2Bucket:R2Bucket",
+                    "inputs": {
+                        "accountId": "67f4010d9fb3be60f18824cdfc821819",
+                        "jurisdiction": "default",
+                        "location": "EEUR",
+                        "name": "staging-template",
+                        "storageClass": "Standard"
+                    },
+                    "outputs": {
+                        "__meta": "{\"schema_version\":\"1\"}",
+                        "__pulumi_raw_state_delta": {
+                            "obj": {}
+                        },
+                        "accountId": "67f4010d9fb3be60f18824cdfc821819",
+                        "creationDate": "2025-07-16T18:10:22.029Z",
+                        "id": "staging-template",
+                        "jurisdiction": "default",
+                        "location": "EEUR",
+                        "name": "staging-template",
+                        "storageClass": "Standard"
+                    },
+                    "parent": "urn:pulumi:staging::DocumentManager::pulumi:pulumi:Stack::DocumentManager-staging",
+                    "protect": true,
+                    "provider": "urn:pulumi:staging::DocumentManager::pulumi:providers:cloudflare::default::3589b6a1-608d-4c2d-a971-8be551b484f9",
+                    "created": "2026-04-03T17:24:06.465604Z",
+                    "modified": "2026-04-03T17:24:06.465604Z"
+                },
+                {
+                    "urn": "urn:pulumi:staging::DocumentManager::cloudflare:index/r2Bucket:R2Bucket::staging-poa",
+                    "custom": true,
+                    "id": "staging-poa",
+                    "type": "cloudflare:index/r2Bucket:R2Bucket",
+                    "inputs": {
+                        "accountId": "67f4010d9fb3be60f18824cdfc821819",
+                        "jurisdiction": "default",
+                        "location": "EEUR",
+                        "name": "staging-poa",
+                        "storageClass": "Standard"
+                    },
+                    "outputs": {
+                        "__meta": "{\"schema_version\":\"1\"}",
+                        "__pulumi_raw_state_delta": {
+                            "obj": {}
+                        },
+                        "accountId": "67f4010d9fb3be60f18824cdfc821819",
+                        "creationDate": "2025-07-16T18:10:22.072Z",
+                        "id": "staging-poa",
+                        "jurisdiction": "default",
+                        "location": "EEUR",
+                        "name": "staging-poa",
+                        "storageClass": "Standard"
+                    },
+                    "parent": "urn:pulumi:staging::DocumentManager::pulumi:pulumi:Stack::DocumentManager-staging",
+                    "protect": true,
+                    "provider": "urn:pulumi:staging::DocumentManager::pulumi:providers:cloudflare::default::3589b6a1-608d-4c2d-a971-8be551b484f9",
+                    "created": "2026-04-03T17:24:50.295002Z",
+                    "modified": "2026-04-03T17:24:50.295002Z"
+                },
+                {
+                    "urn": "urn:pulumi:staging::DocumentManager::cloudflare:index/r2Bucket:R2Bucket::staging-invoice",
+                    "custom": true,
+                    "id": "staging-invoice",
+                    "type": "cloudflare:index/r2Bucket:R2Bucket",
+                    "inputs": {
+                        "accountId": "67f4010d9fb3be60f18824cdfc821819",
+                        "jurisdiction": "default",
+                        "location": "EEUR",
+                        "name": "staging-invoice",
+                        "storageClass": "Standard"
+                    },
+                    "outputs": {
+                        "__meta": "{\"schema_version\":\"1\"}",
+                        "__pulumi_raw_state_delta": {
+                            "obj": {}
+                        },
+                        "accountId": "67f4010d9fb3be60f18824cdfc821819",
+                        "creationDate": "2025-07-16T18:10:22.389Z",
+                        "id": "staging-invoice",
+                        "jurisdiction": "default",
+                        "location": "EEUR",
+                        "name": "staging-invoice",
+                        "storageClass": "Standard"
+                    },
+                    "parent": "urn:pulumi:staging::DocumentManager::pulumi:pulumi:Stack::DocumentManager-staging",
+                    "protect": true,
+                    "provider": "urn:pulumi:staging::DocumentManager::pulumi:providers:cloudflare::default::3589b6a1-608d-4c2d-a971-8be551b484f9",
+                    "created": "2026-04-03T17:25:17.423415Z",
+                    "modified": "2026-04-03T17:25:17.423415Z"
+                }
+            ],
+            "metadata": {}
+        }
+    }
+}

@@ -40,12 +40,9 @@ export default function Items({ loaderData: { data } }: Route.ComponentProps) {
     setItem(null);
     setOpen(true);
   };
-  const handleOpenEditing = (rowId: (typeof data)['items'][0]['id']) => {
-    const item = data.items[rowId];
-    if (item) {
-      setItem(item);
-      setOpen(true);
-    }
+  const handleOpenEditing = (row: Item) => {
+    setItem(row);
+    setOpen(true);
   };
 
   const handleClose = () => {

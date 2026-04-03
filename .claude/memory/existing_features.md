@@ -8,7 +8,8 @@ type: project
 
 ### Authentication
 
-- Cloudflare Zero Trust (Access) with Google OAuth
+- Cloudflare Zero Trust (Access) with OTP (one-time pin via email)
+- Email domain whitelist: aeroclime.com
 - User email from `cf-access-authenticated-user-email` header → `context.user.email`
 - Sidebar shows authenticated user email and stub sign-out button
 - No RBAC yet
@@ -58,8 +59,9 @@ type: project
 - Playwright config at `apps/web/playwright.config.ts`
 - Uses Chromium, baseURL `http://127.0.0.1:5173`, single worker, sequential
 - `webServer` runs `e2e/start-dev.sh` with `VITE_LOCAL=true`
-- Test files: home-and-documents, library-companies, library-items, library-settings, navigation
+- Test files: diagnose, home-and-documents, library-companies, library-items, library-settings, navigation
 - Helper utilities in `e2e/helpers.ts`
+- 61 tests total
 
 ### UI Components Available (in `app/components/ui/`)
 
@@ -80,7 +82,7 @@ type: project
 - Routes exist: `/documents/:type`, `/documents/:type/:id`, `/documents/:type/settings`
 - Currently renders `Hello, {type}!` placeholder
 - Three document types defined in sidebar: POAs (Довіренності), Bills (Видаткові накладні), Invoices (Рахунки фактури)
-- R2 buckets pre-created: staging-poa, staging-invoice, staging-bill, staging-template
+- R2 buckets pre-created for both staging and production
 - **Monaco Editor** installed — likely intended for template editing
 
 ### Home Page (`/`)

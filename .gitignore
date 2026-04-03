@@ -56,11 +56,18 @@ vitest.config.*.timestamp*
 # Secrets
 **/.env
 **/.env.*
-**/Pulumi.*.yaml
 **/.dev.vars
+
+# Pulumi - track stack configs (contain encrypted secrets)
+# State files are stored in packages/infra/state/
+packages/infra/state/.pulumi-backups/**
 
 # Playwright
 /apps/web/test-results/
 /apps/web/playwright-report/
 /apps/web/blob-report/
 /apps/web/playwright/.cache/
+
+.nx/polygraph
+.claude/worktrees
+.claude/settings.local.json

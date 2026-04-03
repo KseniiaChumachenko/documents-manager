@@ -97,7 +97,7 @@ export const AddCompanyDialog = ({
                     <td className="p-2 text-muted-foreground text-sm">
                       {i18n.table.headers[key as keyof typeof i18n.table.headers] || key}
                     </td>
-                    <td className="p-2 text-sm leading-none font-medium">{value}</td>
+                    <td className="p-2 text-sm leading-none font-medium">{String(value ?? '')}</td>
                   </tr>
                 ))}
             </tbody>

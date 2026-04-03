@@ -1,0 +1,80 @@
+{
+    "version": 3,
+    "checkpoint": {
+        "stack": "organization/DocumentManager/production",
+        "latest": {
+            "manifest": {
+                "time": "2026-04-03T19:31:49.207348+02:00",
+                "magic": "88d0da18f668d21177091127bf6af43a4706b834600c4edf2e942a3f566ca00e",
+                "version": "v3.229.0"
+            },
+            "secrets_providers": {
+                "type": "passphrase",
+                "state": {
+                    "salt": "v1:KlDxOPrMYCQ=:v1:zjciJWblr6X0KpIM:ecUYMnBcPk4VCmQ60rFfy8ZGqa/TIQ=="
+                }
+            },
+            "resources": [
+                {
+                    "urn": "urn:pulumi:production::DocumentManager::pulumi:pulumi:Stack::DocumentManager-production",
+                    "custom": false,
+                    "type": "pulumi:pulumi:Stack",
+                    "created": "2026-04-03T17:31:48.668626Z",
+                    "modified": "2026-04-03T17:31:48.668626Z"
+                },
+                {
+                    "urn": "urn:pulumi:production::DocumentManager::pulumi:providers:cloudflare::default",
+                    "custom": true,
+                    "id": "1a0e7e92-7608-4b62-925f-f6e4edf33a09",
+                    "type": "pulumi:providers:cloudflare",
+                    "inputs": {
+                        "apiToken": {
+                            "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                            "ciphertext": "v1:wra3b8TvVyq/1bcp:lA4sVWF+yAUld0hFCTQ3r22NTjShppIsQs4Pdcz8B99t74ZZHR0HPyrMzldPuP8VsBHGolPf7UA7GWOcYJbnscNTBISEIvs="
+                        }
+                    },
+                    "outputs": {
+                        "apiToken": {
+                            "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                            "ciphertext": "v1:wra3b8TvVyq/1bcp:lA4sVWF+yAUld0hFCTQ3r22NTjShppIsQs4Pdcz8B99t74ZZHR0HPyrMzldPuP8VsBHGolPf7UA7GWOcYJbnscNTBISEIvs="
+                        }
+                    },
+                    "created": "2026-04-03T17:31:48.777236Z",
+                    "modified": "2026-04-03T17:31:48.777236Z"
+                },
+                {
+                    "urn": "urn:pulumi:production::DocumentManager::cloudflare:index/r2Bucket:R2Bucket::production-web",
+                    "custom": true,
+                    "id": "production-web",
+                    "type": "cloudflare:index/r2Bucket:R2Bucket",
+                    "inputs": {
+                        "accountId": "67f4010d9fb3be60f18824cdfc821819",
+                        "jurisdiction": "default",
+                        "location": "EEUR",
+                        "name": "production-web",
+                        "storageClass": "Standard"
+                    },
+                    "outputs": {
+                        "__meta": "{\"schema_version\":\"1\"}",
+                        "__pulumi_raw_state_delta": {
+                            "obj": {}
+                        },
+                        "accountId": "67f4010d9fb3be60f18824cdfc821819",
+                        "creationDate": "2026-04-01T16:57:04.493Z",
+                        "id": "production-web",
+                        "jurisdiction": "default",
+                        "location": "EEUR",
+                        "name": "production-web",
+                        "storageClass": "Standard"
+                    },
+                    "parent": "urn:pulumi:production::DocumentManager::pulumi:pulumi:Stack::DocumentManager-production",
+                    "protect": true,
+                    "provider": "urn:pulumi:production::DocumentManager::pulumi:providers:cloudflare::default::1a0e7e92-7608-4b62-925f-f6e4edf33a09",
+                    "created": "2026-04-03T17:31:49.205524Z",
+                    "modified": "2026-04-03T17:31:49.205524Z"
+                }
+            ],
+            "metadata": {}
+        }
+    }
+}

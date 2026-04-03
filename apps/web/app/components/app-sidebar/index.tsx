@@ -1,6 +1,14 @@
 'use client';
 import { Home, Settings, Library, FileStack, Waves, ChevronUp } from 'lucide-react';
+import { useRouteLoaderData } from 'react-router-dom';
 
+import { AvatarFallback, Avatar, AvatarImage } from '~/components/ui/avatar';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '~/components/ui/dropdown-menu';
 import {
   Sidebar,
   SidebarContent,
@@ -19,16 +27,7 @@ import {
 } from '~/components/ui/sidebar';
 import { i18n } from '~/i18n';
 import { cn } from '~/lib/utils';
-import { useRouteLoaderData } from 'react-router-dom';
 import type { loader } from '~/root';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '~/components/ui/dropdown-menu';
-
-import { AvatarFallback, Avatar, AvatarImage } from '~/components/ui/avatar';
 
 export const items = [
   {
@@ -85,7 +84,8 @@ export const items = [
 ];
 
 export function ASidebar() {
-  const { user: { email } = { email: '' } } = useRouteLoaderData<typeof loader>('root');
+  const rootData = useRouteLoaderData<typeof loader>('root');
+  const email = rootData?.user?.email ?? '';
 
   return (
     <Sidebar>
