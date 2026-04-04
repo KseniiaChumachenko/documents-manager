@@ -19,9 +19,19 @@ const DEFAULT_SCHEMAS: Record<string, object> = {
       { key: 'number', label: '№ довіреності', type: 'text', required: true },
       { key: 'date', label: 'Дата видачі', type: 'date', required: true },
       { key: 'valid_until', label: 'Дійсна до', type: 'date', required: true },
-      { key: 'company_id', label: 'Контрагент', type: 'company_ref', required: true },
+      {
+        key: 'company_id',
+        label: 'Постачальник (від кого отримати)',
+        type: 'company_ref',
+        required: true,
+      },
+      { key: 'invoice_ref', label: 'За рахунком №', type: 'text' },
       { key: 'recipient_name', label: 'ПІБ довіреної особи', type: 'text', required: true },
-      { key: 'recipient_passport', label: 'Паспорт довіреної особи', type: 'text' },
+      { key: 'recipient_position', label: 'Посада довіреної особи', type: 'text' },
+      { key: 'recipient_passport_series', label: 'Серія паспорту', type: 'text' },
+      { key: 'recipient_passport_number', label: '№ паспорту', type: 'text' },
+      { key: 'recipient_passport_date', label: 'Дата видачі паспорту', type: 'date' },
+      { key: 'recipient_passport_issued_by', label: 'Ким виданий паспорт', type: 'text' },
     ],
     line_items: {
       source: 'items',
@@ -32,10 +42,12 @@ const DEFAULT_SCHEMAS: Record<string, object> = {
   },
   invoices: {
     fields: [
-      { key: 'number', label: '№ рахунку', type: 'text', required: true },
+      { key: 'number', label: '№ рахунку-фактури', type: 'text', required: true },
       { key: 'date', label: 'Дата', type: 'date', required: true },
-      { key: 'company_id', label: 'Контрагент', type: 'company_ref', required: true },
-      { key: 'payment_terms', label: 'Умови оплати', type: 'text' },
+      { key: 'company_id', label: 'Одержувач', type: 'company_ref', required: true },
+      { key: 'contract_number', label: '№ договору', type: 'text' },
+      { key: 'contract_date', label: 'Дата договору', type: 'date' },
+      { key: 'valid_until', label: 'Рахунок дійсний до', type: 'date' },
     ],
     line_items: {
       source: 'items',
@@ -50,11 +62,11 @@ const DEFAULT_SCHEMAS: Record<string, object> = {
   },
   bills: {
     fields: [
-      { key: 'number', label: '№ накладної', type: 'text', required: true },
+      { key: 'number', label: '№ видаткової накладної', type: 'text', required: true },
       { key: 'date', label: 'Дата', type: 'date', required: true },
-      { key: 'company_id', label: 'Контрагент', type: 'company_ref', required: true },
-      { key: 'contract_number', label: '№ договору', type: 'text' },
-      { key: 'contract_date', label: 'Дата договору', type: 'date' },
+      { key: 'company_id', label: 'Одержувач', type: 'company_ref', required: true },
+      { key: 'invoice_ref', label: 'Замовлення (рахунок-фактура)', type: 'text' },
+      { key: 'sales_terms', label: 'Умова продажу', type: 'text' },
     ],
     line_items: {
       source: 'items',

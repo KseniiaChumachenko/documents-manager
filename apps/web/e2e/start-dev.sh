@@ -47,5 +47,14 @@ for db in "$MINIFLARE_DB_DIR"/*.sqlite; do
   fi
 done
 
+# Seed default document templates if empty
+for db in "$MINIFLARE_DB_DIR"/*.sqlite; do
+  count=$(sqlite3 "$db" "SELECT COUNT(*) FROM document_template;" 2>/dev/null || echo "0")
+  if [ "$count" = "0" ]; then
+    echo "Seeding default document templates..."
+    sqlite3 "$db" < database/seed-templates.sql 2>/dev/null || true
+  fi
+done
+
 # Wait for the dev server process
 wait $DEV_PID
