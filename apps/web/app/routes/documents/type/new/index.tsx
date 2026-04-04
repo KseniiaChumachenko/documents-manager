@@ -1,5 +1,5 @@
 import { eq } from 'drizzle-orm';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate, useFetcher } from 'react-router';
 
 import { ErrorBoundary as EB } from '~/components/error-boundary';
@@ -124,9 +124,11 @@ export default function NewDocument({ loaderData: { data, type } }: Route.Compon
   };
 
   // Redirect on success
-  if (fetcher.data?.data?.id) {
-    navigate(`/documents/${type}/${fetcher.data.data.id}`);
-  }
+  useEffect(() => {
+    if (fetcher.data?.data?.id) {
+      navigate(`/documents/${type}/${fetcher.data.data.id}`);
+    }
+  }, [fetcher.data, navigate, type]);
 
   // No templates — guide user to settings
   if (data.templates.length === 0) {
