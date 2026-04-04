@@ -19,6 +19,78 @@ export const i18n = {
   '/documents/invoices': {
     title: 'Рахунки фактури',
   },
+  documents: {
+    actions: {
+      newDocument: 'Новий документ',
+      newTemplate: 'Новий шаблон',
+      export: {
+        xlsx: 'Завантажити XLSX',
+        pdf: 'Завантажити PDF',
+      },
+      save: 'Зберегти',
+      delete: 'Видалити',
+      uploadStamp: 'Завантажити печатку',
+    },
+    table: {
+      headers: {
+        number: '№',
+        date: 'Дата',
+        company: 'Контрагент',
+        createdBy: 'Автор',
+        exportStatus: 'Експорт',
+        createdAt: 'Створено',
+      },
+    },
+    templates: {
+      title: 'Шаблони',
+      table: {
+        headers: {
+          name: 'Назва',
+          type: 'Тип',
+          createdAt: 'Створено',
+          updatedAt: 'Оновлено',
+        },
+      },
+      form: {
+        name: 'Назва шаблону',
+        type: 'Тип документу',
+        schema: 'Схема полів',
+        stamp: 'Печатка',
+      },
+    },
+    form: {
+      template: 'Шаблон',
+      company: 'Контрагент',
+      number: '№ документа',
+      date: 'Дата',
+      includeStamp: 'Включити печатку',
+      lineItems: {
+        title: 'Товари / послуги',
+        item: 'Товар',
+        quantity: 'Кількість',
+        unit: 'Одиниця',
+        price: 'Ціна',
+        priceOverride: 'Ціна (ручна)',
+        total: 'Сума',
+        add: 'Додати рядок',
+      },
+      totals: {
+        subtotal: 'Сума без ПДВ',
+        vat: 'ПДВ 20%',
+        total: 'Разом з ПДВ',
+      },
+    },
+    audit: {
+      title: 'Журнал дій',
+      actions: {
+        created: 'Створено',
+        exported: 'Експортовано',
+        deleted: 'Видалено',
+      },
+    },
+    empty: 'Документів ще немає',
+    templatesEmpty: 'Шаблонів ще немає',
+  },
   '/library': {
     title: 'Бібліотека',
   },

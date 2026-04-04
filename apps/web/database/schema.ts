@@ -54,3 +54,46 @@ export const company = sqliteTable('company', {
 });
 
 export type Company = typeof company.$inferSelect;
+
+export const documentTemplate = sqliteTable('document_template', {
+  id: integer().primaryKey({ autoIncrement: true }),
+  name: text().notNull(),
+  type: text().notNull(), // 'act' | 'invoice' | 'delivery_note'
+  schemaJson: text('schema_json').notNull(),
+  stampImageKey: text('stamp_image_key'),
+  createdAt: text('created_at').notNull(),
+  updatedAt: text('updated_at').notNull(),
+});
+
+export type DocumentTemplate = typeof documentTemplate.$inferSelect;
+
+export const document = sqliteTable('document', {
+  id: integer().primaryKey({ autoIncrement: true }),
+  templateId: integer('template_id')
+    .references(() => documentTemplate.id)
+    .notNull(),
+  companyId: integer('company_id')
+    .references(() => company.id)
+    .notNull(),
+  documentType: text('document_type').notNull(), // matches R2 bucket: 'poas' | 'invoices' | 'bills'
+  dataJson: text('data_json').notNull(),
+  createdBy: text('created_by').notNull(),
+  createdAt: text('created_at').notNull(),
+  exportedAt: text('exported_at'),
+  exportFormat: text('export_format'), // 'xlsx' | 'pdf'
+  r2Key: text('r2_key'),
+});
+
+export type Document = typeof document.$inferSelect;
+
+export const documentAuditLog = sqliteTable('document_audit_log', {
+  id: integer().primaryKey({ autoIncrement: true }),
+  documentId: integer('document_id')
+    .references(() => document.id)
+    .notNull(),
+  action: text().notNull(), // 'created' | 'exported' | 'deleted'
+  actorEmail: text('actor_email').notNull(),
+  timestamp: text().notNull(),
+});
+
+export type DocumentAuditLog = typeof documentAuditLog.$inferSelect;

@@ -1,15 +1,8 @@
-import { getTitle } from '~/i18n';
+import * as Router from 'react-router';
 
-import type { Route } from '../../../.react-router/types/app/routes/documents/+types';
+import { ErrorBoundary as EB } from '~/components/error-boundary';
 
-export function meta({ location }: Route.MetaArgs) {
-  return [{ title: getTitle(location) }];
+export default function Documents() {
+  return <Router.Outlet />;
 }
-
-export function loader() {
-  return { message: 'Hello, home!' };
-}
-
-export default function Documents({ loaderData }: Route.ComponentProps) {
-  return <div>{loaderData.message}</div>;
-}
+export const ErrorBoundary = EB;

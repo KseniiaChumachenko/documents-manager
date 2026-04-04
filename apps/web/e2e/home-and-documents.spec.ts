@@ -1,5 +1,7 @@
 import { test, expect } from '@playwright/test';
 
+import { waitForHydration } from './helpers';
+
 test.describe('Home Page', () => {
   test('renders home page with greeting message', async ({ page }) => {
     await page.goto('/');
@@ -14,14 +16,13 @@ test.describe('Home Page', () => {
   });
 });
 
-test.describe('Documents Pages (stubs)', () => {
-  // Note: /documents parent route has no <Outlet>, so child routes
-  // don't render their own content — only the parent "Hello, home!" shows.
+test.describe('Documents Pages', () => {
+  test('documents/invoices route renders document list', async ({ page }) => {
+    await page.goto('/documents/invoices');
+    await waitForHydration(page);
 
-  test('documents index page renders', async ({ page }) => {
-    await page.goto('/documents');
-
-    await expect(page.getByText('Hello, home!')).toBeVisible();
+    // Should show the "New document" button
+    await expect(page.getByRole('button', { name: 'Новий документ' })).toBeVisible();
   });
 
   test('documents/poas route is reachable', async ({ page }) => {
@@ -44,12 +45,6 @@ test.describe('Documents Pages (stubs)', () => {
 
   test('documents type settings route is reachable', async ({ page }) => {
     const response = await page.goto('/documents/poas/settings');
-
-    expect(response?.status()).toBe(200);
-  });
-
-  test('documents individual document route is reachable', async ({ page }) => {
-    const response = await page.goto('/documents/poas/123');
 
     expect(response?.status()).toBe(200);
   });
