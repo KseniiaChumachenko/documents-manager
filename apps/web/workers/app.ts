@@ -38,19 +38,17 @@ export default {
     const cron = controller.cron;
     console.log(`[scheduled] Cron triggered: ${cron}`);
 
-    if (cron === '0 3 1 * *') {
-      ctx.waitUntil(
-        (async () => {
-          console.log('[company-refresh] Starting monthly refresh');
-          const govApiUrl = env.GOV_API;
-          if (!govApiUrl) {
-            console.error('[company-refresh] GOV_API binding not configured');
-            return;
-          }
-          const result = await refreshStaleCompanies(env.DB, govApiUrl);
-          console.log('[company-refresh] Result:', JSON.stringify(result));
-        })()
-      );
-    }
+    ctx.waitUntil(
+      (async () => {
+        console.log('[company-refresh] Starting monthly refresh');
+        const govApiUrl = env.GOV_API;
+        if (!govApiUrl) {
+          console.error('[company-refresh] GOV_API binding not configured');
+          return;
+        }
+        const result = await refreshStaleCompanies(env.DB, govApiUrl);
+        console.log('[company-refresh] Result:', JSON.stringify(result));
+      })()
+    );
   },
 } satisfies ExportedHandler<Env>;
