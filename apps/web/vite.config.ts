@@ -14,6 +14,13 @@ export default defineConfig({
   resolve: {
     alias: {
       fs: new URL('./app/lib/empty-module.ts', import.meta.url).pathname,
+      path: new URL('./app/lib/empty-module.ts', import.meta.url).pathname,
+      stream: new URL('./app/lib/empty-module.ts', import.meta.url).pathname,
+    },
+  },
+  ssr: {
+    resolve: {
+      conditions: ['browser', 'default'],
     },
   },
   plugins: [
