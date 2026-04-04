@@ -1,5 +1,5 @@
 import type { ColumnDef } from '@tanstack/react-table';
-import { Link, useNavigate } from 'react-router';
+import { useNavigate, Link } from 'react-router';
 
 import { ErrorBoundary as EB } from '~/components/error-boundary';
 import { Button } from '~/components/ui/button';
@@ -15,12 +15,6 @@ export function meta({ location }: Route.MetaArgs) {
 }
 
 const DOCUMENT_TYPES = ['invoices', 'bills', 'poas'] as const;
-
-const TYPE_LABELS: Record<string, string> = {
-  invoices: i['/documents/invoices'].title,
-  bills: i['/documents/bills'].title,
-  poas: i['/documents/poas'].title,
-};
 
 export async function loader({ context }: Route.LoaderArgs) {
   const templates = await context.db.select().from(documentTemplate);
@@ -45,14 +39,15 @@ export default function DocumentSettings({ loaderData: { data } }: Route.Compone
       </div>
 
       {DOCUMENT_TYPES.map((docType) => {
+        const typeLabel = t.typeLabels[docType];
         const templates = data.templates.filter((tmpl) => tmpl.type === docType);
         return (
           <div key={docType} className="flex flex-col gap-3">
             <div className="flex items-center justify-between">
-              <Typography variant="h4">{TYPE_LABELS[docType]}</Typography>
+              <Typography variant="h4">{typeLabel}</Typography>
               <Link to={`/documents/${docType}/settings/new`}>
                 <Button variant="outline" size="sm">
-                  {t.actions.newTemplate}
+                  {t.actions.newTemplate} {typeLabel}
                 </Button>
               </Link>
             </div>

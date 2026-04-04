@@ -281,16 +281,18 @@ export default function TemplateEditor({ loaderData: { data, type } }: Route.Com
   // Redirect on success
   useEffect(() => {
     if (fetcher.data && !fetcher.data.error) {
-      navigate(`/documents/${type}/settings`);
+      navigate('/documents/settings');
     }
-  }, [fetcher.data, navigate, type]);
+  }, [fetcher.data, navigate]);
 
   return (
     <div className="flex flex-col gap-4 h-full">
       {/* Header */}
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-semibold">
-          {isEditing ? data.template!.name : t.actions.newTemplate}
+          {isEditing
+            ? data.template!.name
+            : `${t.actions.newTemplate} ${t.typeLabels[type!] ?? ''}`}
         </h2>
         <div className="flex gap-2">
           {isEditing && (

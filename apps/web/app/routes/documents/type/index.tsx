@@ -65,7 +65,7 @@ export default function DocumentList({ loaderData: { data, type } }: Route.Compo
   return (
     <div className="flex flex-col gap-4">
       <div className="flex justify-end gap-2">
-        <Link to={`/documents/${type}/settings`} aria-label={t.actions.settings}>
+        <Link to="/documents/settings" aria-label={t.actions.settings}>
           <Button variant="outline" size="icon">
             <Settings className="h-4 w-4" />
           </Button>

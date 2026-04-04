@@ -3,14 +3,23 @@ import { test, expect } from '@playwright/test';
 import { waitForHydration } from './helpers';
 
 async function ensureTemplate(page: import('@playwright/test').Page, type = 'invoices') {
-  await page.goto(`/documents/${type}/settings`);
+  await page.goto('/documents/settings');
   await waitForHydration(page);
 
-  // Check if any template already exists
-  const table = page.locator('table');
+  // Check if any template for this type already exists
+  const heading = page.getByRole('heading', {
+    name:
+      type === 'invoices'
+        ? 'Рахунки фактури'
+        : type === 'bills'
+          ? 'Видаткові накладні'
+          : 'Довіренності',
+  });
+  const section = heading.locator('..');
+  const table = section.locator('~ div table');
   const hasTable = await table.isVisible().catch(() => false);
   if (hasTable) {
-    const rows = page.locator('table tbody tr');
+    const rows = table.locator('tbody tr');
     const count = await rows.count();
     if (count > 0) {
       const text = await rows.first().textContent();
@@ -19,35 +28,43 @@ async function ensureTemplate(page: import('@playwright/test').Page, type = 'inv
   }
 
   // Create one via the editor route
-  await page.getByRole('button', { name: 'Новий шаблон' }).click();
-  await page.waitForURL(`**/documents/${type}/settings/new`);
+  await page.goto(`/documents/${type}/settings/new`);
   await waitForHydration(page);
 
   await page.getByLabel('Назва шаблону').fill(`e2e-template-${Date.now()}`);
   await page.getByRole('button', { name: 'Зберегти' }).click();
 
-  // Should redirect back to settings list (regex to avoid matching /settings/new)
-  await page.waitForURL(new RegExp(`/documents/${type}/settings$`), { timeout: 10000 });
+  // Should redirect back to settings
+  await page.waitForURL(/\/documents\/settings$/, { timeout: 10000 });
 }
 
 test.describe('Documents > Template Settings', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/documents/invoices/settings');
+    await page.goto('/documents/settings');
     await waitForHydration(page);
   });
 
-  test('renders template settings page with new template button', async ({ page }) => {
-    await expect(page.getByRole('button', { name: 'Новий шаблон' })).toBeVisible();
+  test('renders settings page with sections and new template buttons', async ({ page }) => {
+    await expect(page.getByText('Налаштування шаблонів')).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Рахунки фактури' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Видаткові накладні' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Довіренності' })).toBeVisible();
+    // Each section has a type-specific add button
+    await expect(page.getByRole('link', { name: 'Новий шаблон Рахунки фактури' })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Новий шаблон Видаткові накладні' })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Новий шаблон Довіренності' })).toBeVisible();
   });
 
-  test('clicking new template button navigates to editor', async ({ page }) => {
-    await page.getByRole('button', { name: 'Новий шаблон' }).click();
+  test('clicking new template button navigates to editor with type-specific title', async ({
+    page,
+  }) => {
+    await page.getByRole('link', { name: 'Новий шаблон Рахунки фактури' }).click();
     await page.waitForURL('**/documents/invoices/settings/new');
     await waitForHydration(page);
 
+    await expect(page.getByText('Новий шаблон Рахунки фактури')).toBeVisible();
     await expect(page.getByLabel('Назва шаблону')).toBeVisible();
     await expect(page.getByLabel('Схема полів')).toBeVisible();
-    // Preview panel should be visible
     await expect(page.getByText('Попередній перегляд')).toBeVisible();
   });
 
@@ -55,26 +72,23 @@ test.describe('Documents > Template Settings', () => {
     await page.goto('/documents/invoices/settings/new');
     await waitForHydration(page);
 
-    // Preview should show document fields section
     await expect(page.getByText('Поля документу')).toBeVisible();
-    // Preview should show line items table
     await expect(page.getByText('Товари / послуги')).toBeVisible();
-    // Preview should show stamp placeholder
     await expect(page.getByText('М.П.')).toBeVisible();
   });
 
-  test('create a template and verify it appears in the list', async ({ page }) => {
+  test('create a template and verify it appears in settings', async ({ page }) => {
     const templateName = `test-template-${Date.now()}`;
 
-    await page.getByRole('button', { name: 'Новий шаблон' }).click();
+    await page.getByRole('link', { name: 'Новий шаблон Рахунки фактури' }).click();
     await page.waitForURL('**/documents/invoices/settings/new');
     await waitForHydration(page);
 
     await page.getByLabel('Назва шаблону').fill(templateName);
     await page.getByRole('button', { name: 'Зберегти' }).click();
 
-    // Should redirect back to settings list (use regex to avoid matching /settings/new)
-    await page.waitForURL(/\/documents\/invoices\/settings$/, { timeout: 10000 });
+    // Should redirect back to /documents/settings
+    await page.waitForURL(/\/documents\/settings$/, { timeout: 10000 });
     await page.reload();
     await waitForHydration(page);
 
@@ -84,19 +98,16 @@ test.describe('Documents > Template Settings', () => {
   });
 
   test('different document types have different default schemas', async ({ page }) => {
-    // Check invoices editor has "рахунку" in the schema
     await page.goto('/documents/invoices/settings/new');
     await waitForHydration(page);
     const invoiceSchema = await page.getByLabel('Схема полів').inputValue();
     expect(invoiceSchema).toContain('рахунку');
 
-    // Check poas editor has "довіреності" in the schema
     await page.goto('/documents/poas/settings/new');
     await waitForHydration(page);
     const poaSchema = await page.getByLabel('Схема полів').inputValue();
     expect(poaSchema).toContain('довіреності');
 
-    // Check bills editor has "накладної" in the schema
     await page.goto('/documents/bills/settings/new');
     await waitForHydration(page);
     const billSchema = await page.getByLabel('Схема полів').inputValue();
@@ -142,27 +153,15 @@ test.describe('Documents > Document List', () => {
     await page.waitForURL('**/documents/invoices/new');
   });
 
-  test('settings button navigates to template list', async ({ page }) => {
+  test('settings button navigates to settings page', async ({ page }) => {
     await page.goto('/documents/invoices');
     await waitForHydration(page);
 
     await page.getByRole('link', { name: 'Налаштування шаблонів' }).click();
-    await page.waitForURL(/\/documents\/invoices\/settings$/);
-    await waitForHydration(page);
-
-    await expect(page.getByRole('button', { name: 'Новий шаблон' })).toBeVisible();
-  });
-
-  test('sidebar settings cog navigates to all-templates page', async ({ page }) => {
-    await page.goto('/documents/settings');
+    await page.waitForURL(/\/documents\/settings$/);
     await waitForHydration(page);
 
     await expect(page.getByText('Налаштування шаблонів')).toBeVisible();
-    await expect(page.getByText('Шаблони визначають структуру')).toBeVisible();
-    // Always shows sections per document type with add buttons
-    await expect(page.getByRole('heading', { name: 'Рахунки фактури' })).toBeVisible();
-    await expect(page.getByRole('heading', { name: 'Видаткові накладні' })).toBeVisible();
-    await expect(page.getByRole('heading', { name: 'Довіренності' })).toBeVisible();
   });
 });
 
@@ -284,8 +283,8 @@ test.describe('Documents > Full Flow', () => {
     await page.getByLabel('Назва шаблону').fill(templateName);
     await page.getByRole('button', { name: 'Зберегти' }).click();
 
-    // Wait for redirect back to settings list, then reload to get fresh data
-    await page.waitForURL(/\/documents\/invoices\/settings$/, { timeout: 10000 });
+    // Wait for redirect back to settings, then reload to get fresh data
+    await page.waitForURL(/\/documents\/settings$/, { timeout: 10000 });
     await page.reload();
     await waitForHydration(page);
     await expect(page.getByRole('cell', { name: templateName })).toBeVisible({ timeout: 15000 });

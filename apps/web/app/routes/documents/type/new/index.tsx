@@ -134,10 +134,14 @@ export default function NewDocument({ loaderData: { data, type } }: Route.Compon
   if (data.templates.length === 0) {
     return (
       <div className="flex flex-col gap-4 max-w-3xl">
-        <h2 className="text-xl font-semibold">{t.actions.newDocument}</h2>
+        <h2 className="text-xl font-semibold">
+          {t.actions.newDocument} {t.typeLabels[type!] ?? ''}
+        </h2>
         <p className="text-muted-foreground">{t.noTemplatesHint}</p>
         <Link to={`/documents/${type}/settings/new`}>
-          <Button variant="outline">{t.actions.newTemplate}</Button>
+          <Button variant="outline">
+            {t.actions.newTemplate} {t.typeLabels[type!] ?? ''}
+          </Button>
         </Link>
       </div>
     );
@@ -145,7 +149,9 @@ export default function NewDocument({ loaderData: { data, type } }: Route.Compon
 
   return (
     <div className="flex flex-col gap-6 max-w-3xl">
-      <h2 className="text-xl font-semibold">{t.actions.newDocument}</h2>
+      <h2 className="text-xl font-semibold">
+        {t.actions.newDocument} {t.typeLabels[type!] ?? ''}
+      </h2>
 
       {fetcher.data?.error && <p className="text-destructive text-sm">{fetcher.data.error}</p>}
 

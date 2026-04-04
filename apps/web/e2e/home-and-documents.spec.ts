@@ -43,8 +43,8 @@ test.describe('Documents Pages', () => {
     expect(response?.status()).toBe(200);
   });
 
-  test('documents type settings route is reachable', async ({ page }) => {
-    const response = await page.goto('/documents/poas/settings');
+  test('documents settings route is reachable', async ({ page }) => {
+    const response = await page.goto('/documents/settings');
 
     expect(response?.status()).toBe(200);
   });

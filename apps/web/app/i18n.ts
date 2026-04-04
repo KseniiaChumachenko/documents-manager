@@ -20,6 +20,11 @@ export const i18n = {
     title: 'Рахунки фактури',
   },
   documents: {
+    typeLabels: {
+      invoices: 'Рахунки фактури',
+      bills: 'Видаткові накладні',
+      poas: 'Довіренності',
+    } as Record<string, string>,
     actions: {
       newDocument: 'Новий документ',
       newTemplate: 'Новий шаблон',

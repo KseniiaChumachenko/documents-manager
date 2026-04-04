@@ -8,7 +8,6 @@ export default [
       route('settings', 'routes/documents/settings/index.tsx'),
       route(':type', 'routes/documents/type/index.tsx'),
       route(':type/new', 'routes/documents/type/new/index.tsx'),
-      route(':type/settings', 'routes/documents/type/settings/index.tsx'),
       route(':type/settings/:templateId', 'routes/documents/type/settings/edit/index.tsx'),
       route(':type/:id', 'routes/documents/type/id/index.tsx'),
 
