@@ -158,9 +158,11 @@ test.describe('Documents > Document List', () => {
     await waitForHydration(page);
 
     await expect(page.getByText('Налаштування шаблонів')).toBeVisible();
-    // Page shows either empty state with type buttons, or sections with templates
-    const description = page.getByText('Шаблони визначають структуру');
-    await expect(description).toBeVisible();
+    await expect(page.getByText('Шаблони визначають структуру')).toBeVisible();
+    // Always shows sections per document type with add buttons
+    await expect(page.getByRole('heading', { name: 'Рахунки фактури' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Видаткові накладні' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Довіренності' })).toBeVisible();
   });
 });
 

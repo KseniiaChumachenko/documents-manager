@@ -1,6 +1,5 @@
 import type { ColumnDef } from '@tanstack/react-table';
-import { FileStack } from 'lucide-react';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 
 import { ErrorBoundary as EB } from '~/components/error-boundary';
 import { Button } from '~/components/ui/button';
@@ -30,7 +29,7 @@ export async function loader({ context }: Route.LoaderArgs) {
 
 export default function DocumentSettings({ loaderData: { data } }: Route.ComponentProps) {
   const t = i.documents;
-  const totalTemplates = data.templates.length;
+  const navigate = useNavigate();
 
   const columns: ColumnDef<DocumentTemplate>[] = [
     { accessorKey: 'name', header: t.templates.table.headers.name },
@@ -45,54 +44,33 @@ export default function DocumentSettings({ loaderData: { data } }: Route.Compone
         <p className="text-muted-foreground text-sm mt-1">{t.settingsDescription}</p>
       </div>
 
-      {totalTemplates === 0 ? (
-        <div className="flex flex-col items-center gap-4 py-12 text-center">
-          <div className="rounded-full bg-muted p-4">
-            <FileStack className="h-8 w-8 text-muted-foreground" />
-          </div>
-          <div>
-            <p className="font-medium">{t.templatesEmpty}</p>
-            <p className="text-muted-foreground text-sm mt-1">{t.settingsEmptyHint}</p>
-          </div>
-          <div className="flex gap-2">
-            {DOCUMENT_TYPES.map((type) => (
-              <Link key={type} to={`/documents/${type}/settings/new`}>
+      {DOCUMENT_TYPES.map((docType) => {
+        const templates = data.templates.filter((tmpl) => tmpl.type === docType);
+        return (
+          <div key={docType} className="flex flex-col gap-3">
+            <div className="flex items-center justify-between">
+              <Typography variant="h4">{TYPE_LABELS[docType]}</Typography>
+              <Link to={`/documents/${docType}/settings/new`}>
                 <Button variant="outline" size="sm">
-                  {TYPE_LABELS[type]}
+                  {t.actions.newTemplate}
                 </Button>
               </Link>
-            ))}
-          </div>
-        </div>
-      ) : (
-        DOCUMENT_TYPES.map((type) => {
-          const templates = data.templates.filter((tmpl) => tmpl.type === type);
-          return (
-            <div key={type} className="flex flex-col gap-3">
-              <div className="flex items-center justify-between">
-                <Typography variant="h4">{TYPE_LABELS[type]}</Typography>
-                <Link to={`/documents/${type}/settings/new`}>
-                  <Button variant="outline" size="sm">
-                    {t.actions.newTemplate}
-                  </Button>
-                </Link>
-              </div>
-
-              {templates.length === 0 ? (
-                <p className="text-muted-foreground text-sm py-4">{t.templatesEmpty}</p>
-              ) : (
-                <DataTable
-                  data={templates}
-                  columns={columns}
-                  onRowClick={(row) => {
-                    window.location.href = `/documents/${type}/settings/${row.id}`;
-                  }}
-                />
-              )}
             </div>
-          );
-        })
-      )}
+
+            {templates.length === 0 ? (
+              <p className="text-muted-foreground text-sm py-4">{t.templatesEmpty}</p>
+            ) : (
+              <DataTable
+                data={templates}
+                columns={columns}
+                onRowClick={(row) => {
+                  navigate(`/documents/${docType}/settings/${row.id}`);
+                }}
+              />
+            )}
+          </div>
+        );
+      })}
     </div>
   );
 }
