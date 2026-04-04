@@ -92,6 +92,9 @@ export const i18n = {
     empty: 'Документів ще немає',
     templatesEmpty: 'Шаблонів ще немає',
     noTemplatesHint: 'Спершу створіть шаблон у налаштуваннях',
+    settingsDescription:
+      'Шаблони визначають структуру документів — які поля відображаються, як розраховуються підсумки.',
+    settingsEmptyHint: 'Створіть перший шаблон, обравши тип документа:',
     validation: {
       templateRequired: 'Оберіть шаблон',
       companyRequired: 'Оберіть контрагента',

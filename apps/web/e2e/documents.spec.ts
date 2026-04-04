@@ -154,16 +154,13 @@ test.describe('Documents > Document List', () => {
   });
 
   test('sidebar settings cog navigates to all-templates page', async ({ page }) => {
-    await page.goto('/documents/invoices');
-    await waitForHydration(page);
-
     await page.goto('/documents/settings');
     await waitForHydration(page);
 
     await expect(page.getByText('Налаштування шаблонів')).toBeVisible();
-    await expect(page.getByRole('heading', { name: 'Рахунки фактури' })).toBeVisible();
-    await expect(page.getByRole('heading', { name: 'Видаткові накладні' })).toBeVisible();
-    await expect(page.getByRole('heading', { name: 'Довіренності' })).toBeVisible();
+    // Page shows either empty state with type buttons, or sections with templates
+    const description = page.getByText('Шаблони визначають структуру');
+    await expect(description).toBeVisible();
   });
 });
 
