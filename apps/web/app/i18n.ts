@@ -30,6 +30,7 @@ export const i18n = {
       save: 'Зберегти',
       delete: 'Видалити',
       uploadStamp: 'Завантажити печатку',
+      settings: 'Налаштування шаблонів',
     },
     table: {
       headers: {

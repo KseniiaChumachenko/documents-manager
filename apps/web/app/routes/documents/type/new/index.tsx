@@ -136,7 +136,7 @@ export default function NewDocument({ loaderData: { data, type } }: Route.Compon
       <div className="flex flex-col gap-4 max-w-3xl">
         <h2 className="text-xl font-semibold">{t.actions.newDocument}</h2>
         <p className="text-muted-foreground">{t.noTemplatesHint}</p>
-        <Link to={`/documents/${type}/settings`}>
+        <Link to={`/documents/${type}/settings/new`}>
           <Button variant="outline">{t.actions.newTemplate}</Button>
         </Link>
       </div>

@@ -141,6 +141,17 @@ test.describe('Documents > Document List', () => {
     await page.getByRole('button', { name: 'Новий документ' }).click();
     await page.waitForURL('**/documents/invoices/new');
   });
+
+  test('settings button navigates to template list', async ({ page }) => {
+    await page.goto('/documents/invoices');
+    await waitForHydration(page);
+
+    await page.getByRole('link', { name: 'Налаштування шаблонів' }).click();
+    await page.waitForURL(/\/documents\/invoices\/settings$/);
+    await waitForHydration(page);
+
+    await expect(page.getByRole('button', { name: 'Новий шаблон' })).toBeVisible();
+  });
 });
 
 test.describe('Documents > New Document Form', () => {

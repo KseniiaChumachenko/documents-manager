@@ -1,5 +1,6 @@
 import type { ColumnDef } from '@tanstack/react-table';
 import { eq } from 'drizzle-orm';
+import { Settings } from 'lucide-react';
 import { Link } from 'react-router';
 
 import { ErrorBoundary as EB } from '~/components/error-boundary';
@@ -63,7 +64,12 @@ export default function DocumentList({ loaderData: { data, type } }: Route.Compo
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex justify-end">
+      <div className="flex justify-end gap-2">
+        <Link to={`/documents/${type}/settings`} aria-label={t.actions.settings}>
+          <Button variant="outline" size="icon">
+            <Settings className="h-4 w-4" />
+          </Button>
+        </Link>
         <Link to={`/documents/${type}/new`}>
           <Button>{t.actions.newDocument}</Button>
         </Link>
