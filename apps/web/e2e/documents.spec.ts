@@ -152,6 +152,19 @@ test.describe('Documents > Document List', () => {
 
     await expect(page.getByRole('button', { name: 'Новий шаблон' })).toBeVisible();
   });
+
+  test('sidebar settings cog navigates to all-templates page', async ({ page }) => {
+    await page.goto('/documents/invoices');
+    await waitForHydration(page);
+
+    await page.goto('/documents/settings');
+    await waitForHydration(page);
+
+    await expect(page.getByText('Налаштування шаблонів')).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Рахунки фактури' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Видаткові накладні' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Довіренності' })).toBeVisible();
+  });
 });
 
 test.describe('Documents > New Document Form', () => {

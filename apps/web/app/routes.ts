@@ -5,6 +5,7 @@ export default [
     index('routes/home/index.tsx'),
 
     route('documents', 'routes/documents/index.tsx', [
+      route('settings', 'routes/documents/settings/index.tsx'),
       route(':type', 'routes/documents/type/index.tsx'),
       route(':type/new', 'routes/documents/type/new/index.tsx'),
       route(':type/settings', 'routes/documents/type/settings/index.tsx'),
