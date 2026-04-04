@@ -90,6 +90,13 @@ export const i18n = {
     },
     empty: 'Документів ще немає',
     templatesEmpty: 'Шаблонів ще немає',
+    noTemplatesHint: 'Спершу створіть шаблон у налаштуваннях',
+    validation: {
+      templateRequired: 'Оберіть шаблон',
+      companyRequired: 'Оберіть контрагента',
+      numberRequired: 'Вкажіть номер документа',
+      lineItemRequired: 'Додайте хоча б один товар',
+    },
   },
   '/library': {
     title: 'Бібліотека',

@@ -36,17 +36,29 @@ export async function loader({ params: { type }, context }: Route.LoaderArgs) {
   return { data: { templates }, type };
 }
 
-const DEFAULT_SCHEMA = JSON.stringify(
-  {
+const DEFAULT_SCHEMAS: Record<string, object> = {
+  poas: {
     fields: [
-      { key: 'number', label: '№ документа', type: 'text', required: true },
+      { key: 'number', label: '№ довіреності', type: 'text', required: true },
+      { key: 'date', label: 'Дата видачі', type: 'date', required: true },
+      { key: 'valid_until', label: 'Дійсна до', type: 'date', required: true },
+      { key: 'company_id', label: 'Контрагент', type: 'company_ref', required: true },
+      { key: 'recipient_name', label: 'ПІБ довіреної особи', type: 'text', required: true },
+      { key: 'recipient_passport', label: 'Паспорт довіреної особи', type: 'text' },
+    ],
+    line_items: {
+      source: 'items',
+      columns: ['name', 'unit', 'quantity'],
+      allow_price_override: false,
+    },
+    totals: [],
+  },
+  invoices: {
+    fields: [
+      { key: 'number', label: '№ рахунку', type: 'text', required: true },
       { key: 'date', label: 'Дата', type: 'date', required: true },
-      {
-        key: 'company_id',
-        label: 'Контрагент',
-        type: 'company_ref',
-        required: true,
-      },
+      { key: 'company_id', label: 'Контрагент', type: 'company_ref', required: true },
+      { key: 'payment_terms', label: 'Умови оплати', type: 'text' },
     ],
     line_items: {
       source: 'items',
@@ -59,9 +71,31 @@ const DEFAULT_SCHEMA = JSON.stringify(
       { label: 'Разом з ПДВ', formula: 'sum(line_items.total) * 1.2' },
     ],
   },
-  null,
-  2
-);
+  bills: {
+    fields: [
+      { key: 'number', label: '№ накладної', type: 'text', required: true },
+      { key: 'date', label: 'Дата', type: 'date', required: true },
+      { key: 'company_id', label: 'Контрагент', type: 'company_ref', required: true },
+      { key: 'contract_number', label: '№ договору', type: 'text' },
+      { key: 'contract_date', label: 'Дата договору', type: 'date' },
+    ],
+    line_items: {
+      source: 'items',
+      columns: ['name', 'unit', 'quantity', 'price_override', 'total'],
+      allow_price_override: true,
+    },
+    totals: [
+      { label: 'Сума без ПДВ', formula: 'sum(line_items.total)' },
+      { label: 'ПДВ 20%', formula: 'sum(line_items.total) * 0.2' },
+      { label: 'Разом з ПДВ', formula: 'sum(line_items.total) * 1.2' },
+    ],
+  },
+};
+
+function getDefaultSchema(type: string): string {
+  const schema = DEFAULT_SCHEMAS[type] ?? DEFAULT_SCHEMAS.invoices;
+  return JSON.stringify(schema, null, 2);
+}
 
 export default function TemplateSettings({ loaderData: { data, type } }: Route.ComponentProps) {
   const t = i.documents;
@@ -131,7 +165,7 @@ export default function TemplateSettings({ loaderData: { data, type } }: Route.C
                   id="schemaJson"
                   name="schemaJson"
                   className="flex min-h-[200px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm font-mono"
-                  defaultValue={editing?.schemaJson ?? DEFAULT_SCHEMA}
+                  defaultValue={editing?.schemaJson ?? getDefaultSchema(type!)}
                   required
                 />
               </div>

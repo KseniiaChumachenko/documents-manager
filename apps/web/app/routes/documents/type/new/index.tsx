@@ -1,6 +1,6 @@
 import { eq } from 'drizzle-orm';
 import { useState } from 'react';
-import { useNavigate, useFetcher } from 'react-router';
+import { Link, useNavigate, useFetcher } from 'react-router';
 
 import { ErrorBoundary as EB } from '~/components/error-boundary';
 import { Button } from '~/components/ui/button';
@@ -43,6 +43,7 @@ export default function NewDocument({ loaderData: { data, type } }: Route.Compon
   const t = i.documents;
   const navigate = useNavigate();
   const fetcher = useFetcher<GenerateDocumentAction>();
+  const [submitted, setSubmitted] = useState(false);
 
   const [templateId, setTemplateId] = useState('');
   const [companyId, setCompanyId] = useState('');
@@ -82,7 +83,19 @@ export default function NewDocument({ loaderData: { data, type } }: Route.Compon
   const vat = Math.round(subtotal * 0.2 * 100) / 100;
   const total = subtotal + vat;
 
+  const hasLineItems = lineItems.some((li) => li.itemId);
+  const missingTemplate = !templateId;
+  const missingCompany = !companyId;
+  const missingNumber = !number;
+  const missingLineItems = !hasLineItems;
+
   const handleSubmit = () => {
+    setSubmitted(true);
+
+    if (missingTemplate || missingCompany || missingNumber || missingLineItems) {
+      return;
+    }
+
     const formData = new FormData();
     formData.set('templateId', templateId);
     formData.set('companyId', companyId);
@@ -115,6 +128,19 @@ export default function NewDocument({ loaderData: { data, type } }: Route.Compon
     navigate(`/documents/${type}/${fetcher.data.data.id}`);
   }
 
+  // No templates — guide user to settings
+  if (data.templates.length === 0) {
+    return (
+      <div className="flex flex-col gap-4 max-w-3xl">
+        <h2 className="text-xl font-semibold">{t.actions.newDocument}</h2>
+        <p className="text-muted-foreground">{t.noTemplatesHint}</p>
+        <Link to={`/documents/${type}/settings`}>
+          <Button variant="outline">{t.actions.newTemplate}</Button>
+        </Link>
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col gap-6 max-w-3xl">
       <h2 className="text-xl font-semibold">{t.actions.newDocument}</h2>
@@ -124,7 +150,7 @@ export default function NewDocument({ loaderData: { data, type } }: Route.Compon
       {/* Template & basic fields */}
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <Label>{t.form.template}</Label>
+          <Label>{t.form.template} *</Label>
           <Select value={templateId} onValueChange={setTemplateId}>
             <SelectTrigger className="w-full">
               <SelectValue placeholder={t.form.template} />
@@ -137,10 +163,13 @@ export default function NewDocument({ loaderData: { data, type } }: Route.Compon
               ))}
             </SelectContent>
           </Select>
+          {submitted && missingTemplate && (
+            <p className="text-destructive text-xs mt-1">{t.validation.templateRequired}</p>
+          )}
         </div>
 
         <div>
-          <Label>{t.form.company}</Label>
+          <Label>{t.form.company} *</Label>
           <Select value={companyId} onValueChange={setCompanyId}>
             <SelectTrigger className="w-full">
               <SelectValue placeholder={t.form.company} />
@@ -153,11 +182,17 @@ export default function NewDocument({ loaderData: { data, type } }: Route.Compon
               ))}
             </SelectContent>
           </Select>
+          {submitted && missingCompany && (
+            <p className="text-destructive text-xs mt-1">{t.validation.companyRequired}</p>
+          )}
         </div>
 
         <div>
-          <Label>{t.form.number}</Label>
+          <Label>{t.form.number} *</Label>
           <Input value={number} onChange={(e) => setNumber(e.target.value)} />
+          {submitted && missingNumber && (
+            <p className="text-destructive text-xs mt-1">{t.validation.numberRequired}</p>
+          )}
         </div>
 
         <div>
@@ -168,7 +203,10 @@ export default function NewDocument({ loaderData: { data, type } }: Route.Compon
 
       {/* Line items */}
       <div>
-        <h3 className="font-medium mb-2">{t.form.lineItems.title}</h3>
+        <h3 className="font-medium mb-2">{t.form.lineItems.title} *</h3>
+        {submitted && missingLineItems && (
+          <p className="text-destructive text-xs mb-2">{t.validation.lineItemRequired}</p>
+        )}
         <div className="flex flex-col gap-2">
           {lineItems.map((li, idx) => (
             <div key={idx} className="grid grid-cols-12 gap-2 items-end">
@@ -266,17 +304,7 @@ export default function NewDocument({ loaderData: { data, type } }: Route.Compon
 
       {/* Submit */}
       <div className="flex gap-2">
-        <Button
-          onClick={handleSubmit}
-          disabled={
-            !templateId ||
-            !companyId ||
-            !number ||
-            !date ||
-            lineItems.every((li) => !li.itemId) ||
-            fetcher.state !== 'idle'
-          }
-        >
+        <Button onClick={handleSubmit} disabled={fetcher.state !== 'idle'}>
           {t.actions.save}
         </Button>
       </div>
