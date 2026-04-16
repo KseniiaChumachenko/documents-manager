@@ -50,11 +50,12 @@ export async function action({ request, context }: Route.ActionArgs) {
     const fd = await request.formData();
     const now = new Date().toISOString();
 
+    const stampIdStr = fd.get('stampId') as string | null;
     const values = {
       name: fd.get('name') as string,
       type: fd.get('type') as string,
       schemaJson: fd.get('schemaJson') as string,
-      stampImageKey: (fd.get('stampImageKey') as string) || null,
+      stampId: stampIdStr ? Number(stampIdStr) : null,
     };
 
     const idStr = fd.get('id');

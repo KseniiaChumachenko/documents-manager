@@ -6,6 +6,7 @@ import {
   documentAuditLog,
   documentTemplate,
   item as itemTable,
+  stamp,
 } from '~/database/schema';
 import {
   computeTotals,
@@ -92,9 +93,15 @@ export async function action({ request, context }: Route.ActionArgs) {
 
     // Get stamp if needed
     let stampBuffer: ArrayBuffer | null = null;
-    if (template.stampImageKey && includeStamp) {
-      const stampObj = await context.cloudflare.env.TEMPLATES.get(template.stampImageKey);
-      stampBuffer = stampObj ? await stampObj.arrayBuffer() : null;
+    if (template.stampId && includeStamp) {
+      const [stampRecord] = await context.db
+        .select()
+        .from(stamp)
+        .where(eq(stamp.id, template.stampId));
+      if (stampRecord) {
+        const stampObj = await context.cloudflare.env.TEMPLATES.get(stampRecord.imageKey);
+        stampBuffer = stampObj ? await stampObj.arrayBuffer() : null;
+      }
     }
 
     // Generate file

@@ -55,12 +55,21 @@ export const company = sqliteTable('company', {
 
 export type Company = typeof company.$inferSelect;
 
+export const stamp = sqliteTable('stamp', {
+  id: integer().primaryKey({ autoIncrement: true }),
+  name: text().notNull(),
+  imageKey: text('image_key').notNull(), // R2 key in TEMPLATES bucket
+  createdAt: text('created_at').notNull(),
+});
+
+export type Stamp = typeof stamp.$inferSelect;
+
 export const documentTemplate = sqliteTable('document_template', {
   id: integer().primaryKey({ autoIncrement: true }),
   name: text().notNull(),
-  type: text().notNull(), // 'act' | 'invoice' | 'delivery_note'
+  type: text().notNull(), // 'poas' | 'invoices' | 'bills'
   schemaJson: text('schema_json').notNull(),
-  stampImageKey: text('stamp_image_key'),
+  stampId: integer('stamp_id').references(() => stamp.id),
   createdAt: text('created_at').notNull(),
   updatedAt: text('updated_at').notNull(),
 });

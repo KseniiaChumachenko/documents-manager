@@ -95,6 +95,14 @@ export const i18n = {
       },
     },
     empty: 'Документів ще немає',
+    stamps: {
+      title: 'Печатки',
+      description:
+        'Печатки можна використовувати в будь-якому шаблоні. Завантажте зображення (PNG, SVG, JPEG) і призначте його шаблонам.',
+      empty: 'Печаток ще немає',
+      namePlaceholder: 'Назва печатки',
+      addButton: 'Додати печатку',
+    },
     templatesEmpty: 'Шаблонів ще немає',
     noTemplatesHint: 'Спершу створіть шаблон у налаштуваннях',
     settingsDescription:

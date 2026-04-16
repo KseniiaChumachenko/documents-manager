@@ -1,13 +1,20 @@
 import { eq } from 'drizzle-orm';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useFetcher } from 'react-router';
 
 import { ErrorBoundary as EB } from '~/components/error-boundary';
 import { Button } from '~/components/ui/button';
 import { Input } from '~/components/ui/input';
 import { Label } from '~/components/ui/label';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '~/components/ui/select';
 import { Separator } from '~/components/ui/separator';
-import { documentTemplate } from '~/database/schema';
+import { documentTemplate, stamp as stampTable } from '~/database/schema';
 import { i18n as i } from '~/i18n';
 import type { TemplateManagementAction } from '~/routes/documents/_api/template-management';
 
@@ -117,7 +124,15 @@ const COLUMN_LABELS: Record<string, string> = {
   total: 'Сума',
 };
 
-function TemplatePreview({ schemaJson, name }: { schemaJson: string; name: string }) {
+function TemplatePreview({
+  schemaJson,
+  name,
+  stampImageUrl,
+}: {
+  schemaJson: string;
+  name: string;
+  stampImageUrl?: string | null;
+}) {
   let schema: ParsedSchema;
   try {
     schema = JSON.parse(schemaJson);
@@ -234,17 +249,28 @@ function TemplatePreview({ schemaJson, name }: { schemaJson: string; name: strin
 
       {/* Stamp indicator */}
       <div className="flex items-center gap-2 text-sm text-muted-foreground pt-2">
-        <div className="w-12 h-12 border-2 border-dashed border-muted-foreground/30 rounded flex items-center justify-center text-xs">
-          М.П.
-        </div>
+        {stampImageUrl ? (
+          <img src={stampImageUrl} alt="Печатка" className="h-12 w-auto rounded" />
+        ) : (
+          <div className="w-12 h-12 border-2 border-dashed border-muted-foreground/30 rounded flex items-center justify-center text-xs">
+            М.П.
+          </div>
+        )}
         <span>Місце для печатки</span>
       </div>
     </div>
   );
 }
 
+interface StampOption {
+  id: number;
+  name: string;
+  dataUrl: string | null;
+}
+
 export async function loader({ params: { type, templateId }, context }: Route.LoaderArgs) {
   let template = null;
+
   if (templateId && templateId !== 'new') {
     const [found] = await context.db
       .select()
@@ -253,7 +279,26 @@ export async function loader({ params: { type, templateId }, context }: Route.Lo
     template = found ?? null;
   }
 
-  return { data: { template }, type };
+  // Fetch all stamps with preview data URLs
+  const stamps = await context.db.select().from(stampTable);
+  const stampOptions: StampOption[] = [];
+  for (const s of stamps) {
+    const obj = await context.cloudflare.env.TEMPLATES.get(s.imageKey);
+    let dataUrl: string | null = null;
+    if (obj) {
+      const buf = await obj.arrayBuffer();
+      const bytes = new Uint8Array(buf);
+      let binary = '';
+      for (let j = 0; j < bytes.byteLength; j++) {
+        binary += String.fromCharCode(bytes[j]);
+      }
+      const contentType = obj.httpMetadata?.contentType ?? 'image/png';
+      dataUrl = `data:${contentType};base64,${btoa(binary)}`;
+    }
+    stampOptions.push({ id: s.id, name: s.name, dataUrl });
+  }
+
+  return { data: { template, stampOptions }, type };
 }
 
 export default function TemplateEditor({ loaderData: { data, type } }: Route.ComponentProps) {
@@ -266,8 +311,17 @@ export default function TemplateEditor({ loaderData: { data, type } }: Route.Com
   const [schemaJson, setSchemaJson] = useState(
     data.template?.schemaJson ?? getDefaultSchema(type!)
   );
+  const [stampId, setStampId] = useState(
+    data.template?.stampId ? String(data.template.stampId) : ''
+  );
+
+  const selectedStamp =
+    stampId && stampId !== 'none'
+      ? data.stampOptions.find((s) => String(s.id) === stampId)
+      : undefined;
 
   const handleSave = () => {
+    shouldRedirect.current = true;
     const formData = new FormData();
     if (data.template) {
       formData.set('id', String(data.template.id));
@@ -275,6 +329,9 @@ export default function TemplateEditor({ loaderData: { data, type } }: Route.Com
     formData.set('name', name);
     formData.set('type', type!);
     formData.set('schemaJson', schemaJson);
+    if (stampId && stampId !== 'none') {
+      formData.set('stampId', stampId);
+    }
 
     fetcher.submit(formData, {
       method: 'POST',
@@ -284,15 +341,19 @@ export default function TemplateEditor({ loaderData: { data, type } }: Route.Com
 
   const handleDelete = () => {
     if (!data.template) return;
+    shouldRedirect.current = true;
     fetcher.submit(null, {
       method: 'DELETE',
       action: `/documents/template-management?id=${data.template.id}`,
     });
   };
 
-  // Redirect on success
+  // Redirect on success for save/delete only
+  const shouldRedirect = useRef(false);
+
   useEffect(() => {
-    if (fetcher.data && !fetcher.data.error) {
+    if (fetcher.data && !fetcher.data.error && shouldRedirect.current) {
+      shouldRedirect.current = false;
       navigate('/documents/settings');
     }
   }, [fetcher.data, navigate]);
@@ -320,10 +381,34 @@ export default function TemplateEditor({ loaderData: { data, type } }: Route.Com
 
       {fetcher.data?.error && <p className="text-destructive text-sm">{fetcher.data.error}</p>}
 
-      {/* Name field */}
-      <div>
-        <Label htmlFor="name">{t.templates.form.name}</Label>
-        <Input id="name" value={name} onChange={(e) => setName(e.target.value)} required />
+      {/* Name + stamp selector */}
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <Label htmlFor="name">{t.templates.form.name}</Label>
+          <Input id="name" value={name} onChange={(e) => setName(e.target.value)} required />
+        </div>
+
+        <div>
+          <Label>{t.templates.form.stamp}</Label>
+          <Select value={stampId} onValueChange={setStampId}>
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="Без печатки" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="none">Без печатки</SelectItem>
+              {data.stampOptions.map((s) => (
+                <SelectItem key={s.id} value={String(s.id)}>
+                  <span className="flex items-center gap-2">
+                    {s.dataUrl && (
+                      <img src={s.dataUrl} alt="" className="h-5 w-5 object-contain inline-block" />
+                    )}
+                    {s.name}
+                  </span>
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
       </div>
 
       {/* Split view: editor + preview */}
@@ -343,7 +428,11 @@ export default function TemplateEditor({ loaderData: { data, type } }: Route.Com
         <div className="flex flex-col gap-1">
           <Label>Попередній перегляд</Label>
           <div className="flex-1 min-h-[500px] rounded-md border border-input bg-muted/30 p-4 overflow-auto">
-            <TemplatePreview schemaJson={schemaJson} name={name} />
+            <TemplatePreview
+              schemaJson={schemaJson}
+              name={name}
+              stampImageUrl={selectedStamp?.dataUrl}
+            />
           </div>
         </div>
       </div>
