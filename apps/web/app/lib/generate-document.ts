@@ -56,6 +56,8 @@ export interface SheetModel {
   rows: Cell[][];
   merges?: XLSX.Range[];
   cols?: { wch: number }[];
+  /** Per-cell number formats (e.g. '0.00' for money), applied to the worksheet. */
+  formats?: { r: number; c: number; z: string }[];
 }
 
 // ---------------------------------------------------------------------------
@@ -95,6 +97,12 @@ export function sheetModelToWorkbook(model: SheetModel, sheetName = 'Докум�
   const ws = XLSX.utils.aoa_to_sheet(model.rows);
   if (model.cols) ws['!cols'] = model.cols;
   if (model.merges) ws['!merges'] = model.merges;
+  if (model.formats) {
+    for (const f of model.formats) {
+      const addr = XLSX.utils.encode_cell({ r: f.r, c: f.c });
+      if (ws[addr]) ws[addr].z = f.z;
+    }
+  }
   XLSX.utils.book_append_sheet(wb, ws, sheetName.substring(0, 31) || 'Sheet1');
   return wb;
 }
