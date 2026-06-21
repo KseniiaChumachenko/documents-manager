@@ -331,10 +331,10 @@ test.describe('Documents > My company settings', () => {
 });
 
 test.describe('Documents > Generation happy path', () => {
-  test('composes an invoice and lands on a downloadable document', async ({ page }) => {
-    const suffix = Date.now();
+  type Page = import('@playwright/test').Page;
 
-    // Create an item type (units are seeded), then an item.
+  // Create an item type (units are seeded) + an item; returns the item name.
+  async function makeItem(page: Page, suffix: number): Promise<string> {
     await page.goto('/library/settings');
     await waitForHydration(page);
     const typeName = `gen-type-${suffix}`;
@@ -358,28 +358,91 @@ test.describe('Documents > Generation happy path', () => {
     await dialog.locator('input[name="priceRetailInclVAT"]').fill('1200');
     await dialog.getByRole('button', { name: 'Зберегти' }).click();
     await expect(page.getByRole('dialog')).not.toBeVisible({ timeout: 5000 });
+    return itemName;
+  }
 
-    await ensureTemplate(page, 'invoices');
-
-    // Compose the document.
-    await page.goto('/documents/invoices/new');
-    await waitForHydration(page);
-
-    await page.locator('#number').fill(`INV-${suffix}`);
-
-    // company_ref select (seeded counterparty)
-    await page.getByRole('combobox', { name: 'Одержувач' }).click();
+  async function pickCompany(page: Page, comboboxLabel: string) {
+    await page.getByRole('combobox', { name: comboboxLabel }).click();
     await page.getByRole('option', { name: /Тестовий Контрагент/ }).click();
-
-    // line-item select
+  }
+  async function pickItem(page: Page, itemName: string) {
     await page.getByRole('combobox').filter({ hasText: 'Товар' }).first().click();
     await page.getByRole('option', { name: itemName }).click();
+  }
 
+  test('composes an invoice (XLSX) and lands on a downloadable document', async ({ page }) => {
+    const suffix = Date.now();
+    const itemName = await makeItem(page, suffix);
+    await ensureTemplate(page, 'invoices');
+
+    await page.goto('/documents/invoices/new');
+    await waitForHydration(page);
+    await page.locator('#number').fill(`INV-${suffix}`);
+    await pickCompany(page, 'Одержувач');
+    await pickItem(page, itemName);
     await page.getByRole('button', { name: 'Зберегти' }).click();
 
-    // Successful generation redirects (from the action) to the document's page.
     await page.waitForURL(/\/documents\/invoices\/\d+$/, { timeout: 20000 });
-    await expect(page.getByRole('button', { name: /Завантажити/ })).toBeVisible({ timeout: 15000 });
+    await expect(page.getByRole('button', { name: 'Завантажити XLSX' })).toBeVisible({
+      timeout: 15000,
+    });
     await expect(page.getByText(`INV-${suffix}`)).toBeVisible({ timeout: 15000 });
+  });
+
+  test('composes an invoice as PDF', async ({ page }) => {
+    const suffix = Date.now();
+    const itemName = await makeItem(page, suffix);
+    await ensureTemplate(page, 'invoices');
+
+    await page.goto('/documents/invoices/new');
+    await waitForHydration(page);
+    await page.locator('#number').fill(`PDF-${suffix}`);
+    await pickCompany(page, 'Одержувач');
+    await pickItem(page, itemName);
+    // Switch the format selector from XLSX to PDF.
+    await page.getByRole('combobox').filter({ hasText: 'XLSX' }).click();
+    await page.getByRole('option', { name: 'PDF' }).click();
+    await page.getByRole('button', { name: 'Зберегти' }).click();
+
+    await page.waitForURL(/\/documents\/invoices\/\d+$/, { timeout: 20000 });
+    await expect(page.getByRole('button', { name: 'Завантажити PDF' })).toBeVisible({
+      timeout: 15000,
+    });
+  });
+
+  test('composes a bill (Видаткова накладна)', async ({ page }) => {
+    const suffix = Date.now();
+    const itemName = await makeItem(page, suffix);
+    await ensureTemplate(page, 'bills');
+
+    await page.goto('/documents/bills/new');
+    await waitForHydration(page);
+    await page.locator('#number').fill(`BILL-${suffix}`);
+    await pickCompany(page, 'Одержувач');
+    await pickItem(page, itemName);
+    await page.getByRole('button', { name: 'Зберегти' }).click();
+
+    await page.waitForURL(/\/documents\/bills\/\d+$/, { timeout: 20000 });
+    await expect(page.getByRole('button', { name: /Завантажити/ })).toBeVisible({ timeout: 15000 });
+    await expect(page.getByText(`BILL-${suffix}`)).toBeVisible({ timeout: 15000 });
+  });
+
+  test('composes a power of attorney (M-2 довіреність)', async ({ page }) => {
+    const suffix = Date.now();
+    const itemName = await makeItem(page, suffix);
+    await ensureTemplate(page, 'poas');
+
+    await page.goto('/documents/poas/new');
+    await waitForHydration(page);
+    await page.locator('#number').fill(`POA-${suffix}`);
+    await page.locator('#valid_until').fill('2026-12-31');
+    await page.locator('#recipient_name').fill('Тест Довірена Особа');
+    await pickCompany(page, 'Постачальник (від кого отримати)');
+    await pickItem(page, itemName);
+    await page.getByRole('button', { name: 'Зберегти' }).click();
+
+    await page.waitForURL(/\/documents\/poas\/\d+$/, { timeout: 20000 });
+    await expect(page.getByRole('button', { name: /Завантажити/ })).toBeVisible({ timeout: 15000 });
+    await expect(page.getByText(`POA-${suffix}`)).toBeVisible({ timeout: 15000 });
   });
 });
