@@ -720,7 +720,9 @@ git commit -m "feat(documents): renderer-driven template preview"
 
 ---
 
-### Task 7: Consolidate R2 storage to one bucket
+### Task 7: Consolidate R2 storage to one bucket — ⏸️ DEFERRED to a stacked follow-up PR
+
+> **Status: NOT done on this branch (decided 2026-06-21).** Units 1–6 (the layout-schema foundation) shipped; this storage task was split off because it touches infra (Pulumi) + production R2 + a data migration, which is orthogonal to the layout schema and carries production-data risk. It MUST still be done — as its own stacked PR after this one merges. The route still uses the three per-type buckets (`POAS`/`INVOICES`/`BILLS`) via `BUCKET_MAP`; see the code comment in `apps/web/app/routes/documents/_api/generate-document.ts` and Section 5 of the design spec. Steps below are the to-do for that follow-up.
 
 **Files:**
 - Modify: `apps/web/wrangler.jsonc` (local + staging + production)

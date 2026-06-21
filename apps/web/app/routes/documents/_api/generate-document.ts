@@ -23,6 +23,11 @@ import {
 
 import type { Route } from '../../../../.react-router/types/app/routes/documents/_api/+types/generate-document';
 
+// TODO(storage-consolidation): these three per-type R2 buckets should be
+// replaced by a single generic `DOCUMENTS` bucket (the document_type column +
+// the `${docType}/...` key prefix already discriminate). Deferred to a stacked
+// follow-up PR because it touches Pulumi infra + a production object migration.
+// See docs/superpowers/specs/2026-06-21-document-layout-schema-design.md §5.
 const BUCKET_MAP: Record<string, 'POAS' | 'INVOICES' | 'BILLS'> = {
   poas: 'POAS',
   invoices: 'INVOICES',
