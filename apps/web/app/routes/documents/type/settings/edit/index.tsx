@@ -121,13 +121,7 @@ const SAMPLE = {
   totals: { subtotal: 200, vat: 40, total: 240, vatRate: 0.2 },
 };
 
-function TemplatePreview({
-  schemaJson,
-}: {
-  schemaJson: string;
-  name: string;
-  stampImageUrl?: string | null;
-}) {
+function TemplatePreview({ schemaJson }: { schemaJson: string }) {
   let html = '';
   try {
     html = sheetModelToHtml(renderLayout(JSON.parse(schemaJson).layout, SAMPLE));
@@ -189,11 +183,6 @@ export default function TemplateEditor({ loaderData: { data, type } }: Route.Com
   const [stampId, setStampId] = useState(
     data.template?.stampId ? String(data.template.stampId) : ''
   );
-
-  const selectedStamp =
-    stampId && stampId !== 'none'
-      ? data.stampOptions.find((s) => String(s.id) === stampId)
-      : undefined;
 
   const handleSave = () => {
     shouldRedirect.current = true;
@@ -303,11 +292,7 @@ export default function TemplateEditor({ loaderData: { data, type } }: Route.Com
         <div className="flex flex-col gap-1">
           <Label>Попередній перегляд</Label>
           <div className="flex-1 min-h-[500px] rounded-md border border-input bg-muted/30 p-4 overflow-auto">
-            <TemplatePreview
-              schemaJson={schemaJson}
-              name={name}
-              stampImageUrl={selectedStamp?.dataUrl}
-            />
+            <TemplatePreview schemaJson={schemaJson} />
           </div>
         </div>
       </div>

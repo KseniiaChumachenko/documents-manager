@@ -85,6 +85,10 @@ export function resolveCell(cell: Cell, scope: Scope): PlacedValue | null {
   if (single) {
     const [, path, transform] = single;
     const raw = lookup(scope, path);
+    // omitIfEmpty check BEFORE transform so that e.g. `{{ x | money }}` with x
+    // absent returns null rather than { value: NaN, numFmt: '0.00' }.
+    // Numeric 0 is NOT empty and must still render.
+    if (cell.omitIfEmpty && (raw == null || raw === '')) return null;
     if (transform && TRANSFORMS[transform]) return TRANSFORMS[transform].place(raw);
     if (typeof raw === 'number') return { value: raw };
     const strVal = raw == null ? '' : String(raw);

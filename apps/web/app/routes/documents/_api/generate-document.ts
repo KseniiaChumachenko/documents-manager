@@ -34,16 +34,12 @@ const BUCKET_MAP: Record<string, 'POAS' | 'INVOICES' | 'BILLS'> = {
   bills: 'BILLS',
 };
 
-/** VAT rate for the document: 0 for powers of attorney, else the template's
- * `vat_rate` (fraction) if set, otherwise 20%. */
-function resolveVatRate(docType: string, schemaJson: string): number {
+/** Derive the VAT rate from an already-parsed schema object.
+ * 0 for powers of attorney, else the template's `vat_rate` (fraction) if set,
+ * otherwise 20%. */
+function resolveVatRate(docType: string, schema: Record<string, unknown>): number {
   if (docType === 'poas') return 0;
-  try {
-    const schema = JSON.parse(schemaJson);
-    if (typeof schema.vat_rate === 'number') return schema.vat_rate;
-  } catch {
-    // fall through
-  }
+  if (typeof schema.vat_rate === 'number') return schema.vat_rate;
   return 0.2;
 }
 
@@ -114,19 +110,19 @@ export async function action({ request, context }: Route.ActionArgs) {
     }
     const lines = resolveLineItems(lineItemsInput);
 
-    // The template's schema_json carries the data-driven layout used to render
-    // the document. Without it we cannot produce an export.
-    let layout;
+    // Parse the template's schema_json once; derive both layout and vat rate from it.
+    let schema: Record<string, unknown>;
     try {
-      layout = JSON.parse(template.schemaJson).layout;
+      schema = JSON.parse(template.schemaJson);
     } catch {
-      layout = undefined;
+      return { data: null, error: 'Шаблон не містить розмітки (layout)' };
     }
+    const layout = schema.layout as import('~/lib/document-layout').Layout | undefined;
     if (!layout) {
       return { data: null, error: 'Шаблон не містить розмітки (layout)' };
     }
 
-    const vatRate = resolveVatRate(docType, template.schemaJson);
+    const vatRate = resolveVatRate(docType, schema);
     const renderContext: RenderContext = {
       supplier: supplier as SupplierIdentity,
       counterparty: {

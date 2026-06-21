@@ -90,4 +90,22 @@ describe('resolveCell', () => {
       resolveCell({ col: 2, text: '{{counterparty.phone}}', omitIfEmpty: true }, scope)
     ).toBeNull();
   });
+
+  it('omits a transformed cell when omitIfEmpty and binding is absent', () => {
+    // field.missing_key is undefined → money transform should still honour omitIfEmpty
+    expect(
+      resolveCell({ col: 0, text: '{{field.missing_key | money}}', omitIfEmpty: true }, scope)
+    ).toBeNull();
+  });
+
+  it('does NOT omit a transformed cell when value is numeric 0', () => {
+    // 0 is falsy but is NOT empty; omitIfEmpty must not suppress it
+    const scopeWithZero = {
+      ...scope,
+      totals: { ...scope.totals, subtotal: 0 },
+    } as unknown as typeof scope;
+    expect(
+      resolveCell({ col: 0, text: '{{totals.subtotal | money}}', omitIfEmpty: true }, scopeWithZero)
+    ).toEqual({ value: 0, numFmt: '0.00' });
+  });
 });

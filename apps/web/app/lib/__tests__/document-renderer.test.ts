@@ -28,7 +28,7 @@ const ctx = {
 } as RenderContext;
 
 describe('renderLayout', () => {
-  it('places row cells at their columns and skips omitted cells', () => {
+  it('places row cells at their columns and skips rows where all cells are omitted', () => {
     const layout: Layout = {
       cols: [10, 20, 20],
       blocks: [
@@ -41,13 +41,15 @@ describe('renderLayout', () => {
         },
         {
           type: 'row',
+          // counterparty.phone is null with omitIfEmpty — entire row should be skipped
           cells: [{ col: 2, text: 'тел. {{counterparty.phone}}', omitIfEmpty: true }],
         },
       ],
     };
     const m = renderLayout(layout, ctx);
+    // Only 1 row emitted; the all-omitted row is dropped
+    expect(m.rows).toHaveLength(1);
     expect(m.rows[0]).toEqual(['Постачальник', null, 'ФОП Тест']);
-    expect(m.rows[1]).toEqual([null, null, null]); // omitted cell → empty row
     expect(m.cols).toEqual([{ wch: 10 }, { wch: 20 }, { wch: 20 }]);
   });
 
@@ -83,5 +85,58 @@ describe('renderLayout', () => {
     };
     const m = renderLayout(layout, ctx);
     expect(m.merges).toEqual([{ s: { r: 0, c: 0 }, e: { r: 0, c: 2 } }]);
+  });
+
+  it('skips a row block whose only cell is omitted via omitIfEmpty', () => {
+    // phone is null in ctx -> omitIfEmpty should cause the row to be absent entirely
+    const layout: Layout = {
+      cols: [10, 20],
+      blocks: [
+        { type: 'row', cells: [{ col: 0, text: 'Before' }] },
+        {
+          type: 'row',
+          cells: [{ col: 1, text: '{{counterparty.phone}}', omitIfEmpty: true }],
+        },
+        { type: 'row', cells: [{ col: 0, text: 'After' }] },
+      ],
+    };
+    const m = renderLayout(layout, ctx);
+    // The middle row is fully omitted; only 2 rows should be present
+    expect(m.rows).toHaveLength(2);
+    expect(m.rows[0]).toEqual(['Before', null]);
+    expect(m.rows[1]).toEqual(['After', null]);
+  });
+
+  it('keeps an explicit spacer row (cells: []) even when surrounded by data rows', () => {
+    const layout: Layout = {
+      cols: [10, 20],
+      blocks: [
+        { type: 'row', cells: [{ col: 0, text: 'Row A' }] },
+        { type: 'row', cells: [] }, // intentional spacer
+        { type: 'row', cells: [{ col: 0, text: 'Row B' }] },
+      ],
+    };
+    const m = renderLayout(layout, ctx);
+    expect(m.rows).toHaveLength(3);
+    expect(m.rows[1]).toEqual([null, null]); // blank spacer row
+  });
+
+  it('emits a row that mixes a present cell with an omitted cell', () => {
+    const layout: Layout = {
+      cols: [10, 20],
+      blocks: [
+        {
+          type: 'row',
+          cells: [
+            { col: 0, text: 'Static' },
+            { col: 1, text: '{{counterparty.phone}}', omitIfEmpty: true },
+          ],
+        },
+      ],
+    };
+    const m = renderLayout(layout, ctx);
+    // Row has one present value; it must NOT be dropped
+    expect(m.rows).toHaveLength(1);
+    expect(m.rows[0]).toEqual(['Static', null]);
   });
 });
