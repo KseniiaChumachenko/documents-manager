@@ -345,6 +345,8 @@ git commit -m "feat(documents): generic layout renderer to SheetModel"
 
 ---
 
+> **Atomicity note (pre-flight fix):** Tasks 3 and 4 must be implemented and committed **together as one change**. Task 3 deletes `buildDocumentSheet`/`generateXlsx`/`generatePdf`, which the alignment describes in `generate-document.test.ts` reference until Task 4 re-points them — so an isolated Task 3 commit would fail `tsc -b`. Treat Tasks 3+4 as a single deliverable: split writers, author layouts, re-point the whole test file, delete the builders, then one green commit (`npx vitest run` + `npx tsc -b` both pass).
+
 ### Task 3: Split output writers (SheetModel → XLSX/PDF)
 
 **Files:**
