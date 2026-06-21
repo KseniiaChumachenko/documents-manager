@@ -383,10 +383,13 @@ test.describe('Documents > Generation happy path', () => {
     await page.getByRole('button', { name: 'Зберегти' }).click();
 
     await page.waitForURL(/\/documents\/invoices\/\d+$/, { timeout: 20000 });
-    await expect(page.getByRole('button', { name: 'Завантажити XLSX' })).toBeVisible({
-      timeout: 15000,
-    });
     await expect(page.getByText(`INV-${suffix}`)).toBeVisible({ timeout: 15000 });
+
+    // Download it — exercises export-document reading from the DOCUMENTS bucket.
+    const downloadPromise = page.waitForEvent('download');
+    await page.getByRole('button', { name: 'Завантажити XLSX' }).click();
+    const download = await downloadPromise;
+    expect(download.suggestedFilename()).toMatch(/\.xlsx$/);
   });
 
   test('composes an invoice as PDF', async ({ page }) => {

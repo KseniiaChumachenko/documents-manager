@@ -23,16 +23,10 @@ import {
 
 import type { Route } from '../../../../.react-router/types/app/routes/documents/_api/+types/generate-document';
 
-// TODO(storage-consolidation): these three per-type R2 buckets should be
-// replaced by a single generic `DOCUMENTS` bucket (the document_type column +
-// the `${docType}/...` key prefix already discriminate). Deferred to a stacked
-// follow-up PR because it touches Pulumi infra + a production object migration.
-// See docs/superpowers/specs/2026-06-21-document-layout-schema-design.md §5.
-const BUCKET_MAP: Record<string, 'POAS' | 'INVOICES' | 'BILLS'> = {
-  poas: 'POAS',
-  invoices: 'INVOICES',
-  bills: 'BILLS',
-};
+// Generated documents are stored in a single generic R2 bucket (DOCUMENTS).
+// The document type is encoded in the `${docType}/...` key prefix and the
+// document_type DB column, so no per-type bucket is needed.
+const DOC_TYPES = new Set(['poas', 'invoices', 'bills']);
 
 /** Derive the VAT rate from an already-parsed schema object.
  * 0 for powers of attorney, else the template's `vat_rate` (fraction) if set,
@@ -69,8 +63,7 @@ export async function action({ request, context }: Route.ActionArgs) {
       return { data: null, error: 'Missing required fields' };
     }
 
-    const bucketKey = BUCKET_MAP[docType];
-    if (!bucketKey) {
+    if (!DOC_TYPES.has(docType)) {
       return { data: null, error: `Unknown document type: ${docType}` };
     }
 
@@ -160,7 +153,7 @@ export async function action({ request, context }: Route.ActionArgs) {
     const ext = format === 'pdf' ? 'pdf' : 'xlsx';
     // Timestamp suffix avoids overwriting documents that share number + date.
     const r2Key = `${docType}/${date}-${number}-${Date.parse(now)}.${ext}`;
-    const bucket = context.cloudflare.env[bucketKey];
+    const bucket = context.cloudflare.env.DOCUMENTS;
     await bucket.put(r2Key, buffer, {
       httpMetadata: {
         contentType:

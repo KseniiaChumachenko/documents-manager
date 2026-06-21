@@ -4,7 +4,10 @@ import { document as documentTable, documentAuditLog } from '~/database/schema';
 
 import type { Route } from '../../../../.react-router/types/app/routes/documents/_api/+types/export-document';
 
-const BUCKET_MAP: Record<string, 'POAS' | 'INVOICES' | 'BILLS'> = {
+// Legacy per-type buckets, kept only as a read-fallback for documents stored
+// before storage consolidation. New documents live in the generic DOCUMENTS
+// bucket. Remove once existing objects are migrated.
+const LEGACY_BUCKET_MAP: Record<string, 'POAS' | 'INVOICES' | 'BILLS'> = {
   poas: 'POAS',
   invoices: 'INVOICES',
   bills: 'BILLS',
@@ -24,13 +27,15 @@ export async function loader({ request, context }: Route.LoaderArgs) {
     return new Response('Document not found or not exported', { status: 404 });
   }
 
-  const bucketKey = BUCKET_MAP[doc.documentType];
-  if (!bucketKey) {
-    return new Response('Unknown document type', { status: 400 });
+  // New documents are in the generic DOCUMENTS bucket; fall back to the legacy
+  // per-type bucket for objects stored before consolidation.
+  let object = await context.cloudflare.env.DOCUMENTS.get(doc.r2Key);
+  if (!object) {
+    const legacyKey = LEGACY_BUCKET_MAP[doc.documentType];
+    if (legacyKey) {
+      object = await context.cloudflare.env[legacyKey].get(doc.r2Key);
+    }
   }
-
-  const bucket = context.cloudflare.env[bucketKey];
-  const object = await bucket.get(doc.r2Key);
 
   if (!object) {
     return new Response('File not found in storage', { status: 404 });

@@ -13,6 +13,7 @@ declare namespace Cloudflare {
     INVOICES: R2Bucket;
     BILLS: R2Bucket;
     TEMPLATES: R2Bucket;
+    DOCUMENTS: R2Bucket;
     DB: D1Database;
     GOV_API: string;
   }
