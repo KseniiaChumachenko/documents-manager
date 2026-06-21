@@ -3,16 +3,42 @@ import * as XLSX from 'xlsx';
 
 import type { Item } from '~/database/schema';
 
+import { BILL_LAYOUT, INVOICE_LAYOUT, POA_LAYOUT } from '../default-document-layouts';
+import type { RenderContext } from '../document-layout';
+import { renderLayout } from '../document-renderer';
 import {
-  buildDocumentSheet,
   computeTotals,
-  generatePdf,
-  generateXlsx,
   resolveLineItems,
+  sheetModelToPdf,
+  sheetModelToXlsx,
+  type ResolvedLineItem,
   type SheetModel,
+  type SupplierIdentity,
 } from '../generate-document';
 
 import { BILL_REF, INVOICE_REF, POA_REF, SUPPLIER, normalize } from './reference-fixtures';
+
+/** Build a RenderContext from a reference fixture (invoice/bill shape). */
+function ctxFrom(
+  ref: typeof INVOICE_REF | typeof BILL_REF,
+  supplier: SupplierIdentity,
+  recipientPhone?: string,
+  fieldOverrides: Record<string, string> = {}
+): RenderContext {
+  const lines = ref.lines as ResolvedLineItem[];
+  const totals = computeTotals(lines, 0.2);
+  return {
+    supplier,
+    counterparty: { name: ref.recipientName, phone: recipientPhone ?? null },
+    field: {
+      number: ref.number,
+      date: ref.date,
+      ...fieldOverrides,
+    },
+    lines,
+    totals: { ...totals, vatRate: 0.2, discount: 0 },
+  };
+}
 
 const baseItem: Item = {
   id: 1,
@@ -78,21 +104,14 @@ describe('computeTotals', () => {
   });
 });
 
-describe('buildDocumentSheet — invoice (Рахунок-фактура)', () => {
-  const model = buildDocumentSheet({
-    docType: 'invoices',
-    templateName: 'Рахунок-фактура (стандартний)',
-    supplier: SUPPLIER,
-    counterparty: { name: INVOICE_REF.recipientName, phone: INVOICE_REF.recipientPhone },
-    fields: {
-      number: INVOICE_REF.number,
-      date: INVOICE_REF.date,
+describe('renderLayout — invoice (Рахунок-фактура)', () => {
+  const model = renderLayout(
+    INVOICE_LAYOUT,
+    ctxFrom(INVOICE_REF, SUPPLIER, INVOICE_REF.recipientPhone, {
       invoice_ref: INVOICE_REF.orderRef,
       valid_until_note: INVOICE_REF.validUntilNote,
-    },
-    lines: INVOICE_REF.lines,
-    vatRate: 0.2,
-  });
+    })
+  );
   const text = flatten(model);
 
   it('has a titled header with number and long date', () => {
@@ -136,21 +155,14 @@ describe('buildDocumentSheet — invoice (Рахунок-фактура)', () =>
   });
 });
 
-describe('buildDocumentSheet — bill (Видаткова накладна)', () => {
-  const model = buildDocumentSheet({
-    docType: 'bills',
-    templateName: 'Видаткова накладна (стандартна)',
-    supplier: SUPPLIER,
-    counterparty: { name: BILL_REF.recipientName },
-    fields: {
-      number: BILL_REF.number,
-      date: BILL_REF.date,
+describe('renderLayout — bill (Видаткова накладна)', () => {
+  const model = renderLayout(
+    BILL_LAYOUT,
+    ctxFrom(BILL_REF, SUPPLIER, undefined, {
       invoice_ref: BILL_REF.orderRef,
       sales_terms: BILL_REF.salesTerms,
-    },
-    lines: BILL_REF.lines,
-    vatRate: 0.2,
-  });
+    })
+  );
   const text = flatten(model);
 
   it('has a titled header with number and long date', () => {
@@ -178,14 +190,13 @@ describe('buildDocumentSheet — bill (Видаткова накладна)', ()
   });
 });
 
-describe('buildDocumentSheet — power of attorney (M-2 довіреність)', () => {
-  const model = buildDocumentSheet({
-    docType: 'poas',
-    templateName: 'Довіреність (типова форма М-2)',
+describe('renderLayout — power of attorney (M-2 довіреність)', () => {
+  const poaTotals = computeTotals(POA_REF.lines as ResolvedLineItem[], 0);
+  const model = renderLayout(POA_LAYOUT, {
     supplier: SUPPLIER,
     // For a поа the counterparty is the supplier the goods are collected from.
     counterparty: { name: POA_REF.supplierCompanyName },
-    fields: {
+    field: {
       number: POA_REF.number,
       date: POA_REF.date,
       valid_until: POA_REF.validUntil,
@@ -195,8 +206,8 @@ describe('buildDocumentSheet — power of attorney (M-2 довіреність)'
       recipient_passport_number: POA_REF.passportNumber,
       recipient_passport_issued_by: POA_REF.passportIssuedBy,
     },
-    lines: POA_REF.lines,
-    vatRate: 0,
+    lines: POA_REF.lines as ResolvedLineItem[],
+    totals: { ...poaTotals, vatRate: 0 },
   });
   const text = flatten(model);
 
@@ -230,17 +241,10 @@ describe('buildDocumentSheet — power of attorney (M-2 довіреність)'
   });
 });
 
-describe('generateXlsx round-trip', () => {
+describe('sheetModelToXlsx round-trip', () => {
   it('produces a valid workbook whose cells include the reference content', () => {
-    const buf = generateXlsx({
-      docType: 'invoices',
-      templateName: 'Рахунок-фактура (стандартний)',
-      supplier: SUPPLIER,
-      counterparty: { name: INVOICE_REF.recipientName },
-      fields: { number: INVOICE_REF.number, date: INVOICE_REF.date },
-      lines: INVOICE_REF.lines,
-      vatRate: 0.2,
-    });
+    const model = renderLayout(INVOICE_LAYOUT, ctxFrom(INVOICE_REF, SUPPLIER));
+    const buf = sheetModelToXlsx(model);
 
     const wb = XLSX.read(buf, { type: 'array' });
     const sheet = wb.Sheets[wb.SheetNames[0]];
@@ -258,17 +262,10 @@ describe('generateXlsx round-trip', () => {
   });
 });
 
-describe('generatePdf', () => {
+describe('sheetModelToPdf', () => {
   it('produces a valid PDF with an embedded Cyrillic font', () => {
-    const buf = generatePdf({
-      docType: 'invoices',
-      templateName: 'Рахунок-фактура (стандартний)',
-      supplier: SUPPLIER,
-      counterparty: { name: INVOICE_REF.recipientName },
-      fields: { number: INVOICE_REF.number, date: INVOICE_REF.date },
-      lines: INVOICE_REF.lines,
-      vatRate: 0.2,
-    });
+    const model = renderLayout(INVOICE_LAYOUT, ctxFrom(INVOICE_REF, SUPPLIER));
+    const buf = sheetModelToPdf(model);
 
     const bytes = new Uint8Array(buf);
     const header = String.fromCharCode(...bytes.slice(0, 5));

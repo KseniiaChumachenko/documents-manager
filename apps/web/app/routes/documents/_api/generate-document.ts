@@ -10,12 +10,13 @@ import {
   myCompany,
   stamp,
 } from '~/database/schema';
+import type { RenderContext } from '~/lib/document-layout';
+import { renderLayout } from '~/lib/document-renderer';
 import {
-  generatePdf,
-  generateXlsx,
+  computeTotals,
   resolveLineItems,
-  type DocumentBuildInput,
-  type DocumentType,
+  sheetModelToPdf,
+  sheetModelToXlsx,
   type LineItem,
   type SupplierIdentity,
 } from '~/lib/generate-document';
@@ -54,7 +55,7 @@ export async function action({ request, context }: Route.ActionArgs) {
     const templateId = Number(fd.get('templateId'));
     const companyId = Number(fd.get('companyId'));
     const format = (fd.get('format') as string) || 'xlsx';
-    const docType = fd.get('documentType') as DocumentType;
+    const docType = fd.get('documentType') as string;
     const includeStamp = fd.get('includeStamp') === 'true';
     const fields: Record<string, string> = JSON.parse((fd.get('fields') as string) || '{}');
     const rawItems: Array<{ itemId: number; quantity: number; priceOverride?: number }> =
@@ -108,18 +109,29 @@ export async function action({ request, context }: Route.ActionArgs) {
     }
     const lines = resolveLineItems(lineItemsInput);
 
-    const buildInput: DocumentBuildInput = {
-      docType,
-      templateName: template.name,
+    // The template's schema_json carries the data-driven layout used to render
+    // the document. Without it we cannot produce an export.
+    let layout;
+    try {
+      layout = JSON.parse(template.schemaJson).layout;
+    } catch {
+      layout = undefined;
+    }
+    if (!layout) {
+      return { data: null, error: 'Шаблон не містить розмітки (layout)' };
+    }
+
+    const vatRate = resolveVatRate(docType, template.schemaJson);
+    const renderContext: RenderContext = {
       supplier: supplier as SupplierIdentity,
       counterparty: {
         name: counterparty.name,
         egrpou: counterparty.egrpou,
         phone: counterparty.phone,
       },
-      fields,
+      field: fields,
       lines,
-      vatRate: resolveVatRate(docType, template.schemaJson),
+      totals: { ...computeTotals(lines, vatRate), vatRate, discount: 0 },
     };
 
     // Resolve the stamp image (if any) as a data URL for PDF embedding.
@@ -139,8 +151,9 @@ export async function action({ request, context }: Route.ActionArgs) {
       }
     }
 
+    const model = renderLayout(layout, renderContext);
     const buffer =
-      format === 'pdf' ? generatePdf(buildInput, stampDataUrl) : generateXlsx(buildInput);
+      format === 'pdf' ? sheetModelToPdf(model, stampDataUrl) : sheetModelToXlsx(model);
 
     const now = new Date().toISOString();
     const ext = format === 'pdf' ? 'pdf' : 'xlsx';

@@ -16,6 +16,7 @@ import {
 import { Separator } from '~/components/ui/separator';
 import { documentTemplate, stamp as stampTable } from '~/database/schema';
 import { tns } from '~/i18n';
+import { BILL_LAYOUT, INVOICE_LAYOUT, POA_LAYOUT } from '~/lib/default-document-layouts';
 import type { TemplateManagementAction } from '~/routes/documents/_api/template-management';
 
 import type { Route } from '../../../../../../.react-router/types/app/routes/documents/type/settings/edit/+types';
@@ -46,6 +47,7 @@ const DEFAULT_SCHEMAS: Record<string, object> = {
       allow_price_override: false,
     },
     totals: [],
+    layout: POA_LAYOUT,
   },
   invoices: {
     fields: [
@@ -66,6 +68,7 @@ const DEFAULT_SCHEMAS: Record<string, object> = {
       { label: 'ПДВ 20%', formula: 'sum(line_items.total) * 0.2' },
       { label: 'Разом з ПДВ', formula: 'sum(line_items.total) * 1.2' },
     ],
+    layout: INVOICE_LAYOUT,
   },
   bills: {
     fields: [
@@ -85,6 +88,7 @@ const DEFAULT_SCHEMAS: Record<string, object> = {
       { label: 'ПДВ 20%', formula: 'sum(line_items.total) * 0.2' },
       { label: 'Разом з ПДВ', formula: 'sum(line_items.total) * 1.2' },
     ],
+    layout: BILL_LAYOUT,
   },
 };
 
