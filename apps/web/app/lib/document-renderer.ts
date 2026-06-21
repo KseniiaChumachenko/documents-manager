@@ -28,6 +28,11 @@ function placeRow(
     const placed = resolveCell(cell, scope);
     if (placed == null) continue;
     anyPlaced = true;
+    // TODO(money-numfmt): resolveCell may return a `numFmt` (e.g. '0.00' for the
+    // `money` transform), but SheetModel has no per-cell format channel, so it is
+    // dropped here — XLSX money cells render numerically without a forced
+    // 2-decimal display. Thread numFmt into SheetModel + apply in
+    // sheetModelToWorkbook to match the reference spreadsheets. Follow-up.
     out[cell.col] = placed.value;
     if (cell.span && cell.span > 1) {
       merges!.push({

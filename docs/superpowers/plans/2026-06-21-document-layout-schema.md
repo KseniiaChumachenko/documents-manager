@@ -760,6 +760,11 @@ git commit -m "refactor(infra): consolidate document R2 buckets into DOCUMENTS"
 
 ---
 
+## Deferred follow-ups (documented, not done on this branch)
+
+- **R2 storage consolidation** — Task 7 above (Pulumi + production migration). Stacked PR.
+- **XLSX money number-format** — `resolveCell` produces a `numFmt` ('0.00' for `money`), but `SheetModel` has no per-cell format channel so it's dropped in `document-renderer.ts` (see `TODO(money-numfmt)`). Money cells are numeric but lack a forced 2-decimal display vs the reference. Not a regression (the old engine didn't format either). Fix: add a per-cell format channel to `SheetModel`, thread it through the renderer, apply it in `sheetModelToWorkbook`, with a test. Good to do before the authoring sub-project (#2).
+
 ## Self-Review
 
 - **Spec coverage:** Section 1 (template shape/context) → Tasks 1,5; Section 2 (blocks) → Tasks 1,2,4; Section 3 (bindings/transforms/numeric) → Task 1; Section 4 (renderer/integration/migration/tests) → Tasks 2,3,4,5; Section 5 (storage) → Task 7; Section 6 (preview) → Task 6. All covered.
