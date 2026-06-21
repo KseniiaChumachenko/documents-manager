@@ -72,9 +72,7 @@ test.describe('Documents > Template Settings', () => {
     await page.goto('/documents/invoices/settings/new');
     await waitForHydration(page);
 
-    await expect(page.getByText('Поля документу')).toBeVisible();
-    await expect(page.getByText('Товари / послуги')).toBeVisible();
-    await expect(page.getByText('М.П.')).toBeVisible();
+    await expect(page.getByRole('cell', { name: 'Постачальник' })).toBeVisible();
   });
 
   test('create a template and verify it appears in settings', async ({ page }) => {

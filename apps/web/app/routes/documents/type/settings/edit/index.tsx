@@ -13,10 +13,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from '~/components/ui/select';
-import { Separator } from '~/components/ui/separator';
 import { documentTemplate, stamp as stampTable } from '~/database/schema';
 import { tns } from '~/i18n';
 import { BILL_LAYOUT, INVOICE_LAYOUT, POA_LAYOUT } from '~/lib/default-document-layouts';
+import { renderLayout } from '~/lib/document-renderer';
+import { sheetModelToHtml } from '~/lib/sheet-model-to-html';
 import type { TemplateManagementAction } from '~/routes/documents/_api/template-management';
 
 import type { Route } from '../../../../../../.react-router/types/app/routes/documents/type/settings/edit/+types';
@@ -97,173 +98,43 @@ function getDefaultSchema(type: string): string {
   return JSON.stringify(schema, null, 2);
 }
 
-interface SchemaField {
-  key: string;
-  label: string;
-  type: string;
-  required?: boolean;
-}
-
-interface SchemaLineItems {
-  columns: string[];
-  allow_price_override?: boolean;
-}
-
-interface SchemaTotal {
-  label: string;
-  formula: string;
-}
-
-interface ParsedSchema {
-  fields?: SchemaField[];
-  line_items?: SchemaLineItems;
-  totals?: SchemaTotal[];
-}
-
-const COLUMN_LABELS: Record<string, string> = {
-  name: 'Назва',
-  unit: 'Одиниця',
-  quantity: 'Кількість',
-  price_override: 'Ціна',
-  total: 'Сума',
+const SAMPLE = {
+  supplier: {
+    name: 'ФОП Зразок',
+    egrpou: '00000000',
+    inn: '00000000',
+    vatCertificate: null,
+    iban: 'UA00',
+    bankName: 'БАНК',
+    mfo: '000',
+    phone: '000',
+    address: 'Адреса',
+    taxNote: '',
+    signatoryName: 'І. П.',
+  },
+  counterparty: { name: 'ТОВ Зразок', phone: '000' },
+  field: { number: '0001', date: '2024-12-26' },
+  lines: [
+    { name: 'Зразок 1', unit: 'шт.', quantity: 1, price: 100, total: 100 },
+    { name: 'Зразок 2', unit: 'шт.', quantity: 2, price: 50, total: 100 },
+  ],
+  totals: { subtotal: 200, vat: 40, total: 240, vatRate: 0.2 },
 };
 
 function TemplatePreview({
   schemaJson,
-  name,
-  stampImageUrl,
 }: {
   schemaJson: string;
   name: string;
   stampImageUrl?: string | null;
 }) {
-  let schema: ParsedSchema;
+  let html = '';
   try {
-    schema = JSON.parse(schemaJson);
+    html = sheetModelToHtml(renderLayout(JSON.parse(schemaJson).layout, SAMPLE));
   } catch {
     return <div className="text-destructive text-sm p-4">Помилка в JSON — перевірте синтаксис</div>;
   }
-
-  return (
-    <div className="space-y-4">
-      <h3 className="text-lg font-semibold">{name || 'Без назви'}</h3>
-      <Separator />
-
-      {/* Fields preview */}
-      {schema.fields && schema.fields.length > 0 && (
-        <div className="space-y-3">
-          <h4 className="text-sm font-medium text-muted-foreground">Поля документу</h4>
-          <div className="grid grid-cols-2 gap-3">
-            {schema.fields.map((field) => (
-              <div key={field.key}>
-                <Label className="text-xs">
-                  {field.label}
-                  {field.required && <span className="text-destructive"> *</span>}
-                </Label>
-                {field.type === 'date' ? (
-                  <Input type="date" disabled className="mt-1" />
-                ) : field.type === 'company_ref' ? (
-                  <div className="mt-1 h-9 rounded-md border border-input bg-muted/50 px-3 py-2 text-sm text-muted-foreground">
-                    Обрати контрагента...
-                  </div>
-                ) : (
-                  <Input disabled placeholder={field.label} className="mt-1" />
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* Line items preview */}
-      {schema.line_items && (
-        <div className="space-y-2">
-          <h4 className="text-sm font-medium text-muted-foreground">Товари / послуги</h4>
-          <div className="border rounded-md overflow-hidden">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="border-b bg-muted/50">
-                  <th className="px-3 py-2 text-left font-medium">№</th>
-                  {schema.line_items.columns.map((col) => (
-                    <th key={col} className="px-3 py-2 text-left font-medium">
-                      {COLUMN_LABELS[col] ?? col}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                <tr className="border-b">
-                  <td className="px-3 py-2 text-muted-foreground">1</td>
-                  {schema.line_items.columns.map((col) => (
-                    <td key={col} className="px-3 py-2 text-muted-foreground">
-                      {col === 'name'
-                        ? 'Приклад товару'
-                        : col === 'unit'
-                          ? 'шт'
-                          : col === 'quantity'
-                            ? '10'
-                            : col === 'price_override'
-                              ? '150.00'
-                              : col === 'total'
-                                ? '1 500.00'
-                                : '—'}
-                    </td>
-                  ))}
-                </tr>
-                <tr>
-                  <td className="px-3 py-2 text-muted-foreground">2</td>
-                  {schema.line_items.columns.map((col) => (
-                    <td key={col} className="px-3 py-2 text-muted-foreground">
-                      {col === 'name'
-                        ? 'Інший товар'
-                        : col === 'unit'
-                          ? 'кг'
-                          : col === 'quantity'
-                            ? '5'
-                            : col === 'price_override'
-                              ? '200.00'
-                              : col === 'total'
-                                ? '1 000.00'
-                                : '—'}
-                    </td>
-                  ))}
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      )}
-
-      {/* Totals preview */}
-      {schema.totals && schema.totals.length > 0 && (
-        <div className="space-y-1 text-sm">
-          {schema.totals.map((total, idx) => (
-            <div
-              key={idx}
-              className={`flex justify-between ${idx === schema.totals!.length - 1 ? 'font-bold' : ''}`}
-            >
-              <span>{total.label}</span>
-              <span className="text-muted-foreground">
-                {idx === 0 ? '2 500.00' : idx === 1 ? '500.00' : '3 000.00'}
-              </span>
-            </div>
-          ))}
-        </div>
-      )}
-
-      {/* Stamp indicator */}
-      <div className="flex items-center gap-2 text-sm text-muted-foreground pt-2">
-        {stampImageUrl ? (
-          <img src={stampImageUrl} alt="Печатка" className="h-12 w-auto rounded" />
-        ) : (
-          <div className="w-12 h-12 border-2 border-dashed border-muted-foreground/30 rounded flex items-center justify-center text-xs">
-            М.П.
-          </div>
-        )}
-        <span>Місце для печатки</span>
-      </div>
-    </div>
-  );
+  return <div dangerouslySetInnerHTML={{ __html: html }} />;
 }
 
 interface StampOption {
