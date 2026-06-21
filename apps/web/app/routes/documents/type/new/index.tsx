@@ -112,7 +112,7 @@ export default function NewDocument({ loaderData: { data, type } }: Route.Compon
 
   const getItemPrice = (itemId: string): number => {
     const item = data.items.find((it) => String(it.id) === itemId);
-    return item?.priceInputVATFree ?? 0;
+    return item?.priceSaleVATFree ?? 0;
   };
   const computeLineTotal = (li: LineItemRow): number => {
     const price = li.priceOverride ? Number(li.priceOverride) : getItemPrice(li.itemId);

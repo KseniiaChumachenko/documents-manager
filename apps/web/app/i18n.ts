@@ -256,8 +256,8 @@ export const i18n = {
       headers: {
         name: 'Назва',
         unit: 'Одиниці',
-        priceInputVATFree: 'Відпускна ціна без ПДВ',
-        priceOutputVATFree: 'Вхідна ціна без ПДВ',
+        priceSaleVATFree: 'Відпускна ціна без ПДВ',
+        priceCostVATFree: 'Вхідна ціна без ПДВ',
         priceRetailInclVAT: 'Роздрібна ціна з ПДВ',
         type: 'Тип',
       },

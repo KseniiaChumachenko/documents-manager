@@ -1,15 +1,42 @@
 import { describe, expect, it } from 'vitest';
 import * as XLSX from 'xlsx';
 
+import type { Item } from '~/database/schema';
+
 import {
   buildDocumentSheet,
   computeTotals,
   generatePdf,
   generateXlsx,
+  resolveLineItems,
   type SheetModel,
 } from '../generate-document';
 
 import { BILL_REF, INVOICE_REF, POA_REF, SUPPLIER, normalize } from './reference-fixtures';
+
+const baseItem: Item = {
+  id: 1,
+  name: 'Товар',
+  type: 'Тип',
+  unit: 'шт',
+  priceSaleVATFree: 100,
+  priceCostVATFree: 60,
+  priceRetailInclVAT: 144,
+};
+
+describe('resolveLineItems', () => {
+  it('bills the sale price (Відпускна) by default', () => {
+    const [r] = resolveLineItems([{ item: baseItem, quantity: 3 }]);
+    expect(r.price).toBe(100);
+    expect(r.total).toBe(300);
+  });
+
+  it('uses the price override when provided', () => {
+    const [r] = resolveLineItems([{ item: baseItem, quantity: 2, priceOverride: 50 }]);
+    expect(r.price).toBe(50);
+    expect(r.total).toBe(100);
+  });
+});
 
 function flatten(model: SheetModel): string {
   return normalize(

@@ -43,13 +43,13 @@ const getFields = ({
     options: unitOptions,
   },
   {
-    name: 'priceInputVATFree' as const,
+    name: 'priceSaleVATFree' as const,
     f: 'input' as const,
     type: 'number',
     step: 0.01,
   },
   {
-    name: 'priceOutputVATFree' as const,
+    name: 'priceCostVATFree' as const,
     f: 'input' as const,
     type: 'number',
     step: 0.01,

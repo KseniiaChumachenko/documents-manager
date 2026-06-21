@@ -81,7 +81,7 @@ export interface SheetModel {
 /** Resolve raw line items to display rows. Bills the sale price (Відпускна, без ПДВ). */
 export function resolveLineItems(lineItems: LineItem[]): ResolvedLineItem[] {
   return lineItems.map((li) => {
-    const price = li.priceOverride ?? li.item.priceInputVATFree;
+    const price = li.priceOverride ?? li.item.priceSaleVATFree;
     return {
       name: li.item.name,
       unit: li.item.unit,

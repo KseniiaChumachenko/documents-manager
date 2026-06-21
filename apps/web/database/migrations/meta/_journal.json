@@ -64,6 +64,13 @@
       "when": 1782047970658,
       "tag": "0008_my_company",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "6",
+      "when": 1782048070658,
+      "tag": "0009_rename_item_prices",
+      "breakpoints": true
     }
   ]
 }

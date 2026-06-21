@@ -19,8 +19,8 @@ export const item = sqliteTable('item', {
     .references(() => itemType.name)
     .notNull(),
   unit: text().references(() => unit.name),
-  priceInputVATFree: integer().notNull(),
-  priceOutputVATFree: integer().notNull(),
+  priceSaleVATFree: integer().notNull(), // Відпускна (sale) price, без ПДВ
+  priceCostVATFree: integer().notNull(), // Вхідна (cost) price, без ПДВ
   priceRetailInclVAT: integer().notNull(),
 });
 

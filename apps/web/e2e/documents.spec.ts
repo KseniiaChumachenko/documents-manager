@@ -280,8 +280,8 @@ test.describe('Documents > Full Flow', () => {
     await dialog.locator('input[name="name"]').fill(itemName);
     await dialog.locator('select[name="type"]').selectOption(typeName);
     await dialog.locator('select[name="unit"]').selectOption(unitName);
-    await dialog.locator('input[name="priceInputVATFree"]').fill('100');
-    await dialog.locator('input[name="priceOutputVATFree"]').fill('150');
+    await dialog.locator('input[name="priceSaleVATFree"]').fill('100');
+    await dialog.locator('input[name="priceCostVATFree"]').fill('150');
     await dialog.locator('input[name="priceRetailInclVAT"]').fill('180');
 
     await dialog.getByRole('button', { name: 'Зберегти' }).click();
@@ -355,8 +355,8 @@ test.describe('Documents > Generation happy path', () => {
     const itemName = `gen-item-${suffix}`;
     await dialog.locator('input[name="name"]').fill(itemName);
     await dialog.locator('select[name="type"]').selectOption(typeName);
-    await dialog.locator('input[name="priceInputVATFree"]').fill('1000');
-    await dialog.locator('input[name="priceOutputVATFree"]').fill('800');
+    await dialog.locator('input[name="priceSaleVATFree"]').fill('1000');
+    await dialog.locator('input[name="priceCostVATFree"]').fill('800');
     await dialog.locator('input[name="priceRetailInclVAT"]').fill('1200');
     await dialog.getByRole('button', { name: 'Зберегти' }).click();
     await expect(page.getByRole('dialog')).not.toBeVisible({ timeout: 5000 });
