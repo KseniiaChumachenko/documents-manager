@@ -20,7 +20,8 @@ function placeRow(
   width: number,
   scope: Scope,
   rowIndex: number,
-  merges: SheetModel['merges']
+  merges: SheetModel['merges'],
+  formats: NonNullable<SheetModel['formats']>
 ): { row: CellOut[]; anyPlaced: boolean } {
   const out: CellOut[] = new Array(width).fill(null);
   let anyPlaced = false;
@@ -28,12 +29,10 @@ function placeRow(
     const placed = resolveCell(cell, scope);
     if (placed == null) continue;
     anyPlaced = true;
-    // TODO(money-numfmt): resolveCell may return a `numFmt` (e.g. '0.00' for the
-    // `money` transform), but SheetModel has no per-cell format channel, so it is
-    // dropped here — XLSX money cells render numerically without a forced
-    // 2-decimal display. Thread numFmt into SheetModel + apply in
-    // sheetModelToWorkbook to match the reference spreadsheets. Follow-up.
     out[cell.col] = placed.value;
+    if (placed.numFmt != null) {
+      formats.push({ r: rowIndex, c: cell.col, z: placed.numFmt });
+    }
     if (cell.span && cell.span > 1) {
       merges!.push({
         s: { r: rowIndex, c: cell.col },
@@ -48,6 +47,7 @@ export function renderLayout(layout: Layout, context: RenderContext): SheetModel
   const width = layout.cols.length;
   const rows: CellOut[][] = [];
   const merges: NonNullable<SheetModel['merges']> = [];
+  const formats: NonNullable<SheetModel['formats']> = [];
 
   for (const block of layout.blocks) {
     if (block.type === 'row') {
@@ -58,18 +58,32 @@ export function renderLayout(layout: Layout, context: RenderContext): SheetModel
         rows.push(new Array(width).fill(null));
         continue;
       }
-      const { row, anyPlaced } = placeRow(block.cells, width, context, rows.length, merges);
+      const { row, anyPlaced } = placeRow(
+        block.cells,
+        width,
+        context,
+        rows.length,
+        merges,
+        formats
+      );
       if (!anyPlaced) continue;
       rows.push(row);
     } else {
-      rows.push(placeRow(block.header, width, context, rows.length, merges).row);
+      rows.push(placeRow(block.header, width, context, rows.length, merges, formats).row);
       context.lines.forEach((line, i) => {
         rows.push(
-          placeRow(block.row, width, { ...context, line, index: i + 1 }, rows.length, merges).row
+          placeRow(
+            block.row,
+            width,
+            { ...context, line, index: i + 1 },
+            rows.length,
+            merges,
+            formats
+          ).row
         );
       });
     }
   }
 
-  return { rows, merges, cols: layout.cols.map((wch) => ({ wch })) };
+  return { rows, merges, formats, cols: layout.cols.map((wch) => ({ wch })) };
 }

@@ -121,6 +121,24 @@ describe('renderLayout', () => {
     expect(m.rows[1]).toEqual([null, null]); // blank spacer row
   });
 
+  it('records a per-cell number format for money-transformed cells', () => {
+    const layout: Layout = {
+      cols: [10, 12],
+      blocks: [
+        {
+          type: 'row',
+          cells: [
+            { col: 0, text: 'Разом без ПДВ:' },
+            { col: 1, text: '{{totals.subtotal | money}}' },
+          ],
+        },
+      ],
+    };
+    const m = renderLayout(layout, ctx);
+    expect(m.rows[0]).toEqual(['Разом без ПДВ:', 25]); // value stays numeric
+    expect(m.formats).toContainEqual({ r: 0, c: 1, z: '0.00' }); // format captured
+  });
+
   it('emits a row that mixes a present cell with an omitted cell', () => {
     const layout: Layout = {
       cols: [10, 20],

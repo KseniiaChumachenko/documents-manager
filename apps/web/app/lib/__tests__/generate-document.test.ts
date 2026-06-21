@@ -10,6 +10,7 @@ import {
   computeTotals,
   resolveLineItems,
   sheetModelToPdf,
+  sheetModelToWorkbook,
   sheetModelToXlsx,
   type ResolvedLineItem,
   type SheetModel,
@@ -259,6 +260,14 @@ describe('sheetModelToXlsx round-trip', () => {
     expect(text).toContain('Рахунок-фактура № СФ-0000305');
     expect(text).toContain(normalize(SUPPLIER.name));
     expect(text).toContain(normalize(INVOICE_REF.totalInWords));
+  });
+
+  it('applies per-cell number formats to the worksheet', () => {
+    const model: SheetModel = { rows: [[3250.02, 'x']], formats: [{ r: 0, c: 0, z: '0.00' }] };
+    const wb = sheetModelToWorkbook(model, 'Документ');
+    const ws = wb.Sheets[wb.SheetNames[0]];
+    expect(ws['A1'].z).toBe('0.00'); // money cell carries the 2-decimal format
+    expect(ws['B1'].z).toBeUndefined(); // unformatted cell untouched
   });
 });
 
