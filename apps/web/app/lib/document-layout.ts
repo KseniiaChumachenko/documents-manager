@@ -47,21 +47,36 @@ function lookup(scope: Scope, path: string): unknown {
   }, scope);
 }
 
-type Transform = (raw: unknown) => PlacedValue;
-const TRANSFORMS: Record<string, Transform> = {
-  money: (raw) => ({ value: Number(raw), numFmt: '0.00' }),
-  longDate: (raw) => ({ value: formatUaDateLong(String(raw ?? '')) }),
-  hryvniaWords: (raw) => ({ value: hryvniaInWords(Number(raw)) }),
-  intWords: (raw) => ({ value: integerInWords(Number(raw)) }),
+interface TransformDef {
+  /** Produce the placed value (may carry numFmt for numeric cells). */
+  place: (raw: unknown) => PlacedValue;
+  /** Render to a plain string for mixed-text interpolation. */
+  str: (raw: unknown) => string;
+}
+
+const TRANSFORMS: Record<string, TransformDef> = {
+  money: {
+    place: (raw) => ({ value: Number(raw), numFmt: '0.00' }),
+    str: (raw) => Number(raw).toFixed(2),
+  },
+  longDate: {
+    place: (raw) => ({ value: formatUaDateLong(String(raw ?? '')) }),
+    str: (raw) => formatUaDateLong(String(raw ?? '')),
+  },
+  hryvniaWords: {
+    place: (raw) => ({ value: hryvniaInWords(Number(raw)) }),
+    str: (raw) => hryvniaInWords(Number(raw)),
+  },
+  intWords: {
+    place: (raw) => ({ value: integerInWords(Number(raw)) }),
+    str: (raw) => integerInWords(Number(raw)),
+  },
 };
 
 /** Format a resolved value as a string (used in mixed-text interpolation). */
 function asString(raw: unknown, transform?: string): string {
   if (raw == null) return '';
-  if (transform === 'money') return Number(raw).toFixed(2);
-  if (transform === 'longDate') return formatUaDateLong(String(raw));
-  if (transform === 'hryvniaWords') return hryvniaInWords(Number(raw));
-  if (transform === 'intWords') return integerInWords(Number(raw));
+  if (transform && TRANSFORMS[transform]) return TRANSFORMS[transform].str(raw);
   return String(raw);
 }
 
@@ -70,9 +85,11 @@ export function resolveCell(cell: Cell, scope: Scope): PlacedValue | null {
   if (single) {
     const [, path, transform] = single;
     const raw = lookup(scope, path);
-    if (transform && TRANSFORMS[transform]) return TRANSFORMS[transform](raw);
+    if (transform && TRANSFORMS[transform]) return TRANSFORMS[transform].place(raw);
     if (typeof raw === 'number') return { value: raw };
-    return { value: raw == null ? '' : String(raw) };
+    const strVal = raw == null ? '' : String(raw);
+    if (cell.omitIfEmpty && strVal === '') return null;
+    return { value: strVal };
   }
 
   let anyNonEmpty = false;

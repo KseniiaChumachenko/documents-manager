@@ -83,4 +83,11 @@ describe('resolveCell', () => {
   it('keeps a literal-only cell', () => {
     expect(resolveCell({ col: 1, text: 'Постачальник' }, scope)).toEqual({ value: 'Постачальник' });
   });
+
+  it('omits a pure single-binding cell when omitIfEmpty and value is null', () => {
+    // counterparty.phone is null in scope — pure binding, no surrounding literal
+    expect(
+      resolveCell({ col: 2, text: '{{counterparty.phone}}', omitIfEmpty: true }, scope)
+    ).toBeNull();
+  });
 });
