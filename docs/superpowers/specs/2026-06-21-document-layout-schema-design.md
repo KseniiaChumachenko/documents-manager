@@ -20,7 +20,9 @@ The larger goal (chosen in design) is **user-authored document layouts**. That i
 2. **Authoring experience** (follow-on) — UI to create/edit layouts beyond raw JSON: block palette, add/remove/reorder, bind data, live preview.
 3. **Validation & guardrails** (follow-on) — schema validation, safe rendering of incomplete/invalid layouts, and **layout versioning** so already-generated documents keep rendering when a template changes.
 
-This spec covers **#1 only**, but the schema is designed to be general enough for user authoring later.
+This spec covers **#1 only**, but the schema is designed to be general enough for user authoring later. Two adjacent simplifications are pulled into this foundation because they reinforce the "generic documents" direction: **storage consolidation** (Section 5) and a **renderer-based editor preview** (Section 6).
+
+The data model is **already generic** and needs no change: one `document` table with a row-level `document_type` discriminator (`'poas' | 'invoices' | 'bills'`), and `document_template.type` likewise. No per-type tables.
 
 ## Design Decisions (resolved during brainstorming)
 
@@ -137,7 +139,27 @@ No expression language and no arithmetic in templates — totals are computed in
 ### Testing (the safety net)
 - **Re-point the existing reference-alignment suite** (`generate-document.test.ts`) to the data-driven path: seed layout + reference context → `renderLayout` → the *same* assertions (supplier block, totals, сума прописом, M-2 passport, every line item). Green = the data-driven renderer provably reproduces the references.
 - New unit tests for the resolver: dotted-path lookup, each transform, the single-binding numeric rule, `omitIfEmpty`, and per-block rendering (`row` positioning + merges, `lineItems` expansion).
-- The E2E generation happy-path is unchanged.
+- Unit test for `sheetModelToHtml` (Section 6): rows → table cells with colspans.
+- The E2E generation happy-path is unchanged; an E2E check that the editor preview renders the layout (e.g. the supplier label appears) covers Section 6.
+- After storage consolidation (Section 5), the generation + download E2E exercises the single `DOCUMENTS` bucket; the migration/copy step is verified out-of-band (objects readable by their existing `type/…` keys).
+
+## 5. Storage consolidation (one generic bucket)
+
+Today there are three R2 buckets (`POAS` / `INVOICES` / `BILLS`) selected via a `BUCKET_MAP`. The document type is already redundantly available — the `document` row carries `document_type`, and the key is already prefixed: `r2Key = ${docType}/${date}-${number}-${ts}.{ext}`. We consolidate to a single generic bucket, consistent with the generic table.
+
+- **Infra:** replace the three bindings with one `DOCUMENTS` bucket (e.g. `local-documents` / `staging-documents` / `production-documents`) in `apps/web/wrangler.jsonc` (all three envs) and in the Pulumi stack (`packages/infra`).
+- **Code:** drop `BUCKET_MAP` in `generate-document.ts` and `export-document.ts`; read/write the single `DOCUMENTS` bucket. Keep the `${docType}/…` key prefix so type stays discernible from the key path; the `document_type` column remains the source of truth. Remove the `// matches R2 bucket` coupling comment in `schema.ts`.
+- **Migration:** copy existing objects from the three buckets into `DOCUMENTS` (their keys already carry the `type/` prefix, so no key rewrite). Production has real objects — this needs a deliberate copy step (or a temporary read-fallback to the old buckets) before the old buckets are removed.
+- **Sequencing note:** this is infra (Pulumi) + a data move, orthogonal to layout rendering. It should land as its **own commit/PR step** within this effort, not interleaved with the renderer change, so the infra change is reviewable in isolation and can be rolled out before/after the code switch as needed.
+
+## 6. Template preview (rendered from the renderer)
+
+`renderLayout` is pure and isomorphic (runs in the browser, no R2/file needed), so the template editor preview is driven by the **same renderer**: `renderLayout(layout, sampleContext) → SheetModel`, displayed as an HTML table via a small `sheetModelToHtml` helper.
+
+- Replaces the current field-only `TemplatePreview` with a layout-accurate preview (shows the real document skeleton: supplier block, line table, totals, signatures, M-2 grid).
+- Uses a small fixed **sample context** (placeholder supplier/counterparty/two line items) so the preview shows representative content while editing the layout JSON.
+- Static preview only (sample data, no editing affordances). The interactive block builder is sub-project #2.
+- `sheetModelToHtml` is a tiny, well-bounded unit (rows → `<table>` with colspans from `span`); it shares the `SheetModel` contract with the XLSX/PDF writers, so preview and output cannot drift.
 
 ## Known Limitations
 
@@ -146,8 +168,10 @@ No expression language and no arithmetic in templates — totals are computed in
 
 ## Out of Scope (follow-on sub-projects)
 
-- **#2 Authoring experience** — visual layout builder.
+- **#2 Authoring experience** — visual/interactive layout builder (the foundation ships a static, renderer-based preview only).
 - **#3 Validation & guardrails** — JSON-schema validation of layouts, edit-time errors, layout versioning so historical documents render consistently.
+
+(Storage consolidation and the renderer-based preview were moved **into** this foundation — see Sections 5 and 6.)
 
 ## Open Questions / Risks
 
