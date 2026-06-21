@@ -3,6 +3,8 @@ import { renderToReadableStream } from 'react-dom/server';
 import type { AppLoadContext, EntryContext } from 'react-router';
 import { ServerRouter } from 'react-router';
 
+import './i18n'; // initialise i18next before server-side rendering
+
 export default async function handleRequest(
   request: Request,
   responseStatusCode: number,

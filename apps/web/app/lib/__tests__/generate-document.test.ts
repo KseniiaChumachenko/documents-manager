@@ -97,7 +97,7 @@ describe('buildDocumentSheet — invoice (Рахунок-фактура)', () =>
 
   it('has a titled header with number and long date', () => {
     expect(text).toContain('Рахунок-фактура № СФ-0000305');
-    expect(text).toContain('26 Грудня 2024 р.');
+    expect(text).toContain('26 грудня 2024 р.');
   });
 
   it('includes the supplier block (Постачальник identity)', () => {
@@ -155,7 +155,7 @@ describe('buildDocumentSheet — bill (Видаткова накладна)', ()
 
   it('has a titled header with number and long date', () => {
     expect(text).toContain('Видаткова накладна № РН-0000003');
-    expect(text).toContain('26 Лютого 2025 р.');
+    expect(text).toContain('26 лютого 2025 р.');
   });
 
   it('includes supplier, recipient, order and sales terms', () => {

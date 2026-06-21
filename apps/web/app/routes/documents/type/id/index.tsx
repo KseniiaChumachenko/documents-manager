@@ -8,7 +8,7 @@ import {
   documentAuditLog,
   documentTemplate,
 } from '~/database/schema';
-import { getTitle, i18n as i } from '~/i18n';
+import { getTitle, tns } from '~/i18n';
 
 import type { Route } from '../../../../../.react-router/types/app/routes/documents/type/id/+types';
 
@@ -52,7 +52,7 @@ export async function loader({ params: { type, id }, context }: Route.LoaderArgs
 }
 
 export default function DocumentDetail({ loaderData: { data, type } }: Route.ComponentProps) {
-  const t = i.documents;
+  const t = tns('/documents');
   const doc = data.document;
   let parsedData: {
     fields?: Record<string, string>;
@@ -71,7 +71,8 @@ export default function DocumentDetail({ loaderData: { data, type } }: Route.Com
       {/* Header */}
       <div>
         <h2 className="text-xl font-semibold">
-          {data.template?.name} {number ? `№ ${number}` : ''} {date ? `від ${date}` : ''}
+          {data.template?.name} {number ? `${t.detail.numberLabel} ${number}` : ''}{' '}
+          {date ? `${t.detail.dateLabel} ${date}` : ''}
         </h2>
         <p className="text-muted-foreground text-sm">
           {data.company?.name}

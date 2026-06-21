@@ -1,8 +1,10 @@
+import i18n from '~/i18n';
+
 // Ukrainian currency amount → words ("сума прописом").
-// Reproduces the wording used in the reference accounting documents, e.g.
 //   5488.13 → "П'ять тисяч чотириста вісімдесят вісім гривень 13 копійок"
-// Kopecks are rendered as a zero-padded two-digit number followed by the
-// correctly declined noun, exactly as in the reference spreadsheets.
+// Spelling an integer out in words has no standard platform/library API, so the
+// digit assembly is custom; the *plural noun* forms (гривня/гривні/гривень, …)
+// are resolved through i18next, which selects the form via Intl.PluralRules.
 
 const UNITS_MASCULINE = [
   '',
@@ -58,16 +60,11 @@ const HUNDREDS = [
   "дев'ятсот",
 ];
 
-type PluralForms = [one: string, few: string, many: string];
+type CountedNoun = 'hryvnia' | 'kopeck' | 'thousand' | 'million';
 
-/** Pick the Ukrainian plural form for a count (1 / 2-4 / 5+, with the 11-14 exception). */
-export function pluralUa(n: number, forms: PluralForms): string {
-  const mod100 = n % 100;
-  const mod10 = n % 10;
-  if (mod100 >= 11 && mod100 <= 14) return forms[2];
-  if (mod10 === 1) return forms[0];
-  if (mod10 >= 2 && mod10 <= 4) return forms[1];
-  return forms[2];
+/** Resolve the correct Ukrainian plural form of a noun for a count via i18next. */
+function noun(name: CountedNoun, count: number): string {
+  return i18n.t(name, { count, ns: 'document' });
 }
 
 /** Render a 0-999 group as words. Gender only affects the 1/2 units digit. */
@@ -99,16 +96,10 @@ function integerToWords(n: number): string[] {
   const units = n % 1000;
 
   if (millions > 0) {
-    groups.push(
-      ...threeDigitsToWords(millions, false),
-      pluralUa(millions, ['мільйон', 'мільйони', 'мільйонів'])
-    );
+    groups.push(...threeDigitsToWords(millions, false), noun('million', millions));
   }
   if (thousands > 0) {
-    groups.push(
-      ...threeDigitsToWords(thousands, true),
-      pluralUa(thousands, ['тисяча', 'тисячі', 'тисяч'])
-    );
+    groups.push(...threeDigitsToWords(thousands, true), noun('thousand', thousands));
   }
   if (units > 0) {
     groups.push(...threeDigitsToWords(units, true));
@@ -140,9 +131,9 @@ export function hryvniaInWords(amount: number): string {
   const kopecks = totalKopecks % 100;
 
   const hryvniaWords = integerToWords(hryvnia).join(' ');
-  const hryvniaNoun = pluralUa(hryvnia, ['гривня', 'гривні', 'гривень']);
-  const kopeckNoun = pluralUa(kopecks, ['копійка', 'копійки', 'копійок']);
   const kopeckStr = String(kopecks).padStart(2, '0');
 
-  return capitalize(`${hryvniaWords} ${hryvniaNoun} ${kopeckStr} ${kopeckNoun}`);
+  return capitalize(
+    `${hryvniaWords} ${noun('hryvnia', hryvnia)} ${kopeckStr} ${noun('kopeck', kopecks)}`
+  );
 }

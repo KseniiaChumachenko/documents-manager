@@ -1,4 +1,5 @@
 import './app.css';
+import './i18n'; // initialise i18next (single uk locale) for client + SSR
 import { useEffect } from 'react';
 import {
   isRouteErrorResponse,

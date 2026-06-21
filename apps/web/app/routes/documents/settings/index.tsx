@@ -17,7 +17,7 @@ import {
   type MyCompany,
   type Stamp,
 } from '~/database/schema';
-import { getTitle, i18n as i } from '~/i18n';
+import { getTitle, tns } from '~/i18n';
 
 import type { Route } from '../../../../.react-router/types/app/routes/documents/settings/+types';
 import type { MyCompanyAction } from '../_api/my-company';
@@ -71,7 +71,7 @@ const MY_COMPANY_FIELDS = [
 ] as const;
 
 function MyCompanySection({ company }: { company: MyCompany | null }) {
-  const t = i.documents.myCompany;
+  const t = tns('/documents').myCompany;
   const fetcher = useFetcher<MyCompanyAction>();
   const saved = fetcher.state === 'idle' && fetcher.data?.data;
 
@@ -118,7 +118,7 @@ function StampsSection({
   stamps: Stamp[];
   stampPreviews: Record<number, string>;
 }) {
-  const t = i.documents;
+  const t = tns('/documents');
   const fetcher = useFetcher<StampUploadAction>();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [stampName, setStampName] = useState('');
@@ -172,7 +172,7 @@ function StampsSection({
                 />
               ) : (
                 <div className="h-16 w-16 border-2 border-dashed border-muted-foreground/30 rounded flex items-center justify-center text-xs text-muted-foreground">
-                  М.П.
+                  {t.placeStamp}
                 </div>
               )}
               <span className="text-sm font-medium text-center">{s.name}</span>
@@ -223,7 +223,7 @@ function StampsSection({
 }
 
 export default function DocumentSettings({ loaderData: { data } }: Route.ComponentProps) {
-  const t = i.documents;
+  const t = tns('/documents');
   const navigate = useNavigate();
 
   const columns: ColumnDef<DocumentTemplate>[] = [

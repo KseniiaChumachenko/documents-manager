@@ -14,7 +14,7 @@ import {
   SelectValue,
 } from '~/components/ui/select';
 import { company, documentTemplate, item as itemTable } from '~/database/schema';
-import { getTitle, i18n as i } from '~/i18n';
+import { getTitle, tns } from '~/i18n';
 import type { GenerateDocumentAction } from '~/routes/documents/_api/generate-document';
 
 import type { Route } from '../../../../../.react-router/types/app/routes/documents/type/new/+types';
@@ -62,7 +62,7 @@ function parseSchema(json?: string): ParsedSchema {
 }
 
 export default function NewDocument({ loaderData: { data, type } }: Route.ComponentProps) {
-  const t = i.documents;
+  const t = tns('/documents');
   const fetcher = useFetcher<GenerateDocumentAction>();
   const [submitted, setSubmitted] = useState(false);
 
@@ -172,12 +172,12 @@ export default function NewDocument({ loaderData: { data, type } }: Route.Compon
     return (
       <div className="flex flex-col gap-4 max-w-3xl">
         <h2 className="text-xl font-semibold">
-          {t.actions.newDocument} {t.typeLabels[type!] ?? ''}
+          {t.actions.newDocument} {t.typeLabels[type! as keyof typeof t.typeLabels] ?? ''}
         </h2>
         <p className="text-muted-foreground">{t.noTemplatesHint}</p>
         <Link to={`/documents/${type}/settings/new`}>
           <Button variant="outline">
-            {t.actions.newTemplate} {t.typeLabels[type!] ?? ''}
+            {t.actions.newTemplate} {t.typeLabels[type! as keyof typeof t.typeLabels] ?? ''}
           </Button>
         </Link>
       </div>
@@ -187,7 +187,7 @@ export default function NewDocument({ loaderData: { data, type } }: Route.Compon
   return (
     <div className="flex flex-col gap-6 max-w-3xl">
       <h2 className="text-xl font-semibold">
-        {t.actions.newDocument} {t.typeLabels[type!] ?? ''}
+        {t.actions.newDocument} {t.typeLabels[type! as keyof typeof t.typeLabels] ?? ''}
       </h2>
 
       {fetcher.data?.error && <p className="text-destructive text-sm">{fetcher.data.error}</p>}
@@ -346,8 +346,8 @@ export default function NewDocument({ loaderData: { data, type } }: Route.Compon
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="xlsx">XLSX</SelectItem>
-            <SelectItem value="pdf">PDF</SelectItem>
+            <SelectItem value="xlsx">{t.formatLabels.xlsx}</SelectItem>
+            <SelectItem value="pdf">{t.formatLabels.pdf}</SelectItem>
           </SelectContent>
         </Select>
       </div>

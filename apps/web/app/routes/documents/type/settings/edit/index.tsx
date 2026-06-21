@@ -15,7 +15,7 @@ import {
 } from '~/components/ui/select';
 import { Separator } from '~/components/ui/separator';
 import { documentTemplate, stamp as stampTable } from '~/database/schema';
-import { i18n as i } from '~/i18n';
+import { tns } from '~/i18n';
 import type { TemplateManagementAction } from '~/routes/documents/_api/template-management';
 
 import type { Route } from '../../../../../../.react-router/types/app/routes/documents/type/settings/edit/+types';
@@ -302,7 +302,7 @@ export async function loader({ params: { type, templateId }, context }: Route.Lo
 }
 
 export default function TemplateEditor({ loaderData: { data, type } }: Route.ComponentProps) {
-  const t = i.documents;
+  const t = tns('/documents');
   const navigate = useNavigate();
   const fetcher = useFetcher<TemplateManagementAction>();
   const isEditing = !!data.template;
@@ -365,7 +365,7 @@ export default function TemplateEditor({ loaderData: { data, type } }: Route.Com
         <h2 className="text-xl font-semibold">
           {isEditing
             ? data.template!.name
-            : `${t.actions.newTemplate} ${t.typeLabels[type!] ?? ''}`}
+            : `${t.actions.newTemplate} ${t.typeLabels[type! as keyof typeof t.typeLabels] ?? ''}`}
         </h2>
         <div className="flex gap-2">
           {isEditing && (

@@ -5,7 +5,7 @@ import { ErrorBoundary as EB } from '~/components/error-boundary';
 import { Button } from '~/components/ui/button';
 import { DataTable } from '~/components/ui/data-table';
 import { type Item, item, itemType, unit } from '~/database/schema';
-import { getTitle, i18n as i } from '~/i18n';
+import { getTitle, tns } from '~/i18n';
 import { ItemDialog } from '~/routes/library/items/item-dialog';
 
 import type { Route } from '../../../../.react-router/types/app/routes/library/items/+types';
@@ -27,7 +27,7 @@ export default function Items({ loaderData: { data } }: Route.ComponentProps) {
   const [open, setOpen] = useState(false);
   const [item, setItem] = useState<Item | null>(null);
 
-  const i18n = i[`/library/items`];
+  const i18n = tns('/library/items');
   const tableHeaders = i18n.table.headers;
   const tableKeys = Object.keys(tableHeaders) as Array<keyof typeof tableHeaders>;
   const columns: ColumnDef<Item>[] = tableKeys.map((accessorKey) => ({

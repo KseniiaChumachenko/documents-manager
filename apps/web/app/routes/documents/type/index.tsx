@@ -7,7 +7,7 @@ import { ErrorBoundary as EB } from '~/components/error-boundary';
 import { Button } from '~/components/ui/button';
 import { DataTable } from '~/components/ui/data-table';
 import { company, document as documentTable, type Document } from '~/database/schema';
-import { getTitle, i18n as i } from '~/i18n';
+import { getTitle, tns } from '~/i18n';
 
 import type { Route } from '../../../../.react-router/types/app/routes/documents/type/+types';
 
@@ -40,7 +40,7 @@ export async function loader({ params: { type }, context }: Route.LoaderArgs) {
 }
 
 export default function DocumentList({ loaderData: { data, type } }: Route.ComponentProps) {
-  const t = i.documents;
+  const t = tns('/documents');
 
   const columns: ColumnDef<DocumentRow>[] = [
     { accessorKey: 'id', header: t.table.headers.number },

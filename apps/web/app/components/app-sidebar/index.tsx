@@ -25,18 +25,18 @@ import {
   SidebarMenuSubItem,
   SidebarProvider,
 } from '~/components/ui/sidebar';
-import { i18n } from '~/i18n';
+import { tns } from '~/i18n';
 import { cn } from '~/lib/utils';
 import type { loader } from '~/root';
 
 export const items = [
   {
-    title: i18n['/'].title,
+    title: tns('/').title,
     url: '/',
     icon: Home,
   },
   {
-    title: i18n['/documents'].title,
+    title: tns('/documents').title,
     url: '/documents',
     icon: FileStack,
     action: {
@@ -45,21 +45,21 @@ export const items = [
     },
     children: [
       {
-        title: i18n['/documents/poas'].title,
+        title: tns('/documents/poas').title,
         url: '/documents/poas',
       },
       {
-        title: i18n['/documents/bills'].title,
+        title: tns('/documents/bills').title,
         url: '/documents/bills',
       },
       {
-        title: i18n['/documents/invoices'].title,
+        title: tns('/documents/invoices').title,
         url: '/documents/invoices',
       },
     ],
   },
   {
-    title: i18n['/library'].title,
+    title: tns('/library').title,
     url: '/library',
     icon: Library,
     action: {
@@ -68,15 +68,15 @@ export const items = [
     },
     children: [
       {
-        title: i18n['/library/client'].title,
+        title: tns('/library/client').title,
         url: '/library/client',
       },
       {
-        title: i18n['/library/source'].title,
+        title: tns('/library/source').title,
         url: '/library/source',
       },
       {
-        title: i18n['/library/items'].title,
+        title: tns('/library/items').title,
         url: '/library/items',
       },
     ],
@@ -145,7 +145,7 @@ export function ASidebar() {
               </DropdownMenuTrigger>
               <DropdownMenuContent side="top" className="w-[--radix-popper-anchor-width]">
                 <DropdownMenuItem>
-                  <span>{i18n.root.sidebar.menu.signout}</span>
+                  <span>{tns('root').sidebar.menu.signout}</span>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

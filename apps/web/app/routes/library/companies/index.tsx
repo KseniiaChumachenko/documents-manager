@@ -5,7 +5,7 @@ import { ErrorBoundary as EB } from '~/components/error-boundary';
 import { DataTable } from '~/components/ui/data-table';
 import { company } from '~/database/schema';
 import type { Company } from '~/database/schema';
-import { getTitle, i18n as i } from '~/i18n';
+import { getTitle, tns } from '~/i18n';
 
 import type { Route } from '../../../../.react-router/types/app/routes/library/companies/+types';
 
@@ -25,7 +25,7 @@ export async function loader({ context: { db }, params }: Route.LoaderArgs) {
 }
 
 function Component({ loaderData: { data, type } }: Route.ComponentProps) {
-  const i18n = i[`/library/${type}`];
+  const i18n = tns(`/library/${type}`);
   const tableHeaders = i18n.table.headers;
   const tableKeys = Object.keys(tableHeaders) as Array<keyof typeof tableHeaders>;
   const columns: ColumnDef<Company>[] = tableKeys.map((accessorKey) => ({
