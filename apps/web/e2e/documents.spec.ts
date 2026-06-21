@@ -195,10 +195,22 @@ test.describe('Documents > New Document Form', () => {
 
     await page.getByRole('button', { name: 'Зберегти' }).click();
 
-    await expect(page.getByText('Оберіть шаблон')).toBeVisible();
-    await expect(page.getByText('Оберіть контрагента')).toBeVisible();
-    await expect(page.getByText('Вкажіть номер документа')).toBeVisible();
+    // A template is auto-selected; required schema fields and the missing line
+    // item are flagged.
+    await expect(page.getByText("Обов'язкове поле").first()).toBeVisible();
     await expect(page.getByText('Додайте хоча б один товар')).toBeVisible();
+  });
+
+  test('renders type-specific fields from the template schema (М-2 passport)', async ({ page }) => {
+    await ensureTemplate(page, 'poas');
+    await page.goto('/documents/poas/new');
+    await waitForHydration(page);
+
+    // These fields only exist on the power-of-attorney schema — proof the form
+    // is driven by the template's schema_json, not hardcoded.
+    await expect(page.getByText('ПІБ довіреної особи')).toBeVisible();
+    await expect(page.getByText('Серія паспорту')).toBeVisible();
+    await expect(page.getByText('Ким виданий паспорт')).toBeVisible();
   });
 
   test('can add and remove line items', async ({ page }) => {
@@ -295,5 +307,81 @@ test.describe('Documents > Full Flow', () => {
 
     await expect(page.getByText('Новий документ')).toBeVisible();
     await expect(page.getByText('Товари / послуги')).toBeVisible();
+  });
+});
+
+test.describe('Documents > My company settings', () => {
+  test('shows seeded supplier data and persists edits', async ({ page }) => {
+    await page.goto('/documents/settings');
+    await waitForHydration(page);
+
+    await expect(page.getByRole('heading', { name: 'Моя компанія' })).toBeVisible();
+    await expect(page.locator('#mc-name')).toHaveValue(/Чумаченко/);
+
+    const phone = `050${Date.now() % 10000000}`;
+    await page.locator('#mc-phone').fill(phone);
+    await page
+      .locator('form[action="/documents/my-company"]')
+      .getByRole('button', { name: 'Зберегти' })
+      .click();
+    await expect(page.getByText('Збережено')).toBeVisible({ timeout: 10000 });
+
+    await page.reload();
+    await waitForHydration(page);
+    await expect(page.locator('#mc-phone')).toHaveValue(phone);
+  });
+});
+
+test.describe('Documents > Generation happy path', () => {
+  test('composes an invoice and lands on a downloadable document', async ({ page }) => {
+    const suffix = Date.now();
+
+    // Create an item type (units are seeded), then an item.
+    await page.goto('/library/settings');
+    await waitForHydration(page);
+    const typeName = `gen-type-${suffix}`;
+    const typeForm = page.locator('form#form-type');
+    await typeForm.locator('input[name="name"]').fill(typeName);
+    const typeResp = page.waitForResponse(
+      (r) => r.url().includes('/library/enums/type') && r.status() === 200
+    );
+    await typeForm.getByRole('button', { name: 'Додати' }).click();
+    await typeResp;
+
+    await page.goto('/library/items');
+    await waitForHydration(page);
+    await page.getByRole('button', { name: 'Додати новий товар' }).click();
+    const dialog = page.getByRole('dialog');
+    const itemName = `gen-item-${suffix}`;
+    await dialog.locator('input[name="name"]').fill(itemName);
+    await dialog.locator('select[name="type"]').selectOption(typeName);
+    await dialog.locator('input[name="priceInputVATFree"]').fill('1000');
+    await dialog.locator('input[name="priceOutputVATFree"]').fill('800');
+    await dialog.locator('input[name="priceRetailInclVAT"]').fill('1200');
+    await dialog.getByRole('button', { name: 'Зберегти' }).click();
+    await expect(page.getByRole('dialog')).not.toBeVisible({ timeout: 5000 });
+
+    await ensureTemplate(page, 'invoices');
+
+    // Compose the document.
+    await page.goto('/documents/invoices/new');
+    await waitForHydration(page);
+
+    await page.locator('#number').fill(`INV-${suffix}`);
+
+    // company_ref select (seeded counterparty)
+    await page.getByRole('combobox', { name: 'Одержувач' }).click();
+    await page.getByRole('option', { name: /Тестовий Контрагент/ }).click();
+
+    // line-item select
+    await page.getByRole('combobox').filter({ hasText: 'Товар' }).first().click();
+    await page.getByRole('option', { name: itemName }).click();
+
+    await page.getByRole('button', { name: 'Зберегти' }).click();
+
+    // Successful generation redirects (from the action) to the document's page.
+    await page.waitForURL(/\/documents\/invoices\/\d+$/, { timeout: 20000 });
+    await expect(page.getByRole('button', { name: /Завантажити/ })).toBeVisible({ timeout: 15000 });
+    await expect(page.getByText(`INV-${suffix}`)).toBeVisible({ timeout: 15000 });
   });
 });
