@@ -16,6 +16,7 @@ export default [
       route('stamp-upload', 'routes/documents/_api/stamp-upload.ts'),
       route('generate-document', 'routes/documents/_api/generate-document.ts'),
       route('export-document', 'routes/documents/_api/export-document.ts'),
+      route('my-company', 'routes/documents/_api/my-company.ts'),
     ]),
 
     route('library', 'routes/library/index.tsx', [

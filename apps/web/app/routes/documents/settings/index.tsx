@@ -7,11 +7,20 @@ import { ErrorBoundary as EB } from '~/components/error-boundary';
 import { Button } from '~/components/ui/button';
 import { DataTable } from '~/components/ui/data-table';
 import { Input } from '~/components/ui/input';
+import { Label } from '~/components/ui/label';
 import { Typography } from '~/components/ui/typography';
-import { documentTemplate, stamp, type DocumentTemplate, type Stamp } from '~/database/schema';
+import {
+  documentTemplate,
+  myCompany,
+  stamp,
+  type DocumentTemplate,
+  type MyCompany,
+  type Stamp,
+} from '~/database/schema';
 import { getTitle, i18n as i } from '~/i18n';
 
 import type { Route } from '../../../../.react-router/types/app/routes/documents/settings/+types';
+import type { MyCompanyAction } from '../_api/my-company';
 import type { StampUploadAction } from '../_api/stamp-upload';
 
 export function meta({ location }: Route.MetaArgs) {
@@ -21,10 +30,12 @@ export function meta({ location }: Route.MetaArgs) {
 const DOCUMENT_TYPES = ['invoices', 'bills', 'poas'] as const;
 
 export async function loader({ context }: Route.LoaderArgs) {
-  const [templates, stamps] = await Promise.all([
+  const [templates, stamps, companyRows] = await Promise.all([
     context.db.select().from(documentTemplate),
     context.db.select().from(stamp),
+    context.db.select().from(myCompany).limit(1),
   ]);
+  const company = companyRows[0] ?? null;
 
   // Build stamp data URLs for previews
   const stampPreviews: Record<number, string> = {};
@@ -42,7 +53,62 @@ export async function loader({ context }: Route.LoaderArgs) {
     }
   }
 
-  return { data: { templates, stamps, stampPreviews } };
+  return { data: { templates, stamps, stampPreviews, company } };
+}
+
+const MY_COMPANY_FIELDS = [
+  'name',
+  'egrpou',
+  'inn',
+  'vatCertificate',
+  'iban',
+  'bankName',
+  'mfo',
+  'phone',
+  'address',
+  'taxNote',
+  'signatoryName',
+] as const;
+
+function MyCompanySection({ company }: { company: MyCompany | null }) {
+  const t = i.documents.myCompany;
+  const fetcher = useFetcher<MyCompanyAction>();
+  const saved = fetcher.state === 'idle' && fetcher.data?.data;
+
+  return (
+    <div className="flex flex-col gap-3">
+      <div>
+        <Typography variant="h4">{t.title}</Typography>
+        <p className="text-muted-foreground text-sm mt-1">{t.description}</p>
+      </div>
+      <fetcher.Form
+        method="POST"
+        action="/documents/my-company"
+        className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-3xl"
+      >
+        {MY_COMPANY_FIELDS.map((field) => (
+          <div
+            key={field}
+            className={field === 'name' || field === 'address' ? 'sm:col-span-2' : ''}
+          >
+            <Label htmlFor={`mc-${field}`} className="pb-1 text-xs">
+              {t.fields[field]}
+            </Label>
+            <Input id={`mc-${field}`} name={field} defaultValue={company?.[field] ?? ''} />
+          </div>
+        ))}
+        <div className="sm:col-span-2 flex items-center gap-3">
+          <Button type="submit" disabled={fetcher.state !== 'idle'}>
+            {t.save}
+          </Button>
+          {saved && <span className="text-sm text-muted-foreground">{t.saved}</span>}
+          {fetcher.data?.error && (
+            <span className="text-destructive text-sm">{fetcher.data.error}</span>
+          )}
+        </div>
+      </fetcher.Form>
+    </div>
+  );
 }
 
 function StampsSection({
@@ -172,6 +238,9 @@ export default function DocumentSettings({ loaderData: { data } }: Route.Compone
         <Typography variant="h3">{t.actions.settings}</Typography>
         <p className="text-muted-foreground text-sm mt-1">{t.settingsDescription}</p>
       </div>
+
+      {/* My company section */}
+      <MyCompanySection company={data.company} />
 
       {/* Stamps section */}
       <StampsSection stamps={data.stamps} stampPreviews={data.stampPreviews} />

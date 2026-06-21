@@ -113,6 +113,27 @@ export const i18n = {
       companyRequired: 'Оберіть контрагента',
       numberRequired: 'Вкажіть номер документа',
       lineItemRequired: 'Додайте хоча б один товар',
+      fieldRequired: "Обов'язкове поле",
+    },
+    myCompany: {
+      title: 'Моя компанія',
+      description:
+        'Реквізити вашої компанії як постачальника. Використовуються у згенерованих документах. Дані попередньо заповнені — за потреби виправте.',
+      save: 'Зберегти',
+      saved: 'Збережено',
+      fields: {
+        name: 'Повна назва',
+        egrpou: 'ЄДРПОУ',
+        inn: 'ІПН',
+        vatCertificate: 'Номер свідоцтва ПДВ',
+        iban: 'Р/р (IBAN)',
+        bankName: 'Банк',
+        mfo: 'МФО',
+        phone: 'Телефон',
+        address: 'Адреса',
+        taxNote: 'Податковий статус',
+        signatoryName: 'Підписант (для підпису)',
+      },
     },
   },
   '/library': {

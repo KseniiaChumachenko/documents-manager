@@ -55,8 +55,7 @@ export default function DocumentDetail({ loaderData: { data, type } }: Route.Com
   const t = i.documents;
   const doc = data.document;
   let parsedData: {
-    number?: string;
-    date?: string;
+    fields?: Record<string, string>;
     lineItems?: Array<{ itemId: number; quantity: number; priceOverride?: number }>;
   } = {};
   try {
@@ -64,14 +63,15 @@ export default function DocumentDetail({ loaderData: { data, type } }: Route.Com
   } catch {
     // ignore
   }
+  const number = parsedData.fields?.number;
+  const date = parsedData.fields?.date;
 
   return (
     <div className="flex flex-col gap-6 max-w-3xl">
       {/* Header */}
       <div>
         <h2 className="text-xl font-semibold">
-          {data.template?.name} {parsedData.number ? `№ ${parsedData.number}` : ''}{' '}
-          {parsedData.date ? `від ${parsedData.date}` : ''}
+          {data.template?.name} {number ? `№ ${number}` : ''} {date ? `від ${date}` : ''}
         </h2>
         <p className="text-muted-foreground text-sm">
           {data.company?.name}
@@ -97,10 +97,12 @@ export default function DocumentDetail({ loaderData: { data, type } }: Route.Com
         )}
       </div>
 
-      {/* Export buttons */}
+      {/* Download the generated file in the format it was created with */}
       <div className="flex gap-2">
         <a href={`/documents/export-document?id=${doc.id}`}>
-          <Button>{t.actions.export.xlsx}</Button>
+          <Button>
+            {doc.exportFormat === 'pdf' ? t.actions.export.pdf : t.actions.export.xlsx}
+          </Button>
         </a>
       </div>
 

@@ -1,4 +1,5 @@
 import { eq } from 'drizzle-orm';
+import { redirect } from 'react-router';
 
 import {
   company,
@@ -6,15 +7,17 @@ import {
   documentAuditLog,
   documentTemplate,
   item as itemTable,
+  myCompany,
   stamp,
 } from '~/database/schema';
 import {
-  computeTotals,
   generatePdf,
   generateXlsx,
   resolveLineItems,
-  type DocumentData,
+  type DocumentBuildInput,
+  type DocumentType,
   type LineItem,
+  type SupplierIdentity,
 } from '~/lib/generate-document';
 
 import type { Route } from '../../../../.react-router/types/app/routes/documents/_api/+types/generate-document';
@@ -25,17 +28,40 @@ const BUCKET_MAP: Record<string, 'POAS' | 'INVOICES' | 'BILLS'> = {
   bills: 'BILLS',
 };
 
+/** VAT rate for the document: 0 for powers of attorney, else the template's
+ * `vat_rate` (fraction) if set, otherwise 20%. */
+function resolveVatRate(docType: string, schemaJson: string): number {
+  if (docType === 'poas') return 0;
+  try {
+    const schema = JSON.parse(schemaJson);
+    if (typeof schema.vat_rate === 'number') return schema.vat_rate;
+  } catch {
+    // fall through
+  }
+  return 0.2;
+}
+
+function arrayBufferToBase64(buffer: ArrayBuffer): string {
+  const bytes = new Uint8Array(buffer);
+  let binary = '';
+  for (let i = 0; i < bytes.byteLength; i++) binary += String.fromCharCode(bytes[i]);
+  return btoa(binary);
+}
+
 export async function action({ request, context }: Route.ActionArgs) {
   try {
     const fd = await request.formData();
     const templateId = Number(fd.get('templateId'));
     const companyId = Number(fd.get('companyId'));
     const format = (fd.get('format') as string) || 'xlsx';
-    const docType = fd.get('documentType') as string;
-    const number = fd.get('number') as string;
-    const date = fd.get('date') as string;
+    const docType = fd.get('documentType') as DocumentType;
     const includeStamp = fd.get('includeStamp') === 'true';
-    const lineItemsJson = fd.get('lineItems') as string;
+    const fields: Record<string, string> = JSON.parse((fd.get('fields') as string) || '{}');
+    const rawItems: Array<{ itemId: number; quantity: number; priceOverride?: number }> =
+      JSON.parse((fd.get('lineItems') as string) || '[]');
+
+    const number = fields.number;
+    const date = fields.date;
 
     if (!templateId || !companyId || !docType || !number || !date) {
       return { data: null, error: 'Missing required fields' };
@@ -46,53 +72,58 @@ export async function action({ request, context }: Route.ActionArgs) {
       return { data: null, error: `Unknown document type: ${docType}` };
     }
 
-    // Fetch template and company
     const [template] = await context.db
       .select()
       .from(documentTemplate)
       .where(eq(documentTemplate.id, templateId));
 
-    const [companyRecord] = await context.db
-      .select()
-      .from(company)
-      .where(eq(company.id, companyId));
+    const [counterparty] = await context.db.select().from(company).where(eq(company.id, companyId));
 
-    if (!template || !companyRecord) {
+    const [supplier] = await context.db.select().from(myCompany).limit(1);
+
+    if (!template || !counterparty) {
       return { data: null, error: 'Template or company not found' };
     }
+    if (!supplier) {
+      return {
+        data: null,
+        error: 'Спершу заповніть дані вашої компанії в налаштуваннях',
+      };
+    }
 
-    // Parse and resolve line items
-    const rawItems: Array<{ itemId: number; quantity: number; priceOverride?: number }> =
-      JSON.parse(lineItemsJson || '[]');
-
-    const lineItems: LineItem[] = [];
+    // Resolve line items against the catalogue.
+    const lineItemsInput: LineItem[] = [];
     for (const raw of rawItems) {
       const [itemRecord] = await context.db
         .select()
         .from(itemTable)
         .where(eq(itemTable.id, raw.itemId));
       if (itemRecord) {
-        lineItems.push({
+        lineItemsInput.push({
           item: itemRecord,
           quantity: raw.quantity,
           priceOverride: raw.priceOverride,
         });
       }
     }
+    const lines = resolveLineItems(lineItemsInput);
 
-    const data: DocumentData = {
-      number,
-      date,
-      companyId,
-      includeStamp,
-      lineItems,
+    const buildInput: DocumentBuildInput = {
+      docType,
+      templateName: template.name,
+      supplier: supplier as SupplierIdentity,
+      counterparty: {
+        name: counterparty.name,
+        egrpou: counterparty.egrpou,
+        phone: counterparty.phone,
+      },
+      fields,
+      lines,
+      vatRate: resolveVatRate(docType, template.schemaJson),
     };
 
-    const lines = resolveLineItems(data);
-    const totals = computeTotals(lines);
-
-    // Get stamp if needed
-    let stampBuffer: ArrayBuffer | null = null;
+    // Resolve the stamp image (if any) as a data URL for PDF embedding.
+    let stampDataUrl: string | null = null;
     if (template.stampId && includeStamp) {
       const [stampRecord] = await context.db
         .select()
@@ -100,19 +131,21 @@ export async function action({ request, context }: Route.ActionArgs) {
         .where(eq(stamp.id, template.stampId));
       if (stampRecord) {
         const stampObj = await context.cloudflare.env.TEMPLATES.get(stampRecord.imageKey);
-        stampBuffer = stampObj ? await stampObj.arrayBuffer() : null;
+        if (stampObj) {
+          const buf = await stampObj.arrayBuffer();
+          const ct = stampObj.httpMetadata?.contentType ?? 'image/png';
+          stampDataUrl = `data:${ct};base64,${arrayBufferToBase64(buf)}`;
+        }
       }
     }
 
-    // Generate file
     const buffer =
-      format === 'pdf'
-        ? await generatePdf(template, companyRecord, data, lines, totals, stampBuffer)
-        : await generateXlsx(template, companyRecord, data, lines, totals, stampBuffer);
+      format === 'pdf' ? generatePdf(buildInput, stampDataUrl) : generateXlsx(buildInput);
 
-    // Store in R2
+    const now = new Date().toISOString();
     const ext = format === 'pdf' ? 'pdf' : 'xlsx';
-    const r2Key = `${docType}/${date}-${number}.${ext}`;
+    // Timestamp suffix avoids overwriting documents that share number + date.
+    const r2Key = `${docType}/${date}-${number}-${Date.parse(now)}.${ext}`;
     const bucket = context.cloudflare.env[bucketKey];
     await bucket.put(r2Key, buffer, {
       httpMetadata: {
@@ -123,17 +156,15 @@ export async function action({ request, context }: Route.ActionArgs) {
       },
     });
 
-    const now = new Date().toISOString();
     const actorEmail = context.user?.email ?? 'unknown';
 
-    // Save document record
     const [doc] = await context.db
       .insert(documentTable)
       .values({
         templateId,
         companyId,
         documentType: docType,
-        dataJson: JSON.stringify({ number, date, includeStamp, lineItems: rawItems }),
+        dataJson: JSON.stringify({ fields, lineItems: rawItems, includeStamp }),
         createdBy: actorEmail,
         createdAt: now,
         exportedAt: now,
@@ -142,7 +173,6 @@ export async function action({ request, context }: Route.ActionArgs) {
       })
       .returning();
 
-    // Audit log
     await context.db.insert(documentAuditLog).values({
       documentId: doc.id,
       action: 'created',
@@ -150,7 +180,9 @@ export async function action({ request, context }: Route.ActionArgs) {
       timestamp: now,
     });
 
-    return { data: { id: doc.id, r2Key }, error: null };
+    // Redirect from the action so React Router drives the navigation to the new
+    // document (a client-side navigate() after the fetcher leaves a blank page).
+    return redirect(`/documents/${docType}/${doc.id}`);
   } catch (e) {
     console.error(e);
     return { data: null, error: e instanceof Error ? e.message : String(e) };

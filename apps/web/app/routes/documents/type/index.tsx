@@ -50,7 +50,7 @@ export default function DocumentList({ loaderData: { data, type } }: Route.Compo
       cell: ({ row }) => {
         try {
           const parsed = JSON.parse(row.original.dataJson);
-          return parsed.date ?? '';
+          return parsed.fields?.date ?? parsed.date ?? '';
         } catch {
           return '';
         }

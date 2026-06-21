@@ -55,6 +55,25 @@ export const company = sqliteTable('company', {
 
 export type Company = typeof company.$inferSelect;
 
+// Single-row settings record describing the business issuing the documents
+// (the "Постачальник" / "підприємство-одержувач" identity block). Always id=1.
+export const myCompany = sqliteTable('my_company', {
+  id: integer().primaryKey({ autoIncrement: true }),
+  name: text().notNull(),
+  egrpou: text(),
+  inn: text(), // ІПН
+  vatCertificate: text('vat_certificate'), // номер свідоцтва платника ПДВ
+  iban: text(),
+  bankName: text('bank_name'),
+  mfo: text(),
+  phone: text(),
+  address: text(),
+  taxNote: text('tax_note'), // e.g. "Не є платником податку на прибуток на загальних підставах"
+  signatoryName: text('signatory_name'), // "Чумаченко І. В." for the signature line
+});
+
+export type MyCompany = typeof myCompany.$inferSelect;
+
 export const stamp = sqliteTable('stamp', {
   id: integer().primaryKey({ autoIncrement: true }),
   name: text().notNull(),
