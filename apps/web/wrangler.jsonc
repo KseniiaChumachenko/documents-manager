@@ -39,6 +39,10 @@
     {
       "binding": "TEMPLATES",
       "bucket_name": "local-template"
+    },
+    {
+      "binding": "DOCUMENTS",
+      "bucket_name": "local-documents"
     }
   ],
   "vars": {
@@ -88,6 +92,10 @@
         {
           "binding": "TEMPLATES",
           "bucket_name": "staging-template"
+        },
+        {
+          "binding": "DOCUMENTS",
+          "bucket_name": "staging-documents"
         }
       ]
     },
@@ -133,6 +141,10 @@
         {
           "binding": "TEMPLATES",
           "bucket_name": "production-template"
+        },
+        {
+          "binding": "DOCUMENTS",
+          "bucket_name": "production-documents"
         }
       ]
     }

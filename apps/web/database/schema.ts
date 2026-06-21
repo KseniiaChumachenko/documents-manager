@@ -103,7 +103,7 @@ export const document = sqliteTable('document', {
   companyId: integer('company_id')
     .references(() => company.id)
     .notNull(),
-  documentType: text('document_type').notNull(), // matches R2 bucket: 'poas' | 'invoices' | 'bills'
+  documentType: text('document_type').notNull(), // 'poas' | 'invoices' | 'bills' (also the R2 key prefix)
   dataJson: text('data_json').notNull(),
   createdBy: text('created_by').notNull(),
   createdAt: text('created_at').notNull(),
