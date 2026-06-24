@@ -76,6 +76,8 @@ describe('renderLayout', () => {
     expect(m.rows[0]).toEqual(['№', 'Назва', null, 'Сума']);
     expect(m.rows[1]).toEqual([1, 'A', null, 20]); // index numeric, total numeric
     expect(m.rows[2]).toEqual([2, 'B', null, 5]);
+    // Records the table region: header row 0 through last data row 2, header cols.
+    expect(m.tables).toEqual([{ r0: 0, r1: 2, cols: [0, 1, 3] }]);
   });
 
   it('emits merges from cell span', () => {

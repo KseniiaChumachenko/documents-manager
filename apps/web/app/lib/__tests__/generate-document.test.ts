@@ -10,6 +10,7 @@ import {
   computeTotals,
   resolveLineItems,
   sheetModelToPdf,
+  sheetModelToWorkbook,
   sheetModelToXlsx,
   type ResolvedLineItem,
   type SheetModel,
@@ -277,5 +278,31 @@ describe('sheetModelToPdf', () => {
     expect(latin1).toContain('DejaVuSansUA');
     // Embedding a font makes the file substantial.
     expect(buf.byteLength).toBeGreaterThan(10000);
+  });
+});
+
+describe('sheetModelToWorkbook table formatting', () => {
+  it('borders table cells and merges logical columns', () => {
+    const model: SheetModel = {
+      rows: [
+        ['№', 'Назва', null, 'Сума'],
+        [1, 'A', null, 20],
+      ],
+      cols: [{ wch: 5 }, { wch: 30 }, { wch: 10 }, { wch: 10 }],
+      tables: [{ r0: 0, r1: 1, cols: [0, 1, 3] }],
+    };
+    const wb = sheetModelToWorkbook(model, 'Документ');
+    const ws = wb.Sheets[wb.SheetNames[0]];
+
+    // Header cell carries a thin border (and bold).
+    expect(ws['A1'].s?.border?.top?.style).toBe('thin');
+    expect(ws['A1'].s?.font?.bold).toBe(true);
+    // A data cell is bordered too.
+    expect(ws['A2'].s?.border?.bottom?.style).toBe('thin');
+
+    // The wide "name" column (grid cols 1..2) is merged on header + each data row.
+    const refs = (ws['!merges'] ?? []).map((m) => XLSX.utils.encode_range(m));
+    expect(refs).toContain('B1:C1');
+    expect(refs).toContain('B2:C2');
   });
 });

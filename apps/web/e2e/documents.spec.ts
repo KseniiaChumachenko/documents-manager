@@ -389,6 +389,30 @@ test.describe('Documents > Generation happy path', () => {
     await expect(page.getByText(`INV-${suffix}`)).toBeVisible({ timeout: 15000 });
   });
 
+  test('downloads a document as both XLSX and PDF', async ({ page }) => {
+    const suffix = Date.now();
+    const itemName = await makeItem(page, suffix);
+    await ensureTemplate(page, 'invoices');
+
+    await page.goto('/documents/invoices/new');
+    await waitForHydration(page);
+    await page.locator('#number').fill(`BOTH-${suffix}`);
+    await pickCompany(page, 'Одержувач');
+    await pickItem(page, itemName);
+    await page.getByRole('button', { name: 'Зберегти' }).click();
+    await page.waitForURL(/\/documents\/invoices\/\d+$/, { timeout: 20000 });
+
+    // The document was created as XLSX, but both formats are downloadable —
+    // the PDF is rendered on demand from the stored data.
+    const xlsxDownload = page.waitForEvent('download');
+    await page.getByRole('button', { name: 'Завантажити XLSX' }).click();
+    expect((await xlsxDownload).suggestedFilename()).toMatch(/\.xlsx$/);
+
+    const pdfDownload = page.waitForEvent('download');
+    await page.getByRole('button', { name: 'Завантажити PDF' }).click();
+    expect((await pdfDownload).suggestedFilename()).toMatch(/\.pdf$/);
+  });
+
   test('composes an invoice as PDF', async ({ page }) => {
     const suffix = Date.now();
     const itemName = await makeItem(page, suffix);
@@ -423,7 +447,11 @@ test.describe('Documents > Generation happy path', () => {
     await page.getByRole('button', { name: 'Зберегти' }).click();
 
     await page.waitForURL(/\/documents\/bills\/\d+$/, { timeout: 20000 });
-    await expect(page.getByRole('button', { name: /Завантажити/ })).toBeVisible({ timeout: 15000 });
+    // Both export formats are offered on every document.
+    await expect(page.getByRole('button', { name: 'Завантажити XLSX' })).toBeVisible({
+      timeout: 15000,
+    });
+    await expect(page.getByRole('button', { name: 'Завантажити PDF' })).toBeVisible();
     await expect(page.getByText(`BILL-${suffix}`)).toBeVisible({ timeout: 15000 });
   });
 
@@ -442,7 +470,11 @@ test.describe('Documents > Generation happy path', () => {
     await page.getByRole('button', { name: 'Зберегти' }).click();
 
     await page.waitForURL(/\/documents\/poas\/\d+$/, { timeout: 20000 });
-    await expect(page.getByRole('button', { name: /Завантажити/ })).toBeVisible({ timeout: 15000 });
+    // Both export formats are offered on every document.
+    await expect(page.getByRole('button', { name: 'Завантажити XLSX' })).toBeVisible({
+      timeout: 15000,
+    });
+    await expect(page.getByRole('button', { name: 'Завантажити PDF' })).toBeVisible();
     await expect(page.getByText(`POA-${suffix}`)).toBeVisible({ timeout: 15000 });
   });
 });

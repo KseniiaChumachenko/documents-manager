@@ -48,6 +48,7 @@ export function renderLayout(layout: Layout, context: RenderContext): SheetModel
   const width = layout.cols.length;
   const rows: CellOut[][] = [];
   const merges: NonNullable<SheetModel['merges']> = [];
+  const tables: NonNullable<SheetModel['tables']> = [];
 
   for (const block of layout.blocks) {
     if (block.type === 'row') {
@@ -62,14 +63,19 @@ export function renderLayout(layout: Layout, context: RenderContext): SheetModel
       if (!anyPlaced) continue;
       rows.push(row);
     } else {
+      const r0 = rows.length;
       rows.push(placeRow(block.header, width, context, rows.length, merges).row);
       context.lines.forEach((line, i) => {
         rows.push(
           placeRow(block.row, width, { ...context, line, index: i + 1 }, rows.length, merges).row
         );
       });
+      const r1 = rows.length - 1;
+      // Header columns define the table's logical columns for bordering.
+      const headerCols = [...new Set(block.header.map((c) => c.col))].sort((a, b) => a - b);
+      if (r1 >= r0 && headerCols.length > 0) tables.push({ r0, r1, cols: headerCols });
     }
   }
 
-  return { rows, merges, cols: layout.cols.map((wch) => ({ wch })) };
+  return { rows, merges, cols: layout.cols.map((wch) => ({ wch })), tables };
 }
