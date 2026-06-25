@@ -1,8 +1,10 @@
 # Phase 3: Employee Management + Payroll
 
+> **Legal basis:** validate against `.claude/skills/ukrainian-accounting/references/05-payroll-employees.md` and `04-military-levy-esv.md`. Corrected on 2026-06-25 per `findings-initial-review.md` (conflict C6; gaps G6, G7, G9, terminology).
+
 ## Goal
 
-Manage up to ~10 employees: profiles, monthly payroll calculation, timesheets, leave tracking. Generate payroll documents (розрахунково-платіжна відомість). Prepare quarterly unified report data (ЄСВ + ПДФО + ВЗ).
+Manage up to ~10 employees: profiles, monthly payroll calculation, timesheets, leave tracking. Generate payroll documents (розрахунково-платіжна відомість). Prepare the unified report data (ЄСВ + ПДФО + ВЗ) on the correct cadence (ЮО employer → monthly; ФОП employer → quarterly — see Phase 4 / `references/05`).
 
 ## Prerequisites
 
@@ -20,11 +22,14 @@ Add to `apps/web/app/database/schema.ts`:
 export const employee = sqliteTable('employee', {
   id: integer().primaryKey({ autoIncrement: true }),
   name: text().notNull(),
-  taxId: text('tax_id').notNull().unique(), // ІПН (10 digits)
+  taxId: text('tax_id', { length: 10 }).notNull().unique(), // РНОКПП (10 digits) — the individual's tax number, not the 12-digit ІПН ПДВ
   position: text().notNull(),
   hireDate: text('hire_date').notNull(), // ISO date
+  // Legally mandatory: a Повідомлення про прийняття must reach ДПС BEFORE work begins
+  // (КЗпП ст. 24; Постанова КМУ № 413). Track that it was filed.
+  hireNotificationSentAt: text('hire_notification_sent_at'), // ISO date the ДПС notice was filed
   salaryGross: integer('salary_gross').notNull(), // kopecks
-  status: text().notNull().default('active'), // 'active' | 'dismissed'
+  status: text().notNull().default('active'), // 'active' | 'dismissed' | 'suspended'
   dismissDate: text('dismiss_date'),
 });
 
@@ -75,22 +80,46 @@ After adding, run `npm run db:generate`.
 
 ## 2. Payroll Calculation Logic (`apps/web/app/lib/payroll-calculator.ts`)
 
-```typescript
-// Tax rates (update in code when law changes, approx. annually)
-const PDFO_RATE = 0.18; // ПДФО
-const VZ_RATE = 0.05; // Військовий збір на зарплату
-const ESV_EMPLOYER_RATE = 0.22; // ЄСВ роботодавця
+Rates and the min-wage base come from dated config (mirror `references/08-volatile-values-2026.md`),
+not hardcoded literals — ВЗ went 1.5% → 5% on 01.12.2024, exactly the kind of change a literal misses.
 
-export function calculatePayroll(grossKopecks: number, bonusKopecks = 0) {
-  const taxable = grossKopecks + bonusKopecks;
-  const pdfo = Math.round(taxable * PDFO_RATE);
-  const vz = Math.round(taxable * VZ_RATE);
-  const esvEmployer = Math.round(taxable * ESV_EMPLOYER_RATE);
-  const net = taxable - pdfo - vz;
+```typescript
+// 2026 values shown for reference — load from config with an effective date.
+const PDFO_RATE = 0.18; // ПДФО — ПКУ ст. 167.1
+const VZ_RATE = 0.05;   // Військовий збір на зарплату — eff. 01.12.2024 (Закон 4015-IX)
+const ESV_EMPLOYER_RATE = 0.22; // ЄСВ роботодавця — Закон 2464 ст. 8
+
+export function calculatePayroll(
+  taxableKopecks: number, // gross + bonus (the ПДФО/ВЗ base)
+  cfg: {
+    minimumWageKopecks: number; // for the ЄСВ minimum base
+    isFullTime: boolean;        // full-time employees get the min-base rule
+    esvRate?: number;           // 0.22 default; 0.0841 for employees with disability
+  },
+) {
+  const pdfo = Math.round(taxableKopecks * PDFO_RATE);
+  const vz = Math.round(taxableKopecks * VZ_RATE);
+
+  // ЄСВ base rules (Закон 2464):
+  //  - MINIMUM base: a full-time employee's ЄСВ base is at least the minimum wage,
+  //    even when actual/prorated pay is lower (e.g. partial month). Charging 22% of a
+  //    prorated gross below the min wage UNDERPAYS ЄСВ.
+  //  - MAXIMUM base: capped at 20× minimum wage.
+  const esvRate = cfg.esvRate ?? ESV_EMPLOYER_RATE;
+  const maxBase = cfg.minimumWageKopecks * 20;
+  let esvBase = Math.min(taxableKopecks, maxBase);
+  if (cfg.isFullTime) esvBase = Math.max(esvBase, cfg.minimumWageKopecks);
+  const esvEmployer = Math.round(esvBase * esvRate);
+
+  const net = taxableKopecks - pdfo - vz; // ЄСВ is employer-borne, not withheld
   return { pdfo, vz, esvEmployer, net };
 }
 
-// Prorated salary for partial months
+// Optional: податкова соціальна пільга (ПСП) reduces the ПДФО base only, for monthly
+// income ≤ 4 660 грн (2026). Above that (incl. anyone at the 8 647 грн min wage) it does
+// not apply — relevant only for part-time/low-norm pay. ПКУ ст. 169.
+
+// Prorated salary for partial months (drives the ПДФО/ВЗ base, NOT the ЄСВ min base above)
 export function proratedGross(salaryGross: number, workedDays: number, totalWorkingDays: number) {
   return Math.round(salaryGross * (workedDays / totalWorkingDays));
 }
@@ -105,7 +134,8 @@ All in `apps/web/app/routes/employees/_api/`:
 ### `employee-management.ts`
 
 - `GET ?action=list` → all employees (active + dismissed)
-- `POST action=create` → create employee
+- `POST action=create` → create employee. **Surface the ДПС hiring-notification obligation:** the employee may not lawfully start work until a `Повідомлення про прийняття` is filed to ДПС (КЗпП ст. 24; КМУ № 413). Either record `hireNotificationSentAt` here or block "active" status until it is set; warn if `hireDate` is reached without it.
+- `POST action=mark-hire-notified` → set `hireNotificationSentAt`
 - `POST action=update` → update employee (salary, position)
 - `POST action=dismiss` → set status=dismissed, dismissDate
 
@@ -114,7 +144,7 @@ All in `apps/web/app/routes/employees/_api/`:
 - `GET ?year=X&month=X` → list all payroll records for period
 - `POST action=calculate` → auto-calculate payroll for all active employees for given month (creates draft records)
 - `POST action=confirm` → mark payroll records as paid
-- `GET ?action=quarterly-report&year=X&quarter=X` → aggregate ЄСВ+ПДФО+ВЗ for quarterly report
+- `GET ?action=unified-report&year=X&period=X` → aggregate ЄСВ+ПДФО+ВЗ for the Податковий розрахунок. **Cadence depends on entity type:** a legal-entity (ЮО) employer files **monthly**; a ФОП employer files **quarterly** (2026 reform — `references/05-payroll-employees.md`). Parameterize the period accordingly; do not assume quarterly.
 
 ### `timesheet-management.ts`
 
@@ -191,10 +221,10 @@ Required:
 ## Definition of Done
 
 - [ ] All schema tables created and migration applied
-- [ ] Employees can be created, edited, dismissed
-- [ ] Payroll auto-calculates correctly for all employees
+- [ ] Employees can be created, edited, dismissed; ДПС hiring notification (`hireNotificationSentAt`) tracked and enforced before "active"
+- [ ] Payroll auto-calculates correctly: ПДФО 18% + ВЗ 5% withheld, ЄСВ 22% employer with the **minimum-wage base floor** (full-timers) and **20× cap** applied; rates from dated config
 - [ ] Timesheet calendar correctly reflects work/leave/sick days
 - [ ] Leave records deduct from timesheet
-- [ ] Quarterly aggregate report shows correct ЄСВ+ПДФО+ВЗ totals
+- [ ] Unified ЄСВ+ПДФО+ВЗ report aggregates correct totals on the entity-type cadence (ЮО monthly / ФОП quarterly)
 - [ ] Sidebar navigation includes Employees section
 - [ ] All E2E tests pass

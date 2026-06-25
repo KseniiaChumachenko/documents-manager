@@ -1,8 +1,10 @@
 # Phase 1: Document Generation Engine
 
+> **Legal basis:** validate against `.claude/skills/ukrainian-accounting/references/06-primary-documents.md` (Закон 996 ст. 9 mandatory requisites) and `01-entities-registries.md` / `03-vat-pdv.md`. Corrected on 2026-06-25 per `findings-initial-review.md` (conflict C5; gaps G1, G2, G3, plus the ФОП-code labelling note). The three reference `.xls` files are the export ground truth.
+
 ## Goal
 
-Generate business documents (acts, invoices, delivery notes) from JSON-schema templates stored in R2. Output XLSX via ExcelJS and PDF via jsPDF. Store generated documents in R2. Full audit trail in D1.
+Generate business documents (powers of attorney, invoices, delivery notes, acts) from JSON-schema templates stored in R2. Each must carry the **Закон 996 ст. 9 mandatory requisites** to be a valid primary document. Output XLSX via ExcelJS and PDF via jsPDF. Store generated documents in R2. Full audit trail in D1.
 
 ## Prerequisites
 
@@ -27,7 +29,12 @@ Add to `apps/web/app/database/schema.ts`:
 export const documentTemplate = sqliteTable('document_template', {
   id: integer().primaryKey({ autoIncrement: true }),
   name: text().notNull(),
-  type: text().notNull(), // 'act' | 'invoice' | 'delivery_note'
+  // Must cover all four document kinds the app handles. The previous enum omitted
+  // power_of_attorney despite the /documents/poas route, the *-poa R2 bucket, and a
+  // reference Довіреність .xls. 'power_of_attorney' has a DIFFERENT structure (no
+  // line-item pricing/VAT; instead: validity term, authorised person + passport/РНОКПП,
+  // ТМЦ list, "за рахунком №"). See references/06-primary-documents.md.
+  type: text().notNull(), // 'power_of_attorney' | 'invoice' (рахунок-фактура/СФ) | 'delivery_note' (видаткова накладна/РН) | 'act'
   schemaJson: text('schema_json').notNull(),
   stampImageKey: text('stamp_image_key'), // R2 key, nullable
   createdAt: text('created_at').notNull(),
@@ -67,7 +74,10 @@ After adding, run `npm run db:generate` to create the migration SQL, then apply 
 
 ## 2. JSON Template Schema Format
 
-Define a standard for `schema_json`. Example:
+Define a standard for `schema_json`. The schema is **declarative only** — it names
+fields, line-item columns, the VAT rate, and signatory blocks. **All arithmetic
+(totals, VAT) happens server-side** in the generation function (see §4), never as
+evaluated formulas in the JSON. Example (invoice/delivery_note):
 
 ```json
 {
@@ -81,14 +91,35 @@ Define a standard for `schema_json`. Example:
     "columns": ["name", "unit", "quantity", "price_override", "total"],
     "allow_price_override": true
   },
-  "totals": [
-    { "label": "Сума без ПДВ", "formula": "sum(line_items.total)" },
-    { "label": "ПДВ 20%", "formula": "sum(line_items.total) * 0.2" },
-    { "label": "Разом з ПДВ", "formula": "sum(line_items.total) * 1.2" }
+  "vat": { "mode": "exclusive", "rate": 0.20 },
+  "totals": ["subtotal", "vat", "grand_total"],
+  "signatories": [
+    { "key": "released_by", "label": "Відвантажив(ла)", "require_position": true, "require_surname": true, "require_signature": true },
+    { "key": "received_by", "label": "Отримав(ла)", "by_power_of_attorney": true }
   ],
   "stamp": { "conditional": true, "field": "include_stamp" }
 }
 ```
+
+**VAT (`vat`) is parameterised, not hardcoded to 20%.** Support `rate` ∈ {0.20, 0.14,
+0.07, 0.0} and a `mode: "none"` for non-VAT єдинники whose documents carry **no ПДВ
+line at all** (ПКУ ст. 193; `references/03-vat-pdv.md`). The reference docs happen to
+use 20%, but a 5%-єдинник issues VAT-free documents.
+
+**ст. 9 mandatory requisites (Закон 996) — every template MUST be able to render:**
+document name, date, the issuing enterprise, content + volume + **unit of measure** per
+line, and the **responsible persons' position + surname + signature** (the `signatories`
+block). A primary document missing these is legally deficient (`references/06`).
+
+**`power_of_attorney` uses a different schema shape** — no `line_items` pricing/`vat`/`totals`;
+instead: `valid_until` (term; a довіреність without a date of issue is void — ЦКУ ст. 247),
+authorised person (ПІБ + passport/РНОКПП), the ТМЦ list (найменування, од. виміру, кількість),
+and `"за рахунком № …"`. Model it as its own template `type` with its own field set.
+
+**ФОП identifier labelling:** when the counterparty (`company`) is a ФОП, its 10-digit
+code lives in `company.ik` (РНОКПП) but the reference documents print it under the label
+**"ЄДРПОУ"/"ІПН"**. The generator must map `entity_type='fop' ⇒ ik` onto that label to
+match the ground-truth exports (`references/01`).
 
 ---
 
@@ -180,7 +211,7 @@ Key: all math (totals, VAT) must happen server-side in the generation function, 
 
 Add keys for:
 
-- Document types: `акт виконаних робіт`, `рахунок-фактура`, `видаткова накладна`
+- Document types: `довіреність`, `рахунок-фактура`, `видаткова накладна`, `акт виконаних робіт`
 - Document form labels, line item table headers
 - Export button labels, audit log action labels
 
@@ -216,7 +247,10 @@ Required test cases:
 ## Definition of Done
 
 - [ ] Migration generated and applied locally
-- [ ] Templates can be created, listed, edited, deleted
+- [ ] Templates can be created, listed, edited, deleted — for all four types incl. `power_of_attorney`
+- [ ] Every generated document carries the Закон 996 ст. 9 requisites (name, date, enterprise, content+volume+unit, responsible persons' position+surname+signature)
+- [ ] VAT rate is parameterised (20/14/7/0 + non-VAT "none"), not hardcoded; non-VAT documents render no ПДВ line
+- [ ] ФОП counterparty's `ik` renders under the "ЄДРПОУ"/"ІПН" label to match the reference exports
 - [ ] Documents can be created from a template with company + line items
 - [ ] XLSX export downloads a valid file
 - [ ] PDF export downloads a valid file
