@@ -2,6 +2,8 @@
 // .claude/references/*.xls. Used to assert that generated exports are aligned
 // with the real documents the client produces.
 
+import zlib from 'node:zlib';
+
 import type { ResolvedLineItem, SupplierIdentity } from '../generate-document';
 
 // The business that issues the documents (Постачальник / підприємство-одержувач).
@@ -127,6 +129,50 @@ export const POA_REF = {
     },
   ] as ResolvedLineItem[],
 };
+
+/** Build a valid NxN RGB PNG data URL (proper IDAT) to stand in for an uploaded
+ * stamp in tests. jsPDF's addImage rejects malformed PNGs, so the bytes must be
+ * a real PNG. */
+export function makeTestPng(n: number): string {
+  const crc = (buf: Buffer) => {
+    let c = ~0;
+    for (const b of buf) {
+      c ^= b;
+      for (let k = 0; k < 8; k++) c = (c >>> 1) ^ (0xedb88320 & -(c & 1));
+    }
+    return ~c >>> 0;
+  };
+  const chunk = (type: string, data: Buffer) => {
+    const t = Buffer.from(type, 'ascii');
+    const len = Buffer.alloc(4);
+    len.writeUInt32BE(data.length);
+    const crcBuf = Buffer.alloc(4);
+    crcBuf.writeUInt32BE(crc(Buffer.concat([t, data])));
+    return Buffer.concat([len, t, data, crcBuf]);
+  };
+  const ihdr = Buffer.alloc(13);
+  ihdr.writeUInt32BE(n, 0);
+  ihdr.writeUInt32BE(n, 4);
+  ihdr[8] = 8; // bit depth
+  ihdr[9] = 2; // colour type: RGB
+  const raw = Buffer.alloc(n * (1 + n * 3));
+  for (let y = 0; y < n; y++) {
+    raw[y * (1 + n * 3)] = 0; // filter byte per scanline
+    for (let x = 0; x < n; x++) {
+      const o = y * (1 + n * 3) + 1 + x * 3;
+      raw[o] = 20;
+      raw[o + 1] = 60;
+      raw[o + 2] = 200;
+    }
+  }
+  const png = Buffer.concat([
+    Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]),
+    chunk('IHDR', ihdr),
+    chunk('IDAT', zlib.deflateSync(raw)),
+    chunk('IEND', Buffer.alloc(0)),
+  ]);
+  return 'data:image/png;base64,' + png.toString('base64');
+}
 
 /** Normalise apostrophe variants and whitespace so structural assertions are
  * robust to typography differences between the engine and the reference files. */

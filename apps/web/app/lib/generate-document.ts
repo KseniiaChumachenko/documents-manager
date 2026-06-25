@@ -102,6 +102,11 @@ function round2(n: number): number {
 const THIN_SIDE = { style: 'thin', color: { rgb: '000000' } } as const;
 const THIN_BOX = { top: THIN_SIDE, bottom: THIN_SIDE, left: THIN_SIDE, right: THIN_SIDE };
 
+// The reference .xls files are all set in Arial; match it so the workbook looks
+// the same when opened in Excel.
+const FONT_NAME = 'Arial';
+const FONT_SIZE = 10;
+
 export function sheetModelToWorkbook(model: SheetModel, sheetName = 'Документ'): XLSX.WorkBook {
   const wb = XLSX.utils.book_new();
   const ws = XLSX.utils.aoa_to_sheet(model.rows);
@@ -126,6 +131,16 @@ export function sheetModelToWorkbook(model: SheetModel, sheetName = 'Докум�
         const c1 = k + 1 < t.cols.length ? t.cols[k + 1] - 1 : width - 1;
         if (c1 > c0) merges.push({ s: { r, c: c0 }, e: { r, c: c1 } });
       }
+    }
+  }
+
+  // Apply the Arial typeface to every cell, preserving borders and bold headers.
+  const ref = XLSX.utils.decode_range(ws['!ref'] ?? 'A1');
+  for (let r = ref.s.r; r <= ref.e.r; r++) {
+    for (let c = ref.s.c; c <= ref.e.c; c++) {
+      const cell = ws[XLSX.utils.encode_cell({ r, c })];
+      if (!cell) continue;
+      cell.s = { ...cell.s, font: { name: FONT_NAME, sz: FONT_SIZE, ...cell.s?.font } };
     }
   }
 
@@ -178,13 +193,21 @@ export function sheetModelToPdf(model: SheetModel, stampDataUrl?: string | null)
   model.rows.forEach((row, r) => {
     const present = row.map((v, c) => ({ v, c })).filter((x) => x.v != null && x.v !== '');
 
+    // Line-item table cells always wrap (they have real column boundaries).
+    // Body cells stay on one line and overflow into adjacent empty space — the
+    // way Excel shows them — UNLESS the value is genuinely too wide for its slot,
+    // in which case it wraps so it never runs off the page. This keeps short
+    // labels intact (wrapping breaks them mid-word, e.g. "МФО" → "МФ" / "О").
+    const inTable = tableByRow.has(r);
     let maxLines = 1;
     const cells = present.map((cell, idx) => {
       const next = present[idx + 1];
       const xLeft = xAt(cell.c) + PAD;
       const xRight = (next ? xAt(next.c) : rightEdge) - PAD;
       const avail = Math.max(6, xRight - xLeft);
-      const lines = doc.splitTextToSize(String(cell.v), avail) as string[];
+      const text = String(cell.v);
+      const needsWrap = inTable || doc.getTextWidth(text) > avail;
+      const lines = needsWrap ? (doc.splitTextToSize(text, avail) as string[]) : [text];
       maxLines = Math.max(maxLines, lines.length);
       return { lines, xLeft, xRight, isNum: typeof cell.v === 'number' };
     });
@@ -222,11 +245,14 @@ export function sheetModelToPdf(model: SheetModel, stampDataUrl?: string | null)
     doc.line(rightEdge, top, rightEdge, bottom);
   }
 
+  // The stamp overlays the signature/"Місце печатки" area of the printable copy
+  // (the reference .xls files leave a labelled space for a physical stamp).
   if (stampDataUrl) {
+    const fmt = stampDataUrl.startsWith('data:image/jpeg') ? 'JPEG' : 'PNG';
     try {
-      doc.addImage(stampDataUrl, MARGIN, y + 6, 40, 40);
-    } catch {
-      // ignore unsupported image formats
+      doc.addImage(stampDataUrl, fmt, MARGIN, y + 4, 35, 35);
+    } catch (e) {
+      console.error('stamp addImage failed:', e instanceof Error ? e.message : e);
     }
   }
 

@@ -1,4 +1,4 @@
-import { eq } from 'drizzle-orm';
+import { desc, eq } from 'drizzle-orm';
 import type { AppLoadContext } from 'react-router';
 
 import {
@@ -97,8 +97,17 @@ export async function renderDocument(
   const vatRate = vatRateFor(req.docType, schema);
 
   let stampDataUrl: string | null = null;
-  if (template.stampId && req.includeStamp) {
-    const [stampRecord] = await db.select().from(stamp).where(eq(stamp.id, template.stampId));
+  if (req.includeStamp) {
+    // Prefer the stamp linked to this template; otherwise fall back to the most
+    // recently uploaded stamp, so "upload a stamp + tick include" works without
+    // having to link it to every template first.
+    let stampRecord: typeof stamp.$inferSelect | undefined;
+    if (template.stampId) {
+      [stampRecord] = await db.select().from(stamp).where(eq(stamp.id, template.stampId));
+    }
+    if (!stampRecord) {
+      [stampRecord] = await db.select().from(stamp).orderBy(desc(stamp.id)).limit(1);
+    }
     if (stampRecord) {
       const obj = await context.cloudflare.env.TEMPLATES.get(stampRecord.imageKey);
       if (obj) {
