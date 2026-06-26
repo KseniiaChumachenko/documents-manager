@@ -48,11 +48,14 @@ export async function loader({ request, context }: Route.LoaderArgs) {
     timestamp: new Date().toISOString(),
   });
 
-  const filename = `${doc.documentType}-${doc.id}.${result.ext}`;
+  // documentType (a fixed enum) and the numeric id are server-controlled, but
+  // sanitize defensively and add the RFC 5987 form so the response header can
+  // never be broken by CR/LF/quotes even if the name source changes later.
+  const filename = `${doc.documentType}-${doc.id}.${result.ext}`.replace(/[\r\n"\\;]/g, '_');
   return new Response(result.buffer, {
     headers: {
       'Content-Type': result.contentType,
-      'Content-Disposition': `attachment; filename="${filename}"`,
+      'Content-Disposition': `attachment; filename="${filename}"; filename*=UTF-8''${encodeURIComponent(filename)}`,
     },
   });
 }

@@ -30,6 +30,15 @@ export async function action({ request, context }: Route.ActionArgs) {
       return { data: null, error: 'Missing required fields' };
     }
 
+    // Reject control characters in the user-supplied number/date: they are never
+    // valid in a document number or date and would corrupt the R2 object key
+    // built below (or any response header derived from it downstream).
+    const hasControlChar = (s: string) =>
+      [...s].some((ch) => ch.charCodeAt(0) < 0x20 || ch.charCodeAt(0) === 0x7f);
+    if (hasControlChar(number) || hasControlChar(date)) {
+      return { data: null, error: 'Недопустимі символи у номері або даті документа' };
+    }
+
     const bucketKey = BUCKET_MAP[docType];
     if (!bucketKey) {
       return { data: null, error: `Unknown document type: ${docType}` };

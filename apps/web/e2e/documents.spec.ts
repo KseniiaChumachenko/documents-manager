@@ -489,6 +489,11 @@ test.describe('Documents > Generation happy path', () => {
     const id = new URL(page.url()).pathname.split('/').pop();
     const res = await page.request.get(`/documents/export-document?id=${id}&format=pdf`);
     expect(res.ok()).toBeTruthy();
+    // The download filename is built from server-controlled values and carries
+    // both the quoted and RFC 5987 forms — no user input can break the header.
+    const cd = res.headers()['content-disposition'] ?? '';
+    expect(cd).toContain(`filename="invoices-${id}.pdf"`);
+    expect(cd).toContain("filename*=UTF-8''");
     const body = await res.body();
     expect(body.toString('latin1')).toContain('/Image');
   });
