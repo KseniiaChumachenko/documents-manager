@@ -47,5 +47,32 @@ for db in "$MINIFLARE_DB_DIR"/*.sqlite; do
   fi
 done
 
+# Seed default document templates if empty
+for db in "$MINIFLARE_DB_DIR"/*.sqlite; do
+  count=$(sqlite3 "$db" "SELECT COUNT(*) FROM document_template;" 2>/dev/null || echo "0")
+  if [ "$count" = "0" ]; then
+    echo "Seeding default document templates..."
+    sqlite3 "$db" < database/seed-templates.sql 2>/dev/null || true
+  fi
+done
+
+# Seed the "My company" supplier identity if empty
+for db in "$MINIFLARE_DB_DIR"/*.sqlite; do
+  count=$(sqlite3 "$db" "SELECT COUNT(*) FROM my_company;" 2>/dev/null || echo "0")
+  if [ "$count" = "0" ]; then
+    echo "Seeding My company..."
+    sqlite3 "$db" < database/seed-my-company.sql 2>/dev/null || true
+  fi
+done
+
+# Seed one counterparty so document composition is testable without the gov API
+for db in "$MINIFLARE_DB_DIR"/*.sqlite; do
+  count=$(sqlite3 "$db" "SELECT COUNT(*) FROM company;" 2>/dev/null || echo "0")
+  if [ "$count" = "0" ]; then
+    echo "Seeding sample counterparty..."
+    sqlite3 "$db" "INSERT OR IGNORE INTO company_type(name) VALUES ('client'),('source'); INSERT INTO company (entity_type, type, name, egrpou, address, phone) VALUES ('legal','client','ТОВ \"Тестовий Контрагент\"','12345678','м. Кропивницький, вул. Тестова, 1','0501234567');" 2>/dev/null || true
+  fi
+done
+
 # Wait for the dev server process
 wait $DEV_PID

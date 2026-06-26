@@ -12,8 +12,8 @@ export async function action({ request, context }: Route.ActionArgs) {
       name: fd.get('name') as string,
       type: fd.get('type') as string,
       unit: fd.get('unit') as string | null,
-      priceInputVATFree: Number(fd.get('priceInputVATFree')),
-      priceOutputVATFree: Number(fd.get('priceOutputVATFree')),
+      priceSaleVATFree: Number(fd.get('priceSaleVATFree')),
+      priceCostVATFree: Number(fd.get('priceCostVATFree')),
       priceRetailInclVAT: Number(fd.get('priceRetailInclVAT')),
     };
     const idStr = fd.get('id');

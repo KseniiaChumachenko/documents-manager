@@ -13,10 +13,10 @@ import {
 import { Input } from '~/components/ui/input';
 import { Label } from '~/components/ui/label';
 import type { Item, ItemType, Unit } from '~/database/schema';
-import { i18n as i } from '~/i18n';
+import { tns } from '~/i18n';
 import type { IMLoader } from '~/routes/library/_api/item-management';
 
-const labels = i['/library/items'];
+const labels = tns('/library/items');
 type Options = { value: string; children: string }[];
 
 const getFields = ({
@@ -43,13 +43,13 @@ const getFields = ({
     options: unitOptions,
   },
   {
-    name: 'priceInputVATFree' as const,
+    name: 'priceSaleVATFree' as const,
     f: 'input' as const,
     type: 'number',
     step: 0.01,
   },
   {
-    name: 'priceOutputVATFree' as const,
+    name: 'priceCostVATFree' as const,
     f: 'input' as const,
     type: 'number',
     step: 0.01,

@@ -4,7 +4,9 @@ export default defineConfig({
   testDir: './e2e',
   fullyParallel: false,
   forbidOnly: !!process.env.CI,
-  retries: process.env.CI ? 2 : 0,
+  // One retry locally absorbs the cold-start race where the dev server serves
+  // before start-dev finishes applying D1 migrations to miniflare.
+  retries: process.env.CI ? 2 : 1,
   workers: 1,
   reporter: process.env.CI ? 'list' : 'html',
   timeout: 30_000,

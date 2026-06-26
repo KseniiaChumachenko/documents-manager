@@ -44,8 +44,8 @@ test.describe('Library > Items', () => {
 
     await expect(dialog.locator('input[name="name"]')).toBeVisible();
     await expect(dialog.locator('select[name="unit"]')).toBeVisible();
-    await expect(dialog.locator('input[name="priceInputVATFree"]')).toBeVisible();
-    await expect(dialog.locator('input[name="priceOutputVATFree"]')).toBeVisible();
+    await expect(dialog.locator('input[name="priceSaleVATFree"]')).toBeVisible();
+    await expect(dialog.locator('input[name="priceCostVATFree"]')).toBeVisible();
     await expect(dialog.locator('input[name="priceRetailInclVAT"]')).toBeVisible();
     await expect(dialog.locator('select[name="type"]')).toBeVisible();
     await expect(dialog.locator('input[name="id"]')).toBeHidden();
@@ -101,8 +101,8 @@ test.describe('Library > Items', () => {
     await dialog.locator('input[name="name"]').fill(itemName);
     await dialog.locator('select[name="type"]').selectOption(typeName);
     await dialog.locator('select[name="unit"]').selectOption(unitName);
-    await dialog.locator('input[name="priceInputVATFree"]').fill('200');
-    await dialog.locator('input[name="priceOutputVATFree"]').fill('250');
+    await dialog.locator('input[name="priceSaleVATFree"]').fill('200');
+    await dialog.locator('input[name="priceCostVATFree"]').fill('250');
     await dialog.locator('input[name="priceRetailInclVAT"]').fill('300');
 
     await dialog.getByRole('button', { name: 'Зберегти' }).click();

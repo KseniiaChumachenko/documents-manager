@@ -13,11 +13,11 @@ import {
   DialogTrigger,
 } from '~/components/ui/dialog';
 import { Input } from '~/components/ui/input';
-import { i18n as i } from '~/i18n';
+import { tns } from '~/i18n';
 import type { SaveCompanyLoader } from '~/routes/library/_api/save-company';
 import type { SearchCompanyLoader } from '~/routes/library/_api/search-company';
 
-const labels = i['/library/client'];
+const labels = tns('/library/client');
 
 export const AddCompanyDialog = ({
   i18n,

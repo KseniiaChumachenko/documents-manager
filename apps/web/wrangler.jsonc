@@ -19,6 +19,28 @@
       "migrations_dir": "database/migrations"
     }
   ],
+  "r2_buckets": [
+    {
+      "binding": "ASSETS",
+      "bucket_name": "local-web"
+    },
+    {
+      "binding": "POAS",
+      "bucket_name": "local-poa"
+    },
+    {
+      "binding": "INVOICES",
+      "bucket_name": "local-invoice"
+    },
+    {
+      "binding": "BILLS",
+      "bucket_name": "local-bill"
+    },
+    {
+      "binding": "TEMPLATES",
+      "bucket_name": "local-template"
+    }
+  ],
   "vars": {
     "GOV_API": "https://adm.tools/action/gov/api/"
   },

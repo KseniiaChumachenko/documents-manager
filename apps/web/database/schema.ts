@@ -19,8 +19,8 @@ export const item = sqliteTable('item', {
     .references(() => itemType.name)
     .notNull(),
   unit: text().references(() => unit.name),
-  priceInputVATFree: integer().notNull(),
-  priceOutputVATFree: integer().notNull(),
+  priceSaleVATFree: integer().notNull(), // Відпускна (sale) price, без ПДВ
+  priceCostVATFree: integer().notNull(), // Вхідна (cost) price, без ПДВ
   priceRetailInclVAT: integer().notNull(),
 });
 
@@ -54,3 +54,74 @@ export const company = sqliteTable('company', {
 });
 
 export type Company = typeof company.$inferSelect;
+
+// Single-row settings record describing the business issuing the documents
+// (the "Постачальник" / "підприємство-одержувач" identity block). Always id=1.
+export const myCompany = sqliteTable('my_company', {
+  id: integer().primaryKey({ autoIncrement: true }),
+  name: text().notNull(),
+  egrpou: text(),
+  inn: text(), // ІПН
+  vatCertificate: text('vat_certificate'), // номер свідоцтва платника ПДВ
+  iban: text(),
+  bankName: text('bank_name'),
+  mfo: text(),
+  phone: text(),
+  address: text(),
+  taxNote: text('tax_note'), // e.g. "Не є платником податку на прибуток на загальних підставах"
+  signatoryName: text('signatory_name'), // "Чумаченко І. В." for the signature line
+});
+
+export type MyCompany = typeof myCompany.$inferSelect;
+
+export const stamp = sqliteTable('stamp', {
+  id: integer().primaryKey({ autoIncrement: true }),
+  name: text().notNull(),
+  imageKey: text('image_key').notNull(), // R2 key in TEMPLATES bucket
+  createdAt: text('created_at').notNull(),
+});
+
+export type Stamp = typeof stamp.$inferSelect;
+
+export const documentTemplate = sqliteTable('document_template', {
+  id: integer().primaryKey({ autoIncrement: true }),
+  name: text().notNull(),
+  type: text().notNull(), // 'poas' | 'invoices' | 'bills'
+  schemaJson: text('schema_json').notNull(),
+  stampId: integer('stamp_id').references(() => stamp.id),
+  createdAt: text('created_at').notNull(),
+  updatedAt: text('updated_at').notNull(),
+});
+
+export type DocumentTemplate = typeof documentTemplate.$inferSelect;
+
+export const document = sqliteTable('document', {
+  id: integer().primaryKey({ autoIncrement: true }),
+  templateId: integer('template_id')
+    .references(() => documentTemplate.id)
+    .notNull(),
+  companyId: integer('company_id')
+    .references(() => company.id)
+    .notNull(),
+  documentType: text('document_type').notNull(), // matches R2 bucket: 'poas' | 'invoices' | 'bills'
+  dataJson: text('data_json').notNull(),
+  createdBy: text('created_by').notNull(),
+  createdAt: text('created_at').notNull(),
+  exportedAt: text('exported_at'),
+  exportFormat: text('export_format'), // 'xlsx' | 'pdf'
+  r2Key: text('r2_key'),
+});
+
+export type Document = typeof document.$inferSelect;
+
+export const documentAuditLog = sqliteTable('document_audit_log', {
+  id: integer().primaryKey({ autoIncrement: true }),
+  documentId: integer('document_id')
+    .references(() => document.id)
+    .notNull(),
+  action: text().notNull(), // 'created' | 'exported' | 'deleted'
+  actorEmail: text('actor_email').notNull(),
+  timestamp: text().notNull(),
+});
+
+export type DocumentAuditLog = typeof documentAuditLog.$inferSelect;

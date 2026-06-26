@@ -7,7 +7,7 @@ import { Label } from '~/components/ui/label';
 import { Table, TableBody, TableCell, TableRow } from '~/components/ui/table';
 import { Typography } from '~/components/ui/typography';
 import { itemType, unit } from '~/database/schema';
-import { getTitle, i18n } from '~/i18n';
+import { getTitle, tns } from '~/i18n';
 
 import type { Route } from '../../../../.react-router/types/app/routes/library/settings/+types';
 
@@ -23,7 +23,7 @@ export async function loader({ context }: Route.LoaderArgs) {
   return { data: { types, units } };
 }
 
-const i = i18n['/library/settings'];
+const i = tns('/library/settings');
 
 export default function Settings({
   loaderData: {
