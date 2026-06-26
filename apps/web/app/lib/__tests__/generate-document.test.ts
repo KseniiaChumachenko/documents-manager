@@ -163,6 +163,36 @@ describe('renderLayout — invoice (Рахунок-фактура)', () => {
   });
 });
 
+describe('renderLayout — VAT mode (ПКУ ст. 193: non-VAT payers carry no ПДВ line)', () => {
+  function totalsTextAt(vatRate: number): string {
+    const lines = INVOICE_REF.lines as ResolvedLineItem[];
+    const totals = computeTotals(lines, vatRate);
+    const model = renderLayout(INVOICE_LAYOUT, {
+      supplier: SUPPLIER,
+      counterparty: { name: INVOICE_REF.recipientName, phone: null },
+      field: { number: INVOICE_REF.number, date: INVOICE_REF.date },
+      lines,
+      totals: { ...totals, vatRate, discount: 0 },
+    });
+    return flatten(model);
+  }
+
+  it('a VAT payer (20%) shows the subtotal / ПДВ / total-with-VAT lines', () => {
+    const t = totalsTextAt(0.2);
+    expect(t).toContain('Разом без ПДВ');
+    expect(t).toContain('Всього з ПДВ');
+    expect(t).not.toContain('Всього:'); // the plain non-VAT total is suppressed
+  });
+
+  it('a non-VAT payer (rate 0) omits every ПДВ total line and shows a plain total', () => {
+    const t = totalsTextAt(0);
+    expect(t).not.toContain('Разом без ПДВ');
+    expect(t).not.toContain('Всього з ПДВ');
+    expect(t).not.toContain('ПДВ:'); // no standalone ПДВ row or "ПДВ: … грн." line
+    expect(t).toContain('Всього:');
+  });
+});
+
 describe('renderLayout — bill (Видаткова накладна)', () => {
   const model = renderLayout(
     BILL_LAYOUT,

@@ -50,7 +50,13 @@ export function renderLayout(layout: Layout, context: RenderContext): SheetModel
   const merges: NonNullable<SheetModel['merges']> = [];
   const tables: NonNullable<SheetModel['tables']> = [];
 
+  // A non-VAT payer's documents carry no ПДВ line (ПКУ ст. 193): blocks tagged
+  // `when: 'vat'` render only when a rate applies, `'novat'` only when it does not.
+  const vatApplies = context.totals.vatRate > 0;
+
   for (const block of layout.blocks) {
+    if (block.when === 'vat' && !vatApplies) continue;
+    if (block.when === 'novat' && vatApplies) continue;
     if (block.type === 'row') {
       // An explicit spacer (cells: []) always emits a blank row.
       // A non-empty cells array where every cell resolves to null is skipped —
