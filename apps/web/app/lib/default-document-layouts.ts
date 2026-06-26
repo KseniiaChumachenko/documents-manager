@@ -115,7 +115,7 @@ export const INVOICE_LAYOUT: Layout = {
       ],
     },
 
-    // --- Totals ---
+    // --- Totals (VAT payer: subtotal / ПДВ / total) ---
     {
       type: 'row',
       cells: [
@@ -125,6 +125,7 @@ export const INVOICE_LAYOUT: Layout = {
     },
     {
       type: 'row',
+      when: 'vat',
       cells: [
         { col: 6, text: 'Разом без ПДВ:' },
         { col: 7, text: '{{totals.subtotal | money}}' },
@@ -132,6 +133,7 @@ export const INVOICE_LAYOUT: Layout = {
     },
     {
       type: 'row',
+      when: 'vat',
       cells: [
         { col: 6, text: 'ПДВ:' },
         { col: 7, text: '{{totals.vat | money}}' },
@@ -139,8 +141,18 @@ export const INVOICE_LAYOUT: Layout = {
     },
     {
       type: 'row',
+      when: 'vat',
       cells: [
         { col: 6, text: 'Всього з ПДВ:' },
+        { col: 7, text: '{{totals.total | money}}' },
+      ],
+    },
+    // --- Total (non-VAT payer: single line, no ПДВ) ---
+    {
+      type: 'row',
+      when: 'novat',
+      cells: [
+        { col: 6, text: 'Всього:' },
         { col: 7, text: '{{totals.total | money}}' },
       ],
     },
@@ -149,7 +161,11 @@ export const INVOICE_LAYOUT: Layout = {
     // --- Amount in words ---
     { type: 'row', cells: [{ col: 0, text: 'Всього на суму:' }] },
     { type: 'row', cells: [{ col: 0, text: '{{totals.total | hryvniaWords}}' }] },
-    { type: 'row', cells: [{ col: 0, text: 'ПДВ:       {{totals.vat | money}} грн.' }] },
+    {
+      type: 'row',
+      when: 'vat',
+      cells: [{ col: 0, text: 'ПДВ:       {{totals.vat | money}} грн.' }],
+    },
     { type: 'row', cells: [] },
 
     {
@@ -273,9 +289,10 @@ export const BILL_LAYOUT: Layout = {
       ],
     },
 
-    // --- Totals ---
+    // --- Totals (VAT payer: subtotal / ПДВ / total) ---
     {
       type: 'row',
+      when: 'vat',
       cells: [
         { col: 6, text: 'Разом без ПДВ:' },
         { col: 7, text: '{{totals.subtotal | money}}' },
@@ -283,6 +300,7 @@ export const BILL_LAYOUT: Layout = {
     },
     {
       type: 'row',
+      when: 'vat',
       cells: [
         { col: 6, text: 'ПДВ:' },
         { col: 7, text: '{{totals.vat | money}}' },
@@ -290,8 +308,18 @@ export const BILL_LAYOUT: Layout = {
     },
     {
       type: 'row',
+      when: 'vat',
       cells: [
         { col: 6, text: 'Всього з ПДВ:' },
+        { col: 7, text: '{{totals.total | money}}' },
+      ],
+    },
+    // --- Total (non-VAT payer: single line, no ПДВ) ---
+    {
+      type: 'row',
+      when: 'novat',
+      cells: [
+        { col: 6, text: 'Всього:' },
         { col: 7, text: '{{totals.total | money}}' },
       ],
     },
@@ -300,7 +328,11 @@ export const BILL_LAYOUT: Layout = {
     // --- Amount in words ---
     { type: 'row', cells: [{ col: 0, text: 'Всього на суму:' }] },
     { type: 'row', cells: [{ col: 0, text: '{{totals.total | hryvniaWords}}' }] },
-    { type: 'row', cells: [{ col: 0, text: 'ПДВ:       {{totals.vat | money}} грн.' }] },
+    {
+      type: 'row',
+      when: 'vat',
+      cells: [{ col: 0, text: 'ПДВ:       {{totals.vat | money}} грн.' }],
+    },
     { type: 'row', cells: [] },
 
     {

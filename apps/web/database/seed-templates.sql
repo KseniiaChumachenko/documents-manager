@@ -306,6 +306,7 @@ VALUES
       },
       {
         "type": "row",
+        "when": "vat",
         "cells": [
           {
             "col": 6,
@@ -319,6 +320,7 @@ VALUES
       },
       {
         "type": "row",
+        "when": "vat",
         "cells": [
           {
             "col": 6,
@@ -332,10 +334,25 @@ VALUES
       },
       {
         "type": "row",
+        "when": "vat",
         "cells": [
           {
             "col": 6,
             "text": "Всього з ПДВ:"
+          },
+          {
+            "col": 7,
+            "text": "{{totals.total | money}}"
+          }
+        ]
+      },
+      {
+        "type": "row",
+        "when": "novat",
+        "cells": [
+          {
+            "col": 6,
+            "text": "Всього:"
           },
           {
             "col": 7,
@@ -367,6 +384,7 @@ VALUES
       },
       {
         "type": "row",
+        "when": "vat",
         "cells": [
           {
             "col": 0,
@@ -701,6 +719,7 @@ VALUES
       },
       {
         "type": "row",
+        "when": "vat",
         "cells": [
           {
             "col": 6,
@@ -714,6 +733,7 @@ VALUES
       },
       {
         "type": "row",
+        "when": "vat",
         "cells": [
           {
             "col": 6,
@@ -727,10 +747,25 @@ VALUES
       },
       {
         "type": "row",
+        "when": "vat",
         "cells": [
           {
             "col": 6,
             "text": "Всього з ПДВ:"
+          },
+          {
+            "col": 7,
+            "text": "{{totals.total | money}}"
+          }
+        ]
+      },
+      {
+        "type": "row",
+        "when": "novat",
+        "cells": [
+          {
+            "col": 6,
+            "text": "Всього:"
           },
           {
             "col": 7,
@@ -762,6 +797,7 @@ VALUES
       },
       {
         "type": "row",
+        "when": "vat",
         "cells": [
           {
             "col": 0,

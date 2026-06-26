@@ -10,13 +10,21 @@ import {
   computeTotals,
   resolveLineItems,
   sheetModelToPdf,
+  sheetModelToWorkbook,
   sheetModelToXlsx,
   type ResolvedLineItem,
   type SheetModel,
   type SupplierIdentity,
 } from '../generate-document';
 
-import { BILL_REF, INVOICE_REF, POA_REF, SUPPLIER, normalize } from './reference-fixtures';
+import {
+  BILL_REF,
+  INVOICE_REF,
+  POA_REF,
+  SUPPLIER,
+  makeTestPng,
+  normalize,
+} from './reference-fixtures';
 
 /** Build a RenderContext from a reference fixture (invoice/bill shape). */
 function ctxFrom(
@@ -155,6 +163,36 @@ describe('renderLayout — invoice (Рахунок-фактура)', () => {
   });
 });
 
+describe('renderLayout — VAT mode (ПКУ ст. 193: non-VAT payers carry no ПДВ line)', () => {
+  function totalsTextAt(vatRate: number): string {
+    const lines = INVOICE_REF.lines as ResolvedLineItem[];
+    const totals = computeTotals(lines, vatRate);
+    const model = renderLayout(INVOICE_LAYOUT, {
+      supplier: SUPPLIER,
+      counterparty: { name: INVOICE_REF.recipientName, phone: null },
+      field: { number: INVOICE_REF.number, date: INVOICE_REF.date },
+      lines,
+      totals: { ...totals, vatRate, discount: 0 },
+    });
+    return flatten(model);
+  }
+
+  it('a VAT payer (20%) shows the subtotal / ПДВ / total-with-VAT lines', () => {
+    const t = totalsTextAt(0.2);
+    expect(t).toContain('Разом без ПДВ');
+    expect(t).toContain('Всього з ПДВ');
+    expect(t).not.toContain('Всього:'); // the plain non-VAT total is suppressed
+  });
+
+  it('a non-VAT payer (rate 0) omits every ПДВ total line and shows a plain total', () => {
+    const t = totalsTextAt(0);
+    expect(t).not.toContain('Разом без ПДВ');
+    expect(t).not.toContain('Всього з ПДВ');
+    expect(t).not.toContain('ПДВ:'); // no standalone ПДВ row or "ПДВ: … грн." line
+    expect(t).toContain('Всього:');
+  });
+});
+
 describe('renderLayout — bill (Видаткова накладна)', () => {
   const model = renderLayout(
     BILL_LAYOUT,
@@ -277,5 +315,55 @@ describe('sheetModelToPdf', () => {
     expect(latin1).toContain('DejaVuSansUA');
     // Embedding a font makes the file substantial.
     expect(buf.byteLength).toBeGreaterThan(10000);
+  });
+
+  it('embeds a stamp image when a stamp data URL is provided', () => {
+    const model = renderLayout(INVOICE_LAYOUT, ctxFrom(INVOICE_REF, SUPPLIER));
+    const withoutStamp = sheetModelToPdf(model);
+    const withStamp = sheetModelToPdf(model, makeTestPng(64));
+
+    const bytes = Array.from(new Uint8Array(withStamp), (b) => String.fromCharCode(b)).join('');
+    // The stamp is embedded as a PDF image XObject, which also grows the file.
+    expect(bytes).toContain('/Image');
+    expect(withStamp.byteLength).toBeGreaterThan(withoutStamp.byteLength + 200);
+  });
+
+  it('keeps short body labels on a single line (no mid-word wrap)', () => {
+    // Regression for "МФО" wrapping to "МФ" / "О": a short label in a narrow
+    // grid column must not wrap, so the page stays a single page.
+    const model: SheetModel = { rows: [['МФО', '380838']], cols: [{ wch: 4 }, { wch: 10 }] };
+    const buf = sheetModelToPdf(model);
+    const text = Array.from(new Uint8Array(buf), (b) => String.fromCharCode(b)).join('');
+    expect((text.match(/\/Type\s*\/Page[^s]/g) ?? []).length).toBe(1);
+  });
+});
+
+describe('sheetModelToWorkbook table formatting', () => {
+  it('borders table cells and merges logical columns', () => {
+    const model: SheetModel = {
+      rows: [
+        ['№', 'Назва', null, 'Сума'],
+        [1, 'A', null, 20],
+      ],
+      cols: [{ wch: 5 }, { wch: 30 }, { wch: 10 }, { wch: 10 }],
+      tables: [{ r0: 0, r1: 1, cols: [0, 1, 3] }],
+    };
+    const wb = sheetModelToWorkbook(model, 'Документ');
+    const ws = wb.Sheets[wb.SheetNames[0]];
+
+    // Header cell carries a thin border (and bold).
+    expect(ws['A1'].s?.border?.top?.style).toBe('thin');
+    expect(ws['A1'].s?.font?.bold).toBe(true);
+    // A data cell is bordered too.
+    expect(ws['A2'].s?.border?.bottom?.style).toBe('thin');
+
+    // Every cell uses the reference typeface (Arial), bold preserved on headers.
+    expect(ws['A1'].s?.font?.name).toBe('Arial');
+    expect(ws['B2'].s?.font?.name).toBe('Arial');
+
+    // The wide "name" column (grid cols 1..2) is merged on header + each data row.
+    const refs = (ws['!merges'] ?? []).map((m) => XLSX.utils.encode_range(m));
+    expect(refs).toContain('B1:C1');
+    expect(refs).toContain('B2:C2');
   });
 });

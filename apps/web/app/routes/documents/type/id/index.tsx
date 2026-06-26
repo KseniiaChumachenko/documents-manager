@@ -98,12 +98,13 @@ export default function DocumentDetail({ loaderData: { data, type } }: Route.Com
         )}
       </div>
 
-      {/* Download the generated file in the format it was created with */}
+      {/* Every document is downloadable as both XLSX and PDF (rendered on demand). */}
       <div className="flex gap-2">
-        <a href={`/documents/export-document?id=${doc.id}`}>
-          <Button>
-            {doc.exportFormat === 'pdf' ? t.actions.export.pdf : t.actions.export.xlsx}
-          </Button>
+        <a href={`/documents/export-document?id=${doc.id}&format=xlsx`}>
+          <Button variant="outline">{t.actions.export.xlsx}</Button>
+        </a>
+        <a href={`/documents/export-document?id=${doc.id}&format=pdf`}>
+          <Button variant="outline">{t.actions.export.pdf}</Button>
         </a>
       </div>
 

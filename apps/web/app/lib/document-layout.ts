@@ -11,14 +11,25 @@ export interface Cell {
   bold?: boolean;
   omitIfEmpty?: boolean;
 }
+/**
+ * Conditional rendering tied to VAT applicability. A non-VAT payer (єдинник,
+ * ПКУ ст. 193 — see `.claude/skills/ukrainian-accounting/references/03-vat-pdv.md`)
+ * issues documents with NO ПДВ line at all, so VAT-specific rows are tagged
+ * `'vat'` (render only when a VAT rate applies) and the plain total is tagged
+ * `'novat'` (render only when it does not). Untagged blocks always render.
+ */
+export type WhenVat = 'vat' | 'novat';
+
 export interface RowBlock {
   type: 'row';
   cells: Cell[];
+  when?: WhenVat;
 }
 export interface LineItemsBlock {
   type: 'lineItems';
   header: Cell[];
   row: Cell[];
+  when?: WhenVat;
 }
 export type Block = RowBlock | LineItemsBlock;
 export interface Layout {

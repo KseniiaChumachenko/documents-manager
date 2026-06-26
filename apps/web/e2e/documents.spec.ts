@@ -1,6 +1,49 @@
+import zlib from 'node:zlib';
+
 import { test, expect } from '@playwright/test';
 
 import { waitForHydration } from './helpers';
+
+/** Build a valid NxN RGB PNG buffer (proper IDAT) for stamp-upload tests. */
+function makePngBuffer(n: number): Buffer {
+  const crc = (buf: Buffer) => {
+    let c = ~0;
+    for (const b of buf) {
+      c ^= b;
+      for (let k = 0; k < 8; k++) c = (c >>> 1) ^ (0xedb88320 & -(c & 1));
+    }
+    return ~c >>> 0;
+  };
+  const chunk = (type: string, data: Buffer) => {
+    const t = Buffer.from(type, 'ascii');
+    const len = Buffer.alloc(4);
+    len.writeUInt32BE(data.length);
+    const crcBuf = Buffer.alloc(4);
+    crcBuf.writeUInt32BE(crc(Buffer.concat([t, data])));
+    return Buffer.concat([len, t, data, crcBuf]);
+  };
+  const ihdr = Buffer.alloc(13);
+  ihdr.writeUInt32BE(n, 0);
+  ihdr.writeUInt32BE(n, 4);
+  ihdr[8] = 8;
+  ihdr[9] = 2;
+  const raw = Buffer.alloc(n * (1 + n * 3));
+  for (let y = 0; y < n; y++) {
+    raw[y * (1 + n * 3)] = 0;
+    for (let x = 0; x < n; x++) {
+      const o = y * (1 + n * 3) + 1 + x * 3;
+      raw[o] = 20;
+      raw[o + 1] = 60;
+      raw[o + 2] = 200;
+    }
+  }
+  return Buffer.concat([
+    Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]),
+    chunk('IHDR', ihdr),
+    chunk('IDAT', zlib.deflateSync(raw)),
+    chunk('IEND', Buffer.alloc(0)),
+  ]);
+}
 
 async function ensureTemplate(page: import('@playwright/test').Page, type = 'invoices') {
   await page.goto('/documents/settings');
@@ -389,6 +432,72 @@ test.describe('Documents > Generation happy path', () => {
     await expect(page.getByText(`INV-${suffix}`)).toBeVisible({ timeout: 15000 });
   });
 
+  test('downloads a document as both XLSX and PDF', async ({ page }) => {
+    const suffix = Date.now();
+    const itemName = await makeItem(page, suffix);
+    await ensureTemplate(page, 'invoices');
+
+    await page.goto('/documents/invoices/new');
+    await waitForHydration(page);
+    await page.locator('#number').fill(`BOTH-${suffix}`);
+    await pickCompany(page, 'Одержувач');
+    await pickItem(page, itemName);
+    await page.getByRole('button', { name: 'Зберегти' }).click();
+    await page.waitForURL(/\/documents\/invoices\/\d+$/, { timeout: 20000 });
+
+    // The document was created as XLSX, but both formats are downloadable —
+    // the PDF is rendered on demand from the stored data.
+    const xlsxDownload = page.waitForEvent('download');
+    await page.getByRole('button', { name: 'Завантажити XLSX' }).click();
+    expect((await xlsxDownload).suggestedFilename()).toMatch(/\.xlsx$/);
+
+    const pdfDownload = page.waitForEvent('download');
+    await page.getByRole('button', { name: 'Завантажити PDF' }).click();
+    expect((await pdfDownload).suggestedFilename()).toMatch(/\.pdf$/);
+  });
+
+  test('embeds an uploaded stamp on the PDF export', async ({ page }) => {
+    const suffix = Date.now();
+    const itemName = await makeItem(page, suffix);
+    await ensureTemplate(page, 'invoices');
+
+    // Upload a stamp in settings (a real PNG buffer — jsPDF rejects malformed PNGs).
+    await page.goto('/documents/settings');
+    await waitForHydration(page);
+    await page.getByPlaceholder('Назва печатки').fill(`e2e-stamp-${suffix}`);
+    await page.locator('input[type="file"]').setInputFiles({
+      name: 'stamp.png',
+      mimeType: 'image/png',
+      buffer: makePngBuffer(64),
+    });
+    await expect(page.getByText(`e2e-stamp-${suffix}`)).toBeVisible({ timeout: 10000 });
+
+    // Compose an invoice with the stamp included (the template is not linked to a
+    // stamp, so this also exercises the "use the latest uploaded stamp" fallback).
+    await page.goto('/documents/invoices/new');
+    await waitForHydration(page);
+    await page.locator('#number').fill(`STAMP-${suffix}`);
+    await pickCompany(page, 'Одержувач');
+    await pickItem(page, itemName);
+    await page.getByRole('checkbox').check();
+    await page.getByRole('button', { name: 'Зберегти' }).click();
+    await page.waitForURL(/\/documents\/invoices\/\d+$/, { timeout: 20000 });
+
+    // The PDF is rendered in the worker; assert the stamp image was embedded
+    // (jsPDF writes images as /Image XObjects) — proves R2 fetch + addImage work
+    // in workerd, not just under Node.
+    const id = new URL(page.url()).pathname.split('/').pop();
+    const res = await page.request.get(`/documents/export-document?id=${id}&format=pdf`);
+    expect(res.ok()).toBeTruthy();
+    // The download filename is built from server-controlled values and carries
+    // both the quoted and RFC 5987 forms — no user input can break the header.
+    const cd = res.headers()['content-disposition'] ?? '';
+    expect(cd).toContain(`filename="invoices-${id}.pdf"`);
+    expect(cd).toContain("filename*=UTF-8''");
+    const body = await res.body();
+    expect(body.toString('latin1')).toContain('/Image');
+  });
+
   test('composes an invoice as PDF', async ({ page }) => {
     const suffix = Date.now();
     const itemName = await makeItem(page, suffix);
@@ -423,7 +532,11 @@ test.describe('Documents > Generation happy path', () => {
     await page.getByRole('button', { name: 'Зберегти' }).click();
 
     await page.waitForURL(/\/documents\/bills\/\d+$/, { timeout: 20000 });
-    await expect(page.getByRole('button', { name: /Завантажити/ })).toBeVisible({ timeout: 15000 });
+    // Both export formats are offered on every document.
+    await expect(page.getByRole('button', { name: 'Завантажити XLSX' })).toBeVisible({
+      timeout: 15000,
+    });
+    await expect(page.getByRole('button', { name: 'Завантажити PDF' })).toBeVisible();
     await expect(page.getByText(`BILL-${suffix}`)).toBeVisible({ timeout: 15000 });
   });
 
@@ -442,7 +555,11 @@ test.describe('Documents > Generation happy path', () => {
     await page.getByRole('button', { name: 'Зберегти' }).click();
 
     await page.waitForURL(/\/documents\/poas\/\d+$/, { timeout: 20000 });
-    await expect(page.getByRole('button', { name: /Завантажити/ })).toBeVisible({ timeout: 15000 });
+    // Both export formats are offered on every document.
+    await expect(page.getByRole('button', { name: 'Завантажити XLSX' })).toBeVisible({
+      timeout: 15000,
+    });
+    await expect(page.getByRole('button', { name: 'Завантажити PDF' })).toBeVisible();
     await expect(page.getByText(`POA-${suffix}`)).toBeVisible({ timeout: 15000 });
   });
 });

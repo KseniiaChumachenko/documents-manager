@@ -1,54 +1,15 @@
-import { eq } from 'drizzle-orm';
 import { redirect } from 'react-router';
 
-import {
-  company,
-  document as documentTable,
-  documentAuditLog,
-  documentTemplate,
-  item as itemTable,
-  myCompany,
-  stamp,
-} from '~/database/schema';
-import type { RenderContext } from '~/lib/document-layout';
-import { renderLayout } from '~/lib/document-renderer';
-import {
-  computeTotals,
-  resolveLineItems,
-  sheetModelToPdf,
-  sheetModelToXlsx,
-  type LineItem,
-  type SupplierIdentity,
-} from '~/lib/generate-document';
+import { document as documentTable, documentAuditLog } from '~/database/schema';
+import { renderDocument } from '~/lib/render-document';
 
 import type { Route } from '../../../../.react-router/types/app/routes/documents/_api/+types/generate-document';
 
-// TODO(storage-consolidation): these three per-type R2 buckets should be
-// replaced by a single generic `DOCUMENTS` bucket (the document_type column +
-// the `${docType}/...` key prefix already discriminate). Deferred to a stacked
-// follow-up PR because it touches Pulumi infra + a production object migration.
-// See docs/superpowers/specs/2026-06-21-document-layout-schema-design.md §5.
 const BUCKET_MAP: Record<string, 'POAS' | 'INVOICES' | 'BILLS'> = {
   poas: 'POAS',
   invoices: 'INVOICES',
   bills: 'BILLS',
 };
-
-/** Derive the VAT rate from an already-parsed schema object.
- * 0 for powers of attorney, else the template's `vat_rate` (fraction) if set,
- * otherwise 20%. */
-function resolveVatRate(docType: string, schema: Record<string, unknown>): number {
-  if (docType === 'poas') return 0;
-  if (typeof schema.vat_rate === 'number') return schema.vat_rate;
-  return 0.2;
-}
-
-function arrayBufferToBase64(buffer: ArrayBuffer): string {
-  const bytes = new Uint8Array(buffer);
-  let binary = '';
-  for (let i = 0; i < bytes.byteLength; i++) binary += String.fromCharCode(bytes[i]);
-  return btoa(binary);
-}
 
 export async function action({ request, context }: Route.ActionArgs) {
   try {
@@ -69,105 +30,38 @@ export async function action({ request, context }: Route.ActionArgs) {
       return { data: null, error: 'Missing required fields' };
     }
 
+    // Reject control characters in the user-supplied number/date: they are never
+    // valid in a document number or date and would corrupt the R2 object key
+    // built below (or any response header derived from it downstream).
+    const hasControlChar = (s: string) =>
+      [...s].some((ch) => ch.charCodeAt(0) < 0x20 || ch.charCodeAt(0) === 0x7f);
+    if (hasControlChar(number) || hasControlChar(date)) {
+      return { data: null, error: 'Недопустимі символи у номері або даті документа' };
+    }
+
     const bucketKey = BUCKET_MAP[docType];
     if (!bucketKey) {
       return { data: null, error: `Unknown document type: ${docType}` };
     }
 
-    const [template] = await context.db
-      .select()
-      .from(documentTemplate)
-      .where(eq(documentTemplate.id, templateId));
-
-    const [counterparty] = await context.db.select().from(company).where(eq(company.id, companyId));
-
-    const [supplier] = await context.db.select().from(myCompany).limit(1);
-
-    if (!template || !counterparty) {
-      return { data: null, error: 'Template or company not found' };
+    const result = await renderDocument(context, {
+      templateId,
+      companyId,
+      docType,
+      fields,
+      rawItems,
+      includeStamp,
+      format,
+    });
+    if ('error' in result) {
+      return { data: null, error: result.error };
     }
-    if (!supplier) {
-      return {
-        data: null,
-        error: 'Спершу заповніть дані вашої компанії в налаштуваннях',
-      };
-    }
-
-    // Resolve line items against the catalogue.
-    const lineItemsInput: LineItem[] = [];
-    for (const raw of rawItems) {
-      const [itemRecord] = await context.db
-        .select()
-        .from(itemTable)
-        .where(eq(itemTable.id, raw.itemId));
-      if (itemRecord) {
-        lineItemsInput.push({
-          item: itemRecord,
-          quantity: raw.quantity,
-          priceOverride: raw.priceOverride,
-        });
-      }
-    }
-    const lines = resolveLineItems(lineItemsInput);
-
-    // Parse the template's schema_json once; derive both layout and vat rate from it.
-    let schema: Record<string, unknown>;
-    try {
-      schema = JSON.parse(template.schemaJson);
-    } catch {
-      return { data: null, error: 'Шаблон не містить розмітки (layout)' };
-    }
-    const layout = schema.layout as import('~/lib/document-layout').Layout | undefined;
-    if (!layout) {
-      return { data: null, error: 'Шаблон не містить розмітки (layout)' };
-    }
-
-    const vatRate = resolveVatRate(docType, schema);
-    const renderContext: RenderContext = {
-      supplier: supplier as SupplierIdentity,
-      counterparty: {
-        name: counterparty.name,
-        egrpou: counterparty.egrpou,
-        phone: counterparty.phone,
-      },
-      field: fields,
-      lines,
-      totals: { ...computeTotals(lines, vatRate), vatRate, discount: 0 },
-    };
-
-    // Resolve the stamp image (if any) as a data URL for PDF embedding.
-    let stampDataUrl: string | null = null;
-    if (template.stampId && includeStamp) {
-      const [stampRecord] = await context.db
-        .select()
-        .from(stamp)
-        .where(eq(stamp.id, template.stampId));
-      if (stampRecord) {
-        const stampObj = await context.cloudflare.env.TEMPLATES.get(stampRecord.imageKey);
-        if (stampObj) {
-          const buf = await stampObj.arrayBuffer();
-          const ct = stampObj.httpMetadata?.contentType ?? 'image/png';
-          stampDataUrl = `data:${ct};base64,${arrayBufferToBase64(buf)}`;
-        }
-      }
-    }
-
-    const model = renderLayout(layout, renderContext);
-    const buffer =
-      format === 'pdf' ? sheetModelToPdf(model, stampDataUrl) : sheetModelToXlsx(model);
 
     const now = new Date().toISOString();
-    const ext = format === 'pdf' ? 'pdf' : 'xlsx';
     // Timestamp suffix avoids overwriting documents that share number + date.
-    const r2Key = `${docType}/${date}-${number}-${Date.parse(now)}.${ext}`;
-    const bucket = context.cloudflare.env[bucketKey];
-    await bucket.put(r2Key, buffer, {
-      httpMetadata: {
-        contentType:
-          format === 'pdf'
-            ? 'application/pdf'
-            : 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-      },
+    const r2Key = `${docType}/${date}-${number}-${Date.parse(now)}.${result.ext}`;
+    await context.cloudflare.env[bucketKey].put(r2Key, result.buffer, {
+      httpMetadata: { contentType: result.contentType },
     });
 
     const actorEmail = context.user?.email ?? 'unknown';
