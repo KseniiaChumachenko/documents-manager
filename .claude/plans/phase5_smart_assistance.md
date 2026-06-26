@@ -19,7 +19,7 @@ When a user starts a new document:
 
 1. **Company pre-fill:** If only one company of the required type exists, auto-select it
 2. **Last-used prices:** For each line item added, default `price_override` to the most recently used price for that item+company combination (query last 5 documents)
-3. **Document number:** Auto-increment from last document of the same type (e.g. "РФ-0042" → "РФ-0043")
+3. **Document number:** Auto-increment from last document of the same type, preserving the per-type prefix used in the reference exports (e.g. рахунок-фактура "СФ-0000305" → "СФ-0000306"; видаткова накладна "РН-…"; довіреність "№ 19" → "№ 20")
 4. **Date:** Default to today
 5. **Stamp:** Default to last-used stamp preference per template
 
@@ -43,7 +43,7 @@ Replace the current stub with a real dashboard. All data from D1 aggregations vi
 1. **Monthly income chart** — bar chart, last 12 months. Data: `SELECT strftime('%Y-%m', date) as month, SUM(amount_uah) FROM income_entry GROUP BY month`
 2. **Top 5 clients** — by income YTD. Join `income_entry` → `company`
 3. **Upcoming deadlines** — next 3 notifications from `notification` table (unacknowledged, ordered by due_date)
-4. **Current quarter tax summary** — unified tax + military levy + ESV totals for open quarter
+4. **Current quarter tax summary** — єдиний податок + military levy + ESV for the open quarter, computed via the corrected Phase 2 calculator (group + VAT-status aware — NOT a flat 3%)
 5. **Documents this month** — count of documents created, count exported
 
 **Chart library:** `chart.js` with `react-chartjs-2` wrapper (pure client-side, no server rendering needed). Lightweight, no native dependencies.

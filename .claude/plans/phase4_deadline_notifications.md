@@ -1,5 +1,7 @@
 # Phase 4: Deadline Engine + Notifications
 
+> **Legal basis:** validate against `.claude/skills/ukrainian-accounting/references/07-reporting-deadlines.md`. Corrected on 2026-06-25 per `findings-initial-review.md` (conflicts C2, C3, C4; gap G8). **A deadline engine that is wrong by a day or a direction causes real penalties — these fixes are load-bearing.**
+
 ## Goal
 
 Automatically compute all upcoming tax and compliance deadlines. Send reminders via Telegram Bot API and in-app notification bell. Prevent penalties by alerting the owner well in advance.
@@ -46,24 +48,47 @@ After adding, run `npm run db:generate`.
 
 Deadlines are computed from formulas, not stored dates. Rules:
 
+All deadlines derive from the statutory offsets in `references/07-reporting-deadlines.md`:
+monthly → +20 days, quarterly → +40 days, annual → +60 days; payment → +10 days
+after the filing deadline. **Never hardcode literal dates — compute `periodEnd + offset`,
+then weekend-shift forward.**
+
 ```typescript
 // Returns all deadlines for a given reference date (today)
-export function computeUpcomingDeadlines(today: Date): Deadline[] {
+export function computeUpcomingDeadlines(today: Date, profile: OwnerProfile): Deadline[] {
   const deadlines: Deadline[] = [];
 
-  // VAT declaration: 20th of every month for previous month
-  // Filing deadline: 20th; if weekend → next Monday
-  deadlines.push(vatDeadline(today));
+  // VAT (only if owner is a VAT payer):
+  if (profile.isVatPayer) {
+    // Declaration: monthly, +20 days after month-end (ПКУ ст. 203.1)
+    deadlines.push(vatDeclarationDeadline(today)); // ~20th
+    // Payment: +10 days after the filing deadline (ст. 203.2) — a SEPARATE deadline (~30th)
+    deadlines.push(vatPaymentDeadline(today));
+    // ЄРПН registration of tax invoices (ст. 201.10):
+    //   issued 1st–15th → register by the 5th of next month
+    //   issued 16th–end → register by the 18th of next month
+    deadlines.push(...erpnRegistrationDeadlines(today));
+  }
 
-  // Quarterly tax declaration: 40 days after quarter end
-  // Q1 (Jan-Mar) → May 10 | Q2 → Aug 10 | Q3 → Nov 10 | Q4 → Feb 10 (next year)
-  deadlines.push(...quarterlyTaxDeadlines(today));
+  // Єдиний податок (Group 3): declaration quarterly, +40 days after quarter-end.
+  //   Q1 (ends Mar 31) → May 10 | Q2 (Jun 30) → Aug 9 | Q3 (Sep 30) → Nov 9 | Q4 (Dec 31) → Feb 9
+  //   ⚠ NOT the 10th for Q2–Q4 — 40 calendar days lands on the 9th. Compute it, don't hardcode.
+  deadlines.push(...singleTaxDeadlines(today, profile));
 
-  // ESV payment for self: same as quarterly tax declaration deadline
-  deadlines.push(...esvSelfDeadlines(today));
+  // Військовий збір: Group 3 quarterly (with ЄП); Groups 1/2/4 monthly by the 20th.
+  deadlines.push(...militaryLevyDeadlines(today, profile));
 
-  // Quarterly payroll report (ЄСВ+ПДФО+ВЗ): same 40-day window
-  deadlines.push(...payrollReportDeadlines(today));
+  // ЄСВ:
+  //   - Employer ЄСВ on salaries: MONTHLY, by the 20th of the following month (Закон 2464 ст. 9).
+  //   - ФОП ЄСВ "за себе": may be paid quarterly, by the 20th of the month after the quarter.
+  //   These are DIFFERENT cadences — do not collapse into one (was previously modelled quarterly).
+  deadlines.push(...esvDeadlines(today, profile));
+
+  // Unified ПДФО/ВЗ/ЄСВ report (Податковий розрахунок, 4ДФ):
+  //   ⚠ 2026 cadence depends on entity type — ЮО employers MONTHLY (+20 days),
+  //   ФОП/self-employed QUARTERLY (+40 days). Key off profile.entityType.
+  //   (Verify against the current ДПС form order — reform was still settling in 2026.)
+  deadlines.push(...payrollReportDeadlines(today, profile));
 
   return deadlines.filter(d => {
     const daysUntil = daysBetween(today, d.date);
@@ -71,9 +96,13 @@ export function computeUpcomingDeadlines(today: Date): Deadline[] {
   });
 }
 
-// Weekend shift: if deadline falls on Sat → Fri, Sun → Mon
-function shiftWeekend(date: Date): Date { ... }
+// Weekend/holiday shift: ALWAYS forward to the next working (banking) day — ПКУ ст. 49.20 / 57.1.
+//   Sat → Mon, Sun → Mon. NEVER backward to Friday (that would be legally wrong and, for
+//   payment deadlines, cause a late payment). Also account for official public holidays.
+function shiftToNextWorkingDay(date: Date): Date { ... }
 ```
+
+`OwnerProfile` carries `{ entityType: 'legal' | 'fop', singleTaxGroup: 1|2|3, isVatPayer: boolean, hasEmployees: boolean }` — set in settings; it selects which deadlines apply.
 
 Reminder cadence for each deadline: 10 days before, 5 days before, 2 days before, 1 day before, day-of, overdue.
 
@@ -91,7 +120,7 @@ Add to `wrangler.jsonc`:
 
 Cron handler logic:
 
-1. Call `computeUpcomingDeadlines(new Date())`
+1. Call `computeUpcomingDeadlines(new Date(), ownerProfile)` (load `ownerProfile` from settings)
 2. For each deadline at reminder threshold (10/5/2/1/0 days):
    a. Check if notification already sent today for this deadline type+date (skip if duplicate)
    b. Insert `notification` row
@@ -174,11 +203,14 @@ Required:
 4. Acknowledge a notification — count decreases
 5. "Acknowledge all" — bell count goes to zero
 
-Unit tests (Vitest) for `deadline-engine.ts`:
+Unit tests (Vitest) for `deadline-engine.ts` — these encode the corrected rules:
 
-- VAT deadline on weekday → correct date
-- VAT deadline on Saturday → shifts to Friday
-- Q1 tax deadline → May 10
+- VAT declaration deadline on a weekday → the 20th
+- Deadline on a Saturday/Sunday → shifts **forward to the next Monday** (never back to Friday) — ст. 49.20
+- VAT payment deadline = filing deadline + 10 days (separate from filing)
+- Quarterly єдиний-податок deadline = quarter-end + 40 days → **Q1 May 10, Q2 Aug 9, Q3 Nov 9, Q4 Feb 9** (assert the 9th for Q2–Q4, not the 10th)
+- Employer ЄСВ deadline = monthly, the 20th (NOT quarterly)
+- ЄРПН: invoice dated 10th → register by the 5th of next month; dated 20th → by the 18th
 - Reminder threshold logic (10/5/2/1 days)
 
 ---

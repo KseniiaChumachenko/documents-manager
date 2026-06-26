@@ -15,6 +15,11 @@ Monthly background job that re-fetches data for all legal entity (ЄДРПОУ) 
 
 Schema and API routes are already implemented. This plan covers only the cron worker and R2 CSV storage.
 
+> **Legal-basis notes** (`.claude/skills/ukrainian-accounting/references/01-entities-registries.md`):
+> - **adm.tools is a third-party aggregator**, not the official registrar. The authoritative source is the ЄДР via Мінʼюст / data.gov.ua / Дія. Fine for convenience refresh; if legal reliability of company data ever matters, prefer the official open-data source.
+> - **КВЕД classifier change:** ДК 009:2010 is in force through 2026; **NACE 2.1-UA replaces it from 01.01.2027**. A future refresh may return reclassified codes — plan a one-off remap when it lands.
+> - Skipping ФОП here is correct: adm.tools serves ЄДРПОУ (legal entities) only; ФОП (10-digit РНОКПП in `company.ik`) stay manual.
+
 ---
 
 ## 1. No Schema Changes Required
